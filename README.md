@@ -1,4 +1,4 @@
 cellsociety
 ===========
 
-Empty repository for CellSociety project
+Empty repository for CellSociety project:D
