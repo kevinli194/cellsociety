@@ -1,6 +1,7 @@
 package parent;
 
 import java.util.ArrayList;
+
 //double-check to see if boundaries are correct
 public abstract class CellManager {
 	protected Cell[][] myGrid;
@@ -18,9 +19,12 @@ public abstract class CellManager {
 				setNeighbors(i, j);
 			}
 		}
+		setInitialState(initialState);
 	}
 
 	protected abstract void makeNewCell(int i, int j);
+
+	protected abstract void setInitialState(ArrayList<InitialCell> initialState);
 
 	protected abstract void setNeighbors(int i, int j);
 }

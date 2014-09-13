@@ -27,5 +27,16 @@ public class FireCell extends Cell {
 	
 
 	}
+	public void setState(String state){
+		if (state.equals("EMPTY")){
+			myState = EMPTY;
+		}
+		if (state.equals("TREE")){
+			myState = TREE;
+		}
+		if (state.equals("BURNING")){
+			myState = BURNING;
+		}
+	}
 
 }

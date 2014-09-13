@@ -23,5 +23,16 @@ public class EcoCell extends Cell {
 		// TODO Auto-generated method stub
 
 	}
+	public void setState(String state){
+		if (state.equals("EMPTY")){
+			myState = EMPTY;
+		}
+		if (state.equals("FISH")){
+			myState = FISH;
+		}
+		if (state.equals("SHARK")){
+			myState = SHARK;
+		}
+	}
 
 }

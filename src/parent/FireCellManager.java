@@ -1,5 +1,7 @@
 package parent;
 
+import java.util.ArrayList;
+
 public class FireCellManager extends CellManager {
 
 	@Override
@@ -25,5 +27,15 @@ public class FireCellManager extends CellManager {
 		}
 
 	}
+
+	@Override
+	protected void setInitialState(ArrayList<InitialCell> initialState) {
+		// TODO Auto-generated method stub
+		for(InitialCell c: initialState){
+			((FireCell) myGrid[c.myX][c.myY]).setState(c.myState);
+		}
+	}
+
+
 
 }

@@ -1,5 +1,7 @@
 package parent;
 
+import java.util.ArrayList;
+
 public class SegCellManager extends CellManager {
 
 	@Override
@@ -38,4 +40,11 @@ public class SegCellManager extends CellManager {
 
 	}
 
+	@Override
+	protected void setInitialState(ArrayList<InitialCell> initialState) {
+		// TODO Auto-generated method stub
+		for (InitialCell c : initialState) {
+			((SegCell) myGrid[c.myX][c.myY]).setState(c.myState);
+		}
+	}
 }

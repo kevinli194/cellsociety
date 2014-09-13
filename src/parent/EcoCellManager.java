@@ -1,5 +1,7 @@
 package parent;
 
+import java.util.ArrayList;
+
 public class EcoCellManager extends CellManager {
 
 	@Override
@@ -24,6 +26,14 @@ public class EcoCellManager extends CellManager {
 			myGrid[i][j].addNeighbor(myGrid[i][j + 1]);
 		}
 
+	}
+
+	@Override
+	protected void setInitialState(ArrayList<InitialCell> initialState) {
+		// TODO Auto-generated method stub
+		for(InitialCell c: initialState){
+			((EcoCell) myGrid[c.myX][c.myY]).setState(c.myState);
+		}
 	}
 
 }

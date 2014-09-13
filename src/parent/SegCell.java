@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class SegCell extends Cell {
 	private static final int EMPTY = 0;
 	private static final int X = 1;
-	private static final int Y = 2;
+	private static final int O = 2;
 	private int myState;
 
 	public SegCell(int xCoord, int yCoord, boolean update, int state) {
@@ -20,6 +20,17 @@ public class SegCell extends Cell {
 	public void update() {
 		// TODO Auto-generated method stub
 
+	}
+	public void setState(String state){
+		if (state.equals("EMPTY")){
+			myState = EMPTY;
+		}
+		if (state.equals("X")){
+			myState = X;
+		}
+		if (state.equals("O")){
+			myState = O;
+		}
 	}
 
 }
