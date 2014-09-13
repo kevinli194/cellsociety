@@ -2,28 +2,24 @@ package cellsociety_team16;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.ParserConfigurationException;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
-
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 /*
  * Based on code from http://javafxportal.blogspot.com/2012/03/how-to-read-xml-file-in-java-dom-parser.html
  */
 
 public class XMLParsing {
-
-	private InitialGameParameters igp;
 	
-	public void parseInitialCellsFromFile()
-	{
+	public InitialGameParameters parseInitialCellsFromFile() throws ParserConfigurationException, SAXException, IOException
+	{	
 		Document doc = createDocumentFromFile();
+		InitialGameParameters igp = new InitialGameParameters();
 		igp.simulationMode = doc.getElementById("simulationMode").getNodeValue();
 		igp.gridXSize = Integer.parseInt(doc.getElementById("gridXSize").getNodeValue());
 		igp.gridYSize = Integer.parseInt(doc.getElementById("gridYSize").getNodeValue());
@@ -35,16 +31,20 @@ public class XMLParsing {
 			if (nNode.getNodeType() == Node.ELEMENT_NODE)
 			{
 				Element eElement = (Element) nNode;
-				String cellState = getTagValue("state", eElement);
-				String cellX = getTagValue("x", eElement);
-				String cellY = getTagValue("y", eElement);
-				InitialCell initialCell = new InitialCell(cellState, cellX, cellY);
-				
+				igp.initialCells.add(createNewCellFromFileData(eElement));
 			}
 		}
+		return igp;
 	}
 	
-	
+	private InitialCell createNewCellFromFileData(Element eElement)
+	{
+		InitialCell initialCell = new InitialCell();
+		initialCell.myState = getTagValue("state", eElement);
+		initialCell.myX = Integer.parseInt(getTagValue("x", eElement));
+		initialCell.myY = Integer.parseInt(getTagValue("y", eElement));
+		return initialCell;
+	}
 	
 	private Document createDocumentFromFile() throws ParserConfigurationException, SAXException, IOException
 	{
