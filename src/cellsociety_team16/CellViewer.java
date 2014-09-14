@@ -38,12 +38,14 @@ public class CellViewer {
 	private InitialGameParameters myGameParams;
 	private XMLParsing myXMLParser;
 	private boolean myGridSet = false;
+	private boolean myStepClicked = false;
 
 	private boolean myFileSelected = false;
 	private Button myRestart =  new Button("Restart");
 	private Button myStart= new Button("Start/Resume");
 	private Button myStop = new Button("Stop/Pause");
 	private Button myStep = new Button ("Step");
+	private Button myLastClicked = null;
 
 	// Stores File object .XML
 	private File myFile;
@@ -99,7 +101,7 @@ public class CellViewer {
 		for (int i = 0; i < myGameParams.gridXSize; i++) {
 			myGridPane.getRowConstraints().add(new RowConstraints(5, Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, Priority.ALWAYS, VPos.CENTER, true));
 		}
-		
+
 		for (int i = 0; i < myGameParams.gridYSize; i++) {
 			myGridPane.getColumnConstraints().add(new ColumnConstraints(5, Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, Priority.ALWAYS, HPos.CENTER, true));
 
@@ -201,6 +203,7 @@ public class CellViewer {
 					@Override
 					public void handle(final ActionEvent e) {
 						myAnimation.play();
+						myLastClicked = myStart;
 
 					}
 
@@ -211,6 +214,7 @@ public class CellViewer {
 					@Override
 					public void handle(final ActionEvent e) {
 						myAnimation.pause();
+						myLastClicked = myStop;
 					}
 
 				});
@@ -228,7 +232,9 @@ public class CellViewer {
 				new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(final ActionEvent e) {
-
+						myAnimation.play();
+						myStepClicked = true;
+						myLastClicked = myStep;
 
 					}
 
@@ -239,7 +245,16 @@ public class CellViewer {
 		@Override
 		public void handle(ActionEvent evt) {
 			checkFileSelectedAndAddDisplay();
-			updateDisplay();
+
+			if ((myLastClicked.equals(myStep))) {
+				if (myStepClicked) {
+					updateDisplay();
+					myStepClicked = false;
+					myAnimation.pause();
+				}
+			} else {
+				updateDisplay();
+			}
 			checkSpeedSelection();
 			checkStepClicked();
 		}
