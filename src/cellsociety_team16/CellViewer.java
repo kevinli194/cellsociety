@@ -29,7 +29,7 @@ public class CellViewer {
 	private static final String NORMAL = "Normal";
 	private static final String SLOW = "Slow";
 	private static final String VERY_SLOW = "Slower";
-
+	private XMLParsing myXMLParser;
 
 	private Button myRestart =  new Button("Restart");
 	private Button myStart= new Button("Start/Resume");
@@ -61,6 +61,7 @@ public class CellViewer {
 	public Scene init(Stage stage, int width, int height) {
 		myBorderPane = new BorderPane();
 		myGridPane = new GridPane();
+		myXMLParser = new XMLParsing();
 		//Border Pane holds the scene graph		
 		Scene scene = new Scene(myBorderPane, width, height);
 		addFileSelector(stage);
