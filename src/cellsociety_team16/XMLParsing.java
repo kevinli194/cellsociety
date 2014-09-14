@@ -16,7 +16,6 @@ import java.io.IOException;
 
 public class XMLParsing {
 
-
 /*	public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException
 	{
 		XMLParsing xmlp = new XMLParsing();
