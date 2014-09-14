@@ -23,9 +23,9 @@ public class XMLParsing {
 		System.out.println("done");
 	}*/
 
-	public InitialGameParameters parseInitialCellsFromFile() throws ParserConfigurationException, SAXException, IOException
+	public InitialGameParameters parseInitialCellsFromFile(File file) throws ParserConfigurationException, SAXException, IOException
 	{	
-		Document doc = createDocumentFromFile();
+		Document doc = createDocumentFromFile(file);
 		InitialGameParameters igp = new InitialGameParameters();
 		igp.simulationMode = valueFromTagElement(doc, "simulationMode");
 		igp.gridXSize = Integer.parseInt(valueFromTagElement(doc, "gridXSize").replaceAll("\\s", ""));
@@ -58,9 +58,9 @@ public class XMLParsing {
 		return initialCell;
 	}
 
-	private Document createDocumentFromFile() throws ParserConfigurationException, SAXException, IOException
+	private Document createDocumentFromFile(File file) throws ParserConfigurationException, SAXException, IOException
 	{
-		File fXmlFile = new File("C:\\Users\\Abhishek B\\Documents\\workspace\\cellsociety_team16\\src\\cellsociety_team16\\xml\\initialGameParameters.xml");
+		File fXmlFile = file;
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 		Document doc = dBuilder.parse(fXmlFile);

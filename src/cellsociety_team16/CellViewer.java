@@ -1,7 +1,12 @@
 package cellsociety_team16;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Random;
+
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -29,14 +34,16 @@ public class CellViewer {
 	private static final String NORMAL = "Normal";
 	private static final String SLOW = "Slow";
 	private static final String VERY_SLOW = "Slower";
-	private XMLParsing myXMLParser;
 
+	private InitialGameParameters myGameParams;
+	private XMLParsing myXMLParser;
+	private boolean myGridSet = false;
+
+	private boolean myFileSelected = false;
 	private Button myRestart =  new Button("Restart");
 	private Button myStart= new Button("Start/Resume");
 	private Button myStop = new Button("Stop/Pause");
 	private Button myStep = new Button ("Step");
-	
-
 
 	// Stores File object .XML
 	private File myFile;
@@ -67,8 +74,6 @@ public class CellViewer {
 		addFileSelector(stage);
 		addButtons();
 		setButtonsOnAction();
-		addIndividualCells();
-		addGridConstraints();
 		return scene;
 	}
 
@@ -132,6 +137,14 @@ public class CellViewer {
 							dialog.setScene(dialogScene);
 							dialog.show();
 
+						} else {
+							try {
+								myGameParams = myXMLParser.parseInitialCellsFromFile(myFile);
+								myFileSelected = true;
+							} catch (ParserConfigurationException
+									| SAXException | IOException e1) {
+								e1.printStackTrace();
+							}
 						}
 					}
 				});
@@ -211,13 +224,13 @@ public class CellViewer {
 					}
 
 				});
-		*/
+		 */
 		myStep.setOnAction(
 				new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(final ActionEvent e) {
-						
-						
+
+
 					}
 
 				});	
@@ -226,6 +239,7 @@ public class CellViewer {
 	private EventHandler<ActionEvent> oneFrame = new EventHandler<ActionEvent>() {
 		@Override
 		public void handle(ActionEvent evt) {
+			checkFileSelectedAndAddDisplay();
 			updateDisplay();
 			checkSpeedSelection();
 			checkStepClicked();
@@ -236,13 +250,25 @@ public class CellViewer {
 		return new KeyFrame(Duration.millis(1000), oneFrame);
 	}
 
+	private void checkFileSelectedAndAddDisplay() {
+
+		if ((myFile != null) && (myFileSelected)) {
+			addIndividualCells();
+			addGridConstraints();
+			myGridSet = true;
+			myFileSelected = false;
+		}
+	}
+
+
 	// Currently updating display by picking a random color;
 	private void updateDisplay () {
-
-		for (int i = 0; i < ROW_SIZE; i++) {
-			for (int j = 0; j < COLUMN_SIZE; j++) {
-				Node node = getNodeFromGridPane(i, j);
-				node.setStyle("-fx-background-color: "+ POSSIBLE_COLORS[myRandom.nextInt(POSSIBLE_COLORS.length)] +";");
+		if (myGridSet) {
+			for (int i = 0; i < ROW_SIZE; i++) {
+				for (int j = 0; j < COLUMN_SIZE; j++) {
+					Node node = getNodeFromGridPane(i, j);
+					node.setStyle("-fx-background-color: "+ POSSIBLE_COLORS[myRandom.nextInt(POSSIBLE_COLORS.length)] +";");
+				}
 			}
 		}
 
@@ -274,7 +300,6 @@ public class CellViewer {
 					}
 				}
 			}
-
 		}
 	}
 }
