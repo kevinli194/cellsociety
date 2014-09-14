@@ -51,8 +51,6 @@ public class CellViewer {
 	private GridPane myGridPane;
 	//Border Pane holds the scene graph
 	private BorderPane myBorderPane;
-	private static final int ROW_SIZE = 12;
-	private static final int COLUMN_SIZE = 12;
 	private Timeline myAnimation = new Timeline();
 	private static final String [] POSSIBLE_COLORS = {"yellow", "green", "blue", "black", "orange", "white"};
 	private static final Random myRandom = new Random();
@@ -81,8 +79,8 @@ public class CellViewer {
 
 		myBorderPane.setCenter(myGridPane);
 
-		for (int row = 0; row < ROW_SIZE ; row++) {
-			for (int col = 0; col < COLUMN_SIZE ; col ++) {
+		for (int row = 0; row < myGameParams.gridXSize ; row++) {
+			for (int col = 0; col < myGameParams.gridYSize; col ++) {
 				GridPane square = new GridPane();
 				String color ;
 				if ((row + col) % 2 == 0) {
@@ -97,13 +95,14 @@ public class CellViewer {
 	}
 
 	private void addGridConstraints() {
-		for (int i = 0; i < COLUMN_SIZE; i++) {
+
+		for (int i = 0; i < myGameParams.gridXSize; i++) {
+			myGridPane.getRowConstraints().add(new RowConstraints(5, Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, Priority.ALWAYS, VPos.CENTER, true));
+		}
+		
+		for (int i = 0; i < myGameParams.gridYSize; i++) {
 			myGridPane.getColumnConstraints().add(new ColumnConstraints(5, Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, Priority.ALWAYS, HPos.CENTER, true));
 
-		}
-
-		for (int i = 0; i < ROW_SIZE; i++) {
-			myGridPane.getRowConstraints().add(new RowConstraints(5, Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, Priority.ALWAYS, VPos.CENTER, true));
 		}
 
 		// Adding padding so there are borders between perimeter cells and window edges
@@ -264,8 +263,8 @@ public class CellViewer {
 	// Currently updating display by picking a random color;
 	private void updateDisplay () {
 		if (myGridSet) {
-			for (int i = 0; i < ROW_SIZE; i++) {
-				for (int j = 0; j < COLUMN_SIZE; j++) {
+			for (int i = 0; i < myGameParams.gridXSize; i++) {
+				for (int j = 0; j < myGameParams.gridYSize; j++) {
 					Node node = getNodeFromGridPane(i, j);
 					node.setStyle("-fx-background-color: "+ POSSIBLE_COLORS[myRandom.nextInt(POSSIBLE_COLORS.length)] +";");
 				}
