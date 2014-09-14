@@ -18,6 +18,7 @@ public class FireCell extends Cell {
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
+		myUpdate = true;
 		if(myState == BURNING)
 		{
 			myState = EMPTY;
