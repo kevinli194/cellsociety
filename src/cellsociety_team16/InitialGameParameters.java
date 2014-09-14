@@ -7,4 +7,9 @@ public class InitialGameParameters
 	public int gridXSize;
 	public int gridYSize;
 	public ArrayList<InitialCell> initialCells;
+	
+	public InitialGameParameters()
+	{
+		initialCells = new ArrayList<InitialCell>();
+	}
 }
