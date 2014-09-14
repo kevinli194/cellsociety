@@ -21,7 +21,7 @@ public class FireCell extends Cell {
 		myUpdate = true;
 		if(myState == BURNING)
 		{
-			myState = EMPTY;
+			setState("EMPTY");
 			return;
 		}
 
@@ -30,7 +30,7 @@ public class FireCell extends Cell {
 			double probabilityValue = Math.random();
 			if(probabilityValue < myThresholdValue)
 			{
-				myState = BURNING;
+				setState("BURNING");
 			}
 		}
 	}

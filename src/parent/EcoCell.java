@@ -1,12 +1,9 @@
 package parent;
 
-import java.util.ArrayList;
-
 public class EcoCell extends Cell {
 	private static final int EMPTY = 0;
 	private static final int FISH = 1;
 	private static final int SHARK = 2;
-	private int myState;
 	private int myTurnsAlive;
 
 	public EcoCell(int xCoord, int yCoord, boolean update, int state) {
@@ -15,7 +12,6 @@ public class EcoCell extends Cell {
 		myUpdate = update;
 		myState = state;
 		myTurnsAlive = 0;
-
 	}
 
 	@Override
