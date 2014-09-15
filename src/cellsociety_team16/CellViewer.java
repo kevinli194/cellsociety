@@ -39,12 +39,12 @@ public class CellViewer {
 
 	private InitialGameParameters myGameParams;
 	private XMLParsing myXMLParser;
+	private CellWorld myCellWorld;
 	private boolean myGridSet = false;
 	private boolean myStepClicked = false;
 
 	private boolean myFileSelected = false;
 	private Button myRestart =  new Button("Restart");
-	private Button myShowGrid = new Button("Show Grid");
 	private Button myStart= new Button("Start/Resume");
 	private Button myStop = new Button("Stop/Pause");
 	private Button myStep = new Button ("Step");
@@ -68,8 +68,9 @@ public class CellViewer {
 	private int myHeight;
 
 
-	public CellViewer(Timeline animation) {
+	public CellViewer(Timeline animation, CellWorld cellWorld) {
 		myAnimation = animation;
+		myCellWorld = cellWorld;
 	}
 	
 	private void setHeight(int height) {
@@ -79,11 +80,10 @@ public class CellViewer {
 	public Scene init(Stage stage, int width, int height) {
 		setHeight(height);
 		myBorderPane = new BorderPane();
-		myGridPane = new GridPane();
+		//myGridPane = new GridPane();
 		myXMLParser = new XMLParsing();
 		myCellManager = new FireCellManager();
 
-		myShowGrid.setDisable(true);
 		//Border Pane holds the scene graph		
 		Scene scene = new Scene(myBorderPane, width, height);
 		addFileSelector(stage);
@@ -93,6 +93,8 @@ public class CellViewer {
 	}
 
 	private void addIndividualCells() {
+		
+		myGridPane = new GridPane();
 		myBorderPane.setCenter(myGridPane);
 
 		for (int row = 0; row < myGameParams.gridXSize ; row++) {
@@ -154,15 +156,18 @@ public class CellViewer {
 							try {
 								myGameParams = myXMLParser.parseInitialCellsFromFile(myFile);
 								myFileSelected = true;
-								myShowGrid.setDisable(false);
 
 							} catch (ParserConfigurationException
 									| SAXException | IOException e1) {
 								e1.printStackTrace();
 							}
-
+							myAnimation.stop();
 							myGrid = myCellManager.initialize(myGameParams.simulationMode, myGameParams.gridXSize,
 									myGameParams.gridYSize, myGameParams.initialCells);
+							addIndividualCells();
+							addGridConstraints();
+							myCellWorld.startAnimation();
+
 							
 						}
 					}
@@ -202,7 +207,6 @@ public class CellViewer {
 
 		// Adding buttons to vertical box. This could have been cleaner with an array of Buttons but from
 		// a readability standpoint, this is probably better
-		vbox.getChildren().add(myShowGrid);
 		vbox.getChildren().add(myRestart);
 		vbox.getChildren().add(myStart);
 		vbox.getChildren().add(myStop);
@@ -254,21 +258,6 @@ public class CellViewer {
 						myAnimation.play();
 						myStepClicked = true;
 						myLastClicked = myStep;
-
-					}
-
-				});	
-
-		myShowGrid.setOnAction(
-				new EventHandler<ActionEvent>() {
-					@Override
-					public void handle(final ActionEvent e) {
-						addIndividualCells();
-						addGridConstraints();
-						myAnimation.play();
-						myAnimation.pause();
-						//myShowGrid.setDisable(true);
-						myLastClicked = myShowGrid;
 
 					}
 

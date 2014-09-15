@@ -8,25 +8,33 @@ import javafx.scene.Scene;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+
 public class CellWorld extends Application {
 	private CellViewer myViewer;
 	private int ANIMATION_WIDTH;
 	private int ANIMATION_HEIGHT;
 
+
 	@Override
 	public void start(Stage stage) {
 		getScreenBounds();
-		Timeline animation = new Timeline();
 		stage.setTitle("Cell Society");
-		myViewer = new CellViewer(animation);
+		startAnimation();
 		Scene view = myViewer.init(stage, ANIMATION_WIDTH, ANIMATION_HEIGHT);
 		stage.setScene(view);
 		stage.show();
 
+		
+	}
+	
+	public void startAnimation() {
+		Timeline animation = new Timeline();
+		myViewer = new CellViewer(animation, this);
 		KeyFrame frame = myViewer.start();
 		animation.setCycleCount(Timeline.INDEFINITE);
 		animation.getKeyFrames().add(frame);
 
+		
 	}
 
 
@@ -37,6 +45,7 @@ public class CellWorld extends Application {
 		ANIMATION_WIDTH = (int) (screenBounds.getWidth()/1.25);
 
 	}
+	
 
 	public static void main(String [] args) {
 		launch(args);
