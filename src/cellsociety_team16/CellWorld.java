@@ -3,27 +3,39 @@ package cellsociety_team16;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class CellWorld extends Application {
 	private CellViewer myViewer;
-	private static final int SCREEN_WIDTH = 1500;
-	private static final int SCREEN_HEIGHT = 1500;
+	private int ANIMATION_WIDTH;
+	private int ANIMATION_HEIGHT;
 
 	@Override
 	public void start(Stage stage) {
+		getScreenBounds();
 		Timeline animation = new Timeline();
 		stage.setTitle("Cell Society");
 		myViewer = new CellViewer(animation);
-		Scene view = myViewer.init(stage, SCREEN_WIDTH, SCREEN_HEIGHT);
+		Scene view = myViewer.init(stage, ANIMATION_WIDTH, ANIMATION_HEIGHT);
 		stage.setScene(view);
 		stage.show();
 
 		KeyFrame frame = myViewer.start();
 		animation.setCycleCount(Timeline.INDEFINITE);
 		animation.getKeyFrames().add(frame);
-		
+
+	}
+
+
+	private void getScreenBounds() {
+
+		Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds(); 
+		ANIMATION_HEIGHT =(int) (screenBounds.getHeight()/1.1); 
+		ANIMATION_WIDTH = (int) (screenBounds.getWidth()/1.25);
+
 	}
 
 	public static void main(String [] args) {

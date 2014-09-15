@@ -2,13 +2,8 @@ package cellsociety_team16;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Random;
-
 import javax.xml.parsers.ParserConfigurationException;
-
 import org.xml.sax.SAXException;
-
 import parent.Cell;
 import parent.CellManager;
 import parent.FireCellManager;
@@ -64,7 +59,6 @@ public class CellViewer {
 	private CellManager myCellManager;
 	private Timeline myAnimation = new Timeline();
 	private static final String [] POSSIBLE_COLORS = {"yellow", "green", "blue"};// "black", "orange", "white"};
-	private static final Random myRandom = new Random();
 	private final FileChooser fileChooser = new FileChooser();
 	private final Button openButton = new Button("...");
 	private final ComboBox<String> speedOptions = new ComboBox<String>();
@@ -73,8 +67,11 @@ public class CellViewer {
 	public CellViewer(Timeline animation) {
 		myAnimation = animation;
 	}
-
+	
+	
+	
 	public Scene init(Stage stage, int width, int height) {
+
 		myBorderPane = new BorderPane();
 		myGridPane = new GridPane();
 		myXMLParser = new XMLParsing();
@@ -238,7 +235,6 @@ public class CellViewer {
 					@Override
 					public void handle(final ActionEvent e) {
 
-
 					}
 
 				});
@@ -269,10 +265,6 @@ public class CellViewer {
 					}
 
 				});	
-
-
-
-
 
 	}
 
@@ -333,7 +325,6 @@ public class CellViewer {
 			}
 		}
 	}		
-
 
 	private void checkSpeedSelection() {
 		if (speedOptions.getValue().equals(VERY_SLOW)) {
