@@ -62,16 +62,19 @@ public class CellViewer {
 	private final FileChooser fileChooser = new FileChooser();
 	private final Button openButton = new Button("...");
 	private final ComboBox<String> speedOptions = new ComboBox<String>();
+	private int myHeight;
 
 
 	public CellViewer(Timeline animation) {
 		myAnimation = animation;
 	}
 	
-	
+	private void setHeight(int height) {
+		myHeight = height;
+	}
 	
 	public Scene init(Stage stage, int width, int height) {
-
+		setHeight(height);
 		myBorderPane = new BorderPane();
 		myGridPane = new GridPane();
 		myXMLParser = new XMLParsing();
@@ -178,7 +181,7 @@ public class CellViewer {
 	private void addButtons() {
 		VBox vbox = new VBox();
 		vbox.setSpacing(30);
-		vbox.setPadding(new Insets(500, 0, 0, 2));
+		vbox.setPadding(new Insets(myHeight/4, 0, 0, 2));
 
 
 
@@ -265,7 +268,6 @@ public class CellViewer {
 					}
 
 				});	
-
 	}
 
 	private EventHandler<ActionEvent> oneFrame = new EventHandler<ActionEvent>() {
@@ -305,7 +307,6 @@ public class CellViewer {
 		}		
 
 	}
-
 
 
 	// Currently updating display by picking a random color;
