@@ -2,12 +2,16 @@ package cellsociety_team16;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Random;
 
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
+import parent.Cell;
+import parent.CellManager;
+import parent.FireCellManager;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -42,10 +46,13 @@ public class CellViewer {
 
 	private boolean myFileSelected = false;
 	private Button myRestart =  new Button("Restart");
+	private Button myShowGrid = new Button("Show Grid");
 	private Button myStart= new Button("Start/Resume");
 	private Button myStop = new Button("Stop/Pause");
 	private Button myStep = new Button ("Step");
 	private Button myLastClicked = null;
+
+	private Cell[][] myGrid;
 
 	// Stores File object .XML
 	private File myFile;
@@ -53,8 +60,10 @@ public class CellViewer {
 	private GridPane myGridPane;
 	//Border Pane holds the scene graph
 	private BorderPane myBorderPane;
+
+	private CellManager myCellManager;
 	private Timeline myAnimation = new Timeline();
-	private static final String [] POSSIBLE_COLORS = {"yellow", "green", "blue", "black", "orange", "white"};
+	private static final String [] POSSIBLE_COLORS = {"yellow", "green", "blue"};// "black", "orange", "white"};
 	private static final Random myRandom = new Random();
 	private final FileChooser fileChooser = new FileChooser();
 	private final Button openButton = new Button("...");
@@ -69,6 +78,9 @@ public class CellViewer {
 		myBorderPane = new BorderPane();
 		myGridPane = new GridPane();
 		myXMLParser = new XMLParsing();
+		myCellManager = new FireCellManager();
+
+		myShowGrid.setDisable(true);
 		//Border Pane holds the scene graph		
 		Scene scene = new Scene(myBorderPane, width, height);
 		addFileSelector(stage);
@@ -78,19 +90,14 @@ public class CellViewer {
 	}
 
 	private void addIndividualCells() {
-
 		myBorderPane.setCenter(myGridPane);
 
 		for (int row = 0; row < myGameParams.gridXSize ; row++) {
 			for (int col = 0; col < myGameParams.gridYSize; col ++) {
 				GridPane square = new GridPane();
-				String color ;
-				if ((row + col) % 2 == 0) {
-					color = "green";
-				} else {
-					color = "white";
-				}
-				square.setStyle("-fx-background-color: "+ color +";");
+				Cell cell = myGrid[row][col];
+				
+				square.setStyle("-fx-background-color: "+ POSSIBLE_COLORS[cell.getState()] +";");
 				myGridPane.add(square, col, row);
 			}
 		}		
@@ -142,10 +149,16 @@ public class CellViewer {
 							try {
 								myGameParams = myXMLParser.parseInitialCellsFromFile(myFile);
 								myFileSelected = true;
+								myShowGrid.setDisable(false);
+
 							} catch (ParserConfigurationException
 									| SAXException | IOException e1) {
 								e1.printStackTrace();
 							}
+
+							myGrid = myCellManager.initialize(myGameParams.simulationMode, myGameParams.gridXSize,
+									myGameParams.gridYSize, myGameParams.initialCells);
+							
 						}
 					}
 				});
@@ -184,6 +197,7 @@ public class CellViewer {
 
 		// Adding buttons to vertical box. This could have been cleaner with an array of Buttons but from
 		// a readability standpoint, this is probably better
+		vbox.getChildren().add(myShowGrid);
 		vbox.getChildren().add(myRestart);
 		vbox.getChildren().add(myStart);
 		vbox.getChildren().add(myStop);
@@ -219,15 +233,16 @@ public class CellViewer {
 
 				});
 
-		/*myRestart.setOnAction(
+		myRestart.setOnAction(
 				new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(final ActionEvent e) {
-						myAnimation.playFromStart();
+
+
 					}
 
 				});
-		 */
+
 		myStep.setOnAction(
 				new EventHandler<ActionEvent>() {
 					@Override
@@ -239,24 +254,44 @@ public class CellViewer {
 					}
 
 				});	
+
+		myShowGrid.setOnAction(
+				new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(final ActionEvent e) {
+						addIndividualCells();
+						addGridConstraints();
+						myAnimation.play();
+						myAnimation.pause();
+						//myShowGrid.setDisable(true);
+						myLastClicked = myShowGrid;
+
+					}
+
+				});	
+
+
+
+
+
 	}
 
 	private EventHandler<ActionEvent> oneFrame = new EventHandler<ActionEvent>() {
 		@Override
 		public void handle(ActionEvent evt) {
-			checkFileSelectedAndAddDisplay();
-
+			checkFileSelectedAndSetFlags();
 			if ((myLastClicked.equals(myStep))) {
 				if (myStepClicked) {
+					updateGrid();
 					updateDisplay();
 					myStepClicked = false;
 					myAnimation.pause();
 				}
 			} else {
+				updateGrid();
 				updateDisplay();
 			}
 			checkSpeedSelection();
-			checkStepClicked();
 		}
 	};
 
@@ -264,15 +299,26 @@ public class CellViewer {
 		return new KeyFrame(Duration.millis(1000), oneFrame);
 	}
 
-	private void checkFileSelectedAndAddDisplay() {
+	private void checkFileSelectedAndSetFlags() {
 
 		if ((myFile != null) && (myFileSelected)) {
-			addIndividualCells();
-			addGridConstraints();
 			myGridSet = true;
 			myFileSelected = false;
 		}
 	}
+
+	private void updateGrid() {
+		if (myGridSet) {
+			for (int i = 0; i < myGameParams.gridXSize; i++) {
+				for (int j = 0; j < myGameParams.gridYSize; j++) {
+					myGrid[i][j].update();
+
+				}
+			}
+		}		
+
+	}
+
 
 
 	// Currently updating display by picking a random color;
@@ -281,20 +327,13 @@ public class CellViewer {
 			for (int i = 0; i < myGameParams.gridXSize; i++) {
 				for (int j = 0; j < myGameParams.gridYSize; j++) {
 					Node node = getNodeFromGridPane(i, j);
-					node.setStyle("-fx-background-color: "+ POSSIBLE_COLORS[myRandom.nextInt(POSSIBLE_COLORS.length)] +";");
+					Cell cell = myGrid[i][j];
+					node.setStyle("-fx-background-color: "+ POSSIBLE_COLORS[cell.getState()] +";");
 				}
 			}
 		}
-
 	}		
 
-	private void checkStepClicked() {
-
-
-
-
-
-	}
 
 	private void checkSpeedSelection() {
 		if (speedOptions.getValue().equals(VERY_SLOW)) {

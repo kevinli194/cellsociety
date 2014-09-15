@@ -6,8 +6,8 @@ import java.util.ArrayList;
 public abstract class CellManager {
 	protected Cell[][] myGrid;
 
-	public void initialize(String modelType, int xDimension, int yDimension,
-			ArrayList<InitialCell> initialState) {
+	public Cell[][] initialize(String modelType, int xDimension, int yDimension,
+			ArrayList<InitialCell> initialCells) {
 		myGrid = new Cell[xDimension][yDimension];
 		for (int i = 0; i < xDimension; i++) {
 			for (int j = 0; j < yDimension; j++) {
@@ -19,7 +19,9 @@ public abstract class CellManager {
 				setNeighbors(i, j);
 			}
 		}
-		setInitialState(initialState);
+		setInitialState(initialCells);
+		
+		return myGrid;
 	}
 
 	protected abstract void makeNewCell(int i, int j);

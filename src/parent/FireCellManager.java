@@ -7,7 +7,7 @@ public class FireCellManager extends CellManager {
 	@Override
 	protected void makeNewCell(int i, int j) {
 		// TODO Auto-generated method stub
-		myGrid[i][j] = new FireCell(i, j, true, 0, 0); // last parameter should be the threshold
+		myGrid[i][j] = new FireCell(i, j, true, 0, 1); // last parameter should be the threshold
 	}
 
 	@Override
@@ -32,7 +32,8 @@ public class FireCellManager extends CellManager {
 	protected void setInitialState(ArrayList<InitialCell> initialState) {
 		// TODO Auto-generated method stub
 		for(InitialCell c: initialState){
-			((FireCell) myGrid[c.myX][c.myY]).setState(c.myState);
+		//	System.out.println(c.myState.compareTo("BURNING"));
+			((FireCell) myGrid[c.myX][c.myY]).setState(c.myState.replaceAll("\\s", ""));
 		}
 	}
 
