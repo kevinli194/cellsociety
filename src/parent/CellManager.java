@@ -2,10 +2,12 @@ package parent;
 
 import java.util.ArrayList;
 
-//double-check to see if boundaries are correct
+//double-check to see if boundaries are correct. 
 public abstract class CellManager {
 	protected Cell[][] myGrid;
 
+	// initializes the starting state of myGrid including the dimensions and
+	// initial state and what type of model you are running.
 	public void initialize(String modelType, int xDimension, int yDimension,
 			ArrayList<InitialCell> initialState) {
 		myGrid = new Cell[xDimension][yDimension];

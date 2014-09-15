@@ -1,6 +1,5 @@
 package parent;
 
-import java.util.ArrayList;
 
 public class FireCell extends Cell {
 	private static final int EMPTY = 0;
@@ -27,6 +26,7 @@ public class FireCell extends Cell {
 	
 
 	}
+	@Override
 	public void setState(String state){
 		if (state.equals("EMPTY")){
 			myState = EMPTY;

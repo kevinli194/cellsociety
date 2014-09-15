@@ -1,7 +1,5 @@
 package parent;
 
-import java.util.ArrayList;
-
 public class EcoCell extends Cell {
 	private static final int EMPTY = 0;
 	private static final int FISH = 1;
@@ -23,6 +21,7 @@ public class EcoCell extends Cell {
 		// TODO Auto-generated method stub
 
 	}
+	@Override
 	public void setState(String state){
 		if (state.equals("EMPTY")){
 			myState = EMPTY;

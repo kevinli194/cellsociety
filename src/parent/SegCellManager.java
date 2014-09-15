@@ -45,6 +45,7 @@ public class SegCellManager extends CellManager {
 		// TODO Auto-generated method stub
 		for (InitialCell c : initialState) {
 			((SegCell) myGrid[c.myX][c.myY]).setState(c.myState);
+			myGrid[c.myX][c.myY].setUpdate(true);
 		}
 	}
 }

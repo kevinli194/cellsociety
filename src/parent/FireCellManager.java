@@ -33,6 +33,7 @@ public class FireCellManager extends CellManager {
 		// TODO Auto-generated method stub
 		for(InitialCell c: initialState){
 			((FireCell) myGrid[c.myX][c.myY]).setState(c.myState);
+			myGrid[c.myX][c.myY].setUpdate(true);
 		}
 	}
 

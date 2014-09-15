@@ -21,6 +21,7 @@ public class SegCell extends Cell {
 		// TODO Auto-generated method stub
 
 	}
+	@Override
 	public void setState(String state){
 		if (state.equals("EMPTY")){
 			myState = EMPTY;

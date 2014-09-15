@@ -33,6 +33,7 @@ public class EcoCellManager extends CellManager {
 		// TODO Auto-generated method stub
 		for(InitialCell c: initialState){
 			((EcoCell) myGrid[c.myX][c.myY]).setState(c.myState);
+			myGrid[c.myX][c.myY].setUpdate(true);
 		}
 	}
 
