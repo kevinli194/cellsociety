@@ -36,4 +36,10 @@ public class EcoCellManager extends CellManager {
 		}
 	}
 
+	@Override
+	public void updateGrid() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

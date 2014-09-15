@@ -309,12 +309,7 @@ public class CellViewer {
 
 	private void updateGrid() {
 		if (myGridSet) {
-			for (int i = 0; i < myGameParams.gridXSize; i++) {
-				for (int j = 0; j < myGameParams.gridYSize; j++) {
-					myGrid[i][j].update();
-
-				}
-			}
+			myCellManager.updateGrid();
 		}		
 
 	}

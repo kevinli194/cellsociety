@@ -37,6 +37,32 @@ public class FireCellManager extends CellManager {
 		}
 	}
 
+	@Override
+	public void updateGrid() {
+		// TODO Auto-generated method stub
+		for (int i = 0; i < myGrid.length; i++) {
+			for (int j = 0; j < myGrid[0].length; j++) {
+				((FireCell) myGrid[i][j]).updateTree();
+				
+
+			}
+		}
+		for (int i = 0; i < myGrid.length; i++) {
+			for (int j = 0; j < myGrid[0].length; j++) {
+				((FireCell) myGrid[i][j]).update();
+				
+
+			}
+		}
+		for (int i = 0; i < myGrid.length; i++) {
+			for (int j = 0; j < myGrid[0].length; j++) {
+				((FireCell) myGrid[i][j]).reset();
+				
+
+			}
+		}
+	}
+
 
 
 }

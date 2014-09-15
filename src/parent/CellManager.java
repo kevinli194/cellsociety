@@ -29,4 +29,6 @@ public abstract class CellManager {
 	protected abstract void setInitialState(ArrayList<InitialCell> initialState);
 
 	protected abstract void setNeighbors(int i, int j);
+	
+	public abstract void updateGrid();
 }

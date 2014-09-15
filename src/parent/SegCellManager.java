@@ -47,4 +47,10 @@ public class SegCellManager extends CellManager {
 			((SegCell) myGrid[c.myX][c.myY]).setState(c.myState);
 		}
 	}
+
+	@Override
+	public void updateGrid() {
+		// TODO Auto-generated method stub
+		
+	}
 }
