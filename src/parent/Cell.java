@@ -12,6 +12,10 @@ public abstract class Cell {
 		myNeighbor.add(neighbor);
 	}
 
+	public int getState() {
+		return myState;
+	}
+
 	// resets the myUpdate of the cell for use in next frame
 	public void reset() {
 		if (myState != 0) {
@@ -20,9 +24,5 @@ public abstract class Cell {
 	}
 
 	public abstract void update();
-
-	public int getState() {
-		return myState;
-	}
 
 }

@@ -18,16 +18,6 @@ public class FireCell extends Cell {
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
-		if (myUpdate == false) {
-			if (myState == BURNING) {
-				setState("EMPTY");
-				myUpdate = true;
-			}
-		}
-	}
-
-	public void updateTree() {
 		if (myUpdate == false) {
 			if (myState == TREE & anyNeighborIsBurning()) {
 				double probabilityValue = Math.random();
@@ -35,6 +25,16 @@ public class FireCell extends Cell {
 					setState("BURNING");
 					myUpdate = true;
 				}
+			}
+		}
+	}
+
+	public void update2() {
+		// TODO Auto-generated method stub
+		if (myUpdate == false) {
+			if (myState == BURNING) {
+				setState("EMPTY");
+				myUpdate = true;
 			}
 		}
 	}
