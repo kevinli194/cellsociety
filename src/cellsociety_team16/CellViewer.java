@@ -2,8 +2,11 @@ package cellsociety_team16;
 
 import java.io.File;
 import java.io.IOException;
+
 import javax.xml.parsers.ParserConfigurationException;
+
 import org.xml.sax.SAXException;
+
 import parent.Cell;
 import parent.CellManager;
 import parent.FireCellManager;
@@ -100,7 +103,9 @@ public class CellViewer {
 				square.setStyle("-fx-background-color: "+ POSSIBLE_COLORS[cell.getState()] +";");
 				myGridPane.add(square, col, row);
 			}
-		}		
+		}	
+		// Creates border for each cell
+	    myGridPane.setStyle("-fx-background-color: black; -fx-padding: 2; -fx-hgap: 2; -fx-vgap: 2;");
 	}
 
 	private void addGridConstraints() {
