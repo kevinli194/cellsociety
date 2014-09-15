@@ -58,7 +58,7 @@ public class CellViewer {
 
 	private CellManager myCellManager;
 	private Timeline myAnimation = new Timeline();
-	private static final String [] POSSIBLE_COLORS = {"yellow", "green", "blue"};// "black", "orange", "white"};
+	private static final String [] POSSIBLE_COLORS = {"white", "red", "blue"};
 	private final FileChooser fileChooser = new FileChooser();
 	private final Button openButton = new Button("...");
 	private final ComboBox<String> speedOptions = new ComboBox<String>();
@@ -180,7 +180,7 @@ public class CellViewer {
 
 	private void addButtons() {
 		VBox vbox = new VBox();
-		vbox.setSpacing(30);
+		vbox.setSpacing(myHeight/40);
 		vbox.setPadding(new Insets(myHeight/4, 0, 0, 2));
 
 
