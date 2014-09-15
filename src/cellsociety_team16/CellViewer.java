@@ -44,7 +44,7 @@ public class CellViewer {
 	private boolean myStepClicked = false;
 
 	private boolean myFileSelected = false;
-	private Button myRestart =  new Button("Restart");
+	private Button myReset =  new Button("Reset");
 	private Button myStart= new Button("Start/Resume");
 	private Button myStop = new Button("Stop/Pause");
 	private Button myStep = new Button ("Step");
@@ -207,7 +207,7 @@ public class CellViewer {
 
 		// Adding buttons to vertical box. This could have been cleaner with an array of Buttons but from
 		// a readability standpoint, this is probably better
-		vbox.getChildren().add(myRestart);
+		vbox.getChildren().add(myReset);
 		vbox.getChildren().add(myStart);
 		vbox.getChildren().add(myStop);
 		vbox.getChildren().add(myStep);
@@ -242,11 +242,17 @@ public class CellViewer {
 
 				});
 
-		myRestart.setOnAction(
+		myReset.setOnAction(
 				new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(final ActionEvent e) {
-
+						myAnimation.stop();
+						myGrid = myCellManager.initialize(myGameParams.simulationMode, myGameParams.gridXSize,
+								myGameParams.gridYSize, myGameParams.initialCells);
+						addIndividualCells();
+						addGridConstraints();
+						myCellWorld.startAnimation();
+						myAnimation.pause();
 					}
 
 				});
