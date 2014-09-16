@@ -22,9 +22,13 @@ public abstract class Cell {
 		if (myState != 0) {
 			myUpdate = false;
 		}
+		if (myState == 0){
+			myPreviousState = 0;
+		}
 	}
 
 	public abstract void update();
+
 	public abstract void setState(String state);
 
 }
