@@ -30,7 +30,6 @@ public class FireCell extends Cell {
 	}
 
 	public void update2() {
-		// TODO Auto-generated method stub
 		if (myState == BURNING && myUpdated == false) {
 			myPreviousState = myState;
 			myState = EMPTY;
