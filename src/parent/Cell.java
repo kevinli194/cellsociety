@@ -3,14 +3,15 @@ package parent;
 import java.util.ArrayList;
 
 public abstract class Cell {
-	protected ArrayList<Cell> myNeighbor = new ArrayList<Cell>();
+	protected ArrayList<Cell> myNeighbors = new ArrayList<Cell>();
 	protected int[] myCoordinates;
 	protected boolean myUpdate;
 	protected int myState;
 	protected int myPreviousState;
+	protected double myThresholdValue;
 
 	public void addNeighbor(Cell neighbor) {
-		myNeighbor.add(neighbor);
+		myNeighbors.add(neighbor);
 	}
 
 	public int getState() {
