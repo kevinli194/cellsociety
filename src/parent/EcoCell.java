@@ -35,8 +35,11 @@ public class EcoCell extends Cell {
 			else if(emptyNeighbor != null)
 			{
 				updateNeighbor(emptyNeighbor, SHARK);
+				breed(SHARK);
 			}
 		}
+		
+		myTurnsAlive++;
 	}
 	
 	/*
@@ -50,7 +53,19 @@ public class EcoCell extends Cell {
 			if(emptyNeighbor != null)
 			{
 				updateNeighbor(emptyNeighbor, FISH);
+				breed(FISH);
 			}
+		}
+		
+		myTurnsAlive++;
+	}
+	
+	private void breed(int stateID)
+	{
+		if(myTurnsAlive >= myThresholdValue)
+		{
+			myState = stateID;
+			myTurnsAlive = 0;
 		}
 	}
 	
