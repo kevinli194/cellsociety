@@ -7,6 +7,7 @@ public abstract class Cell {
 	protected int[] myCoordinates;
 	protected boolean myUpdate;
 	protected int myState;
+	protected int myPreviousState;
 
 	public void addNeighbor(Cell neighbor) {
 		myNeighbor.add(neighbor);
@@ -24,5 +25,6 @@ public abstract class Cell {
 	}
 
 	public abstract void update();
+	public abstract void setState(String state);
 
 }

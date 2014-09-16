@@ -18,41 +18,44 @@ public class FireCell extends Cell {
 
 	@Override
 	public void update() {
-		if (myUpdate == false) {
-			if (myState == TREE & anyNeighborIsBurning()) {
+		if (myState == TREE && myUpdate == false) {
+			myPreviousState = myState;
+			myUpdate = true;
+			if (anyNeighborIsBurning()) {
 				double probabilityValue = Math.random();
 				if (probabilityValue < myThresholdValue) {
-					setState("BURNING");
-					myUpdate = true;
+					myState = BURNING;
 				}
+
 			}
 		}
 	}
 
 	public void update2() {
 		// TODO Auto-generated method stub
-		if (myUpdate == false) {
-			if (myState == BURNING) {
-				setState("EMPTY");
-				myUpdate = true;
-			}
+		if (myState == BURNING && myUpdate == false) {
+			myPreviousState = myState;
+			myState = EMPTY;
+			myUpdate = true;
 		}
-	}
-
-	public void updateTREE() {
-
 	}
 
 	private boolean anyNeighborIsBurning() {
 		for (int i = 0; i < myNeighbor.size(); i++) {
 			if (myNeighbor.get(i).myState == BURNING
-					&& myNeighbor.get(i).myUpdate == false)
+					&& myNeighbor.get(i).myUpdate == false) {
 				return true;
+			}
+			if (myNeighbor.get(i).myPreviousState == BURNING
+					&& myNeighbor.get(i).myUpdate == true) {
+				return true;
+			}
 		}
 
 		return false;
 	}
 
+	@Override
 	public void setState(String state) {
 		if (state.equals("EMPTY")) {
 			myState = EMPTY;
