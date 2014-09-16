@@ -7,7 +7,7 @@ public class SegCellManager extends CellManager {
 	@Override
 	protected void makeNewCell(int i, int j) {
 		// TODO Auto-generated method stub
-		myGrid[i][j] = new SegCell(i, j, true, 0);
+		myGrid[i][j] = new SegCell(i, j, true, 0, this, 0);
 	}
 
 	@Override
@@ -51,6 +51,33 @@ public class SegCellManager extends CellManager {
 	@Override
 	public void updateGrid() {
 		// TODO Auto-generated method stub
+		for (int i = 0; i < myGrid.length; i++) {
+			for (int j = 0; j < myGrid[0].length; j++) {
+				((SegCell) myGrid[i][j]).update();
+			}
+		}
+
+		for (int i = 0; i < myGrid.length; i++) {
+			for (int j = 0; j < myGrid[0].length; j++) {
+				myGrid[i][j].reset();
+			}
+		}
+	}
+	
+	public Cell findFirstEmptyCell()
+	{
+		for(int i = 0; i < myGrid.length; i++)
+		{
+			for(int j = 0; j < myGrid[i].length; j++)
+			{
+				Cell currentCell = myGrid[i][j];
+				if(currentCell.myState == 0) // EMPTY
+				{
+					return currentCell;
+				}
+			}
+		}
 		
+		return null;
 	}
 }

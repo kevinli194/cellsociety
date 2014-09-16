@@ -7,7 +7,7 @@ public class EcoCellManager extends CellManager {
 	@Override
 	protected void makeNewCell(int i, int j) {
 		// TODO Auto-generated method stub
-		myGrid[i][j] = new EcoCell(i, j, true, 0);
+		myGrid[i][j] = new EcoCell(i, j, true, 0, 0); // LAST PARAMETER needs to be the threshold value
 	}
 
 	@Override
@@ -39,7 +39,24 @@ public class EcoCellManager extends CellManager {
 	@Override
 	public void updateGrid() {
 		// TODO Auto-generated method stub
-		
+		for (int i = 0; i < myGrid.length; i++) {
+			for (int j = 0; j < myGrid[0].length; j++) {
+				((EcoCell) myGrid[i][j]).update();
+			}
+		}
+		for (int i = 0; i < myGrid.length; i++) {
+			for (int j = 0; j < myGrid[0].length; j++) {
+				((EcoCell) myGrid[i][j]).update2();
+
+			}
+		}
+
+		for (int i = 0; i < myGrid.length; i++) {
+			for (int j = 0; j < myGrid[0].length; j++) {
+				myGrid[i][j].reset();
+
+			}
+		}
 	}
 
 }

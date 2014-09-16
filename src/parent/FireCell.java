@@ -4,54 +4,51 @@ public class FireCell extends Cell {
 	private static final int EMPTY = 0;
 	private static final int TREE = 1;
 	private static final int BURNING = 2;
-	private double myThresholdValue;
 
 	public FireCell(int xCoord, int yCoord, boolean update, int state,
 			double thresholdValue) {
 		myCoordinates = new int[2];
 		myCoordinates[0] = xCoord;
 		myCoordinates[1] = yCoord;
-		myUpdate = update;
+		myUpdated = update;
 		myState = state;
 		myThresholdValue = thresholdValue;
 	}
 
 	@Override
 	public void update() {
-		if (myState == TREE && myUpdate == false) {
+		if (myState == TREE && myUpdated == false) {
 			myPreviousState = myState;
-			myUpdate = true;
+			myUpdated = true;
 			if (anyNeighborIsBurning()) {
 				double probabilityValue = Math.random();
 				if (probabilityValue < myThresholdValue) {
 					myState = BURNING;
 				}
-
 			}
 		}
 	}
 
 	public void update2() {
 		// TODO Auto-generated method stub
-		if (myState == BURNING && myUpdate == false) {
+		if (myState == BURNING && myUpdated == false) {
 			myPreviousState = myState;
-			myUpdate = true;
+			myUpdated = true;
 			myState = EMPTY;
 		}
 	}
 
 	private boolean anyNeighborIsBurning() {
-		for (int i = 0; i < myNeighbor.size(); i++) {
-			if (myNeighbor.get(i).myState == BURNING
-					&& myNeighbor.get(i).myUpdate == false) {
+		for (int i = 0; i < myNeighbors.size(); i++) {
+			if (myNeighbors.get(i).myState == BURNING
+					&& myNeighbors.get(i).myUpdated == false) {
 				return true;
 			}
-			if (myNeighbor.get(i).myPreviousState == BURNING
-					&& myNeighbor.get(i).myUpdate == true) {
+			if (myNeighbors.get(i).myPreviousState == BURNING
+					&& myNeighbors.get(i).myUpdated == true) {
 				return true;
 			}
 		}
-
 		return false;
 	}
 
@@ -67,5 +64,4 @@ public class FireCell extends Cell {
 			myState = BURNING;
 		}
 	}
-
 }

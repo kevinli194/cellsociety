@@ -8,36 +8,36 @@ public class GoLCell extends Cell {
 		myCoordinates = new int[2];
 		myCoordinates[0] = xCoord;
 		myCoordinates[1] = yCoord;
-		myUpdate = update;
+		myUpdated = update;
 		myState = state;
 	}
 
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
-		if (myUpdate == false) {
+		if (myUpdated == false) {
 			if (myState == ALIVE && getAliveCount() < 2) {
 				myPreviousState = myState;
 				myState = DEAD;
-				myUpdate = true;
+				myUpdated = true;
 				return;
 			}
 			if (myState == ALIVE
 					&& (getAliveCount() == 2 || getAliveCount() == 3)) {
 				myPreviousState = myState;
-				myUpdate = true;
+				myUpdated = true;
 				return;
 			}
 			if (myState == ALIVE && getAliveCount() > 3) {
 				myPreviousState = myState;
 				myState = DEAD;
-				myUpdate = true;
+				myUpdated = true;
 				return;
 			}
 			if (myState == DEAD && getAliveCount() == 3) {
 				myPreviousState = myState;
 				myState = ALIVE;
-				myUpdate = true;
+				myUpdated = true;
 				return;
 			}
 
@@ -58,12 +58,12 @@ public class GoLCell extends Cell {
 
 	public int getAliveCount() {
 		int count = 0;
-		for (int i = 0; i < myNeighbor.size(); i++) {
-			if (myNeighbor.get(i).myState == ALIVE
-					&& myNeighbor.get(i).myUpdate == false)
+		for (int i = 0; i < myNeighbors.size(); i++) {
+			if (myNeighbors.get(i).myState == ALIVE
+					&& myNeighbors.get(i).myUpdated == false)
 				count++;
-			if (myNeighbor.get(i).myPreviousState == ALIVE
-					&& myNeighbor.get(i).myUpdate == true)
+			if (myNeighbors.get(i).myPreviousState == ALIVE
+					&& myNeighbors.get(i).myUpdated == true)
 				count++;
 		}
 		return count;
