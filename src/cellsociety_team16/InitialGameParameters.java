@@ -1,6 +1,8 @@
 package cellsociety_team16;
 import java.util.ArrayList;
 
+import parent.InitialCell;
+
 public class InitialGameParameters
 {
 	public String simulationMode;

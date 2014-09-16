@@ -6,6 +6,8 @@ public class FireCell extends Cell {
 	private static final int BURNING = 2;
 	private double myThresholdValue;
 	
+	// pass "this" as a constructor to the thing
+	
 	public FireCell(int xCoord, int yCoord,
 			boolean update, int state, double thresholdValue) {
 		myCoordinates[0] = xCoord;

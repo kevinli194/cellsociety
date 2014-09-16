@@ -13,7 +13,7 @@ public class EcoCell extends Cell {
 		myState = state;
 		myTurnsAlive = 0;
 	}
-
+ 
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
@@ -30,5 +30,4 @@ public class EcoCell extends Cell {
 			myState = SHARK;
 		}
 	}
-
 }

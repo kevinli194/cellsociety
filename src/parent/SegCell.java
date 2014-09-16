@@ -15,8 +15,10 @@ public class SegCell extends Cell {
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
-
+		myUpdate = true;
+		
 	}
+	
 	public void setState(String state){
 		if (state.equals("EMPTY")){
 			myState = EMPTY;
@@ -28,5 +30,4 @@ public class SegCell extends Cell {
 			myState = O;
 		}
 	}
-
 }
