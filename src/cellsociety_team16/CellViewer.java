@@ -72,11 +72,11 @@ public class CellViewer {
 		myAnimation = animation;
 		myCellWorld = cellWorld;
 	}
-	
+
 	private void setHeight(int height) {
 		myHeight = height;
 	}
-	
+
 	public Scene init(Stage stage, int width, int height) {
 		setHeight(height);
 		myBorderPane = new BorderPane();
@@ -88,12 +88,22 @@ public class CellViewer {
 		Scene scene = new Scene(myBorderPane, width, height);
 		addFileSelector(stage);
 		addButtons();
+		disableButtons(true);
 		setButtonsOnAction();
 		return scene;
 	}
 
+
+	private void disableButtons(boolean disable) {
+		myReset.setDisable(disable);
+		myStart.setDisable(disable);
+		myStop.setDisable(disable); 
+		myStep.setDisable(disable);
+	}
+
+
 	private void addIndividualCells() {
-		
+		disableButtons(false);
 		myGridPane = new GridPane();
 		myBorderPane.setCenter(myGridPane);
 
@@ -101,15 +111,15 @@ public class CellViewer {
 			for (int col = 0; col < myGameParams.gridYSize; col ++) {
 				GridPane square = new GridPane();
 				Cell cell = myGrid[row][col];
-				
+
 				square.setStyle("-fx-background-color: "+ POSSIBLE_COLORS[cell.getState()] +";");
 				myGridPane.add(square, col, row);
 			}
 		}	
 		// Creates border for each cell
-	    myGridPane.setStyle("-fx-background-color: black; -fx-padding: 2; -fx-hgap: 2; -fx-vgap: 2;");
+		myGridPane.setStyle("-fx-background-color: black;-fx-hgap: 1; -fx-vgap: 1;");
 	}
-
+	
 	private void addGridConstraints() {
 
 		for (int i = 0; i < myGameParams.gridXSize; i++) {
@@ -120,9 +130,8 @@ public class CellViewer {
 			myGridPane.getColumnConstraints().add(new ColumnConstraints(5, Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, Priority.ALWAYS, HPos.CENTER, true));
 
 		}
-
 		// Adding padding so there are borders between perimeter cells and window edges
-		myGridPane.setPadding(new Insets(0, 10, 10, 0));
+		myGridPane.setPadding(new Insets(5, 5, 5, 5));
 	}
 
 
@@ -168,7 +177,7 @@ public class CellViewer {
 							addGridConstraints();
 							myCellWorld.startAnimation();
 
-							
+
 						}
 					}
 				});

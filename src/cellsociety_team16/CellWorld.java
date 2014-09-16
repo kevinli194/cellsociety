@@ -42,8 +42,7 @@ public class CellWorld extends Application {
 
 		Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds(); 
 		ANIMATION_HEIGHT =(int) (screenBounds.getHeight()/1.1); 
-		ANIMATION_WIDTH = (int) (screenBounds.getWidth()/1.25);
-
+		ANIMATION_WIDTH = (int) (screenBounds.getWidth()/1.7);
 	}
 	
 
