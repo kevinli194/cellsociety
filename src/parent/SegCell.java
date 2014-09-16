@@ -9,7 +9,7 @@ public class SegCell extends Cell {
 	public SegCell(int xCoord, int yCoord, boolean update, int state, SegCellManager segCellManager, double thresholdValue) {
 		myCoordinates[0] = xCoord;
 		myCoordinates[1] = yCoord;
-		myUpdate = update;
+		myUpdated = update;
 		myState = state;
 		mySegCellManager = segCellManager;
 		myThresholdValue = thresholdValue;
@@ -18,32 +18,42 @@ public class SegCell extends Cell {
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
-		int satisfiedNeighbors = 0;
-		int totalNeighbors = 0;
-		for(Cell neighbor : myNeighbors)
+		if(myUpdated == false)
 		{
-			if(neighbor.myState != EMPTY)
+			myUpdated = true;
+			int satisfiedNeighbors = 0;
+			int totalNeighbors = 0;
+			for(Cell neighbor : myNeighbors)
 			{
-				if(neighbor.myState == myState)
+				if(neighbor.myState != EMPTY)
 				{
-					satisfiedNeighbors++;
+					if(neighbor.myState == myState)
+					{
+						satisfiedNeighbors++;
+					}
+					
+					totalNeighbors++;
 				}
-				
-				totalNeighbors++;
+			}
+			
+			double percentageOfNeighborsSatisfied = satisfiedNeighbors / totalNeighbors;
+			if(percentageOfNeighborsSatisfied < myThresholdValue)
+			{
+				moveToBeSatisfied();
 			}
 		}
-		
-		double percentageOfNeighborsSatisfied = satisfiedNeighbors / totalNeighbors;
-		if(percentageOfNeighborsSatisfied < myThresholdValue)
+	}
+	
+	private void moveToBeSatisfied()
+	{
+		Cell emptyCell = mySegCellManager.findFirstEmptyCell();
+		if(emptyCell != null)
 		{
-			Cell emptyCell = mySegCellManager.findFirstEmptyCell();
-			if(emptyCell != null)
-			{
-				emptyCell.myPreviousState = emptyCell.myState;
-				emptyCell.myState = myState;
-				myPreviousState = myState;
-				myState = EMPTY;
-			}
+			emptyCell.myPreviousState = emptyCell.myState;
+			emptyCell.myState = myState;
+			emptyCell.myUpdated = true;
+			myPreviousState = myState;
+			myState = EMPTY;
 		}
 	}
 	

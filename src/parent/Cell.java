@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public abstract class Cell {
 	protected ArrayList<Cell> myNeighbors = new ArrayList<Cell>();
 	protected int[] myCoordinates;
-	protected boolean myUpdate;
+	protected boolean myUpdated;
 	protected int myState;
 	protected int myPreviousState;
 	protected double myThresholdValue;
@@ -21,7 +21,7 @@ public abstract class Cell {
 	// resets the myUpdate of the cell for use in next frame
 	public void reset() {
 		if (myState != 0) {
-			myUpdate = false;
+			myUpdated = false;
 		}
 	}
 
