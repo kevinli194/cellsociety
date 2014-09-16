@@ -187,7 +187,7 @@ public class CellViewer {
 	}
 
 
-	private Node getNodeFromGridPane(int col, int row) {
+	private Node getNodeFromGridPane(int row, int col) {
 		for (Node node : myGridPane.getChildren()) {
 			if (GridPane.getColumnIndex(node) == col && GridPane.getRowIndex(node) == row) {
 				return node;
@@ -321,8 +321,8 @@ public class CellViewer {
 	// Currently updating display by picking a random color;
 	private void updateDisplay () {
 		if (myGridSet) {
-			for (int i = 0; i < myGameParams.gridXSize; i++) {
-				for (int j = 0; j < myGameParams.gridYSize; j++) {
+			for (int i = 0; i < myGrid.length; i++) {
+				for (int j = 0; j < myGrid[0].length; j++) {
 					Node node = getNodeFromGridPane(i, j);
 					Cell cell = myGrid[i][j];
 					node.setStyle("-fx-background-color: "+ POSSIBLE_COLORS[cell.getState()] +";");
