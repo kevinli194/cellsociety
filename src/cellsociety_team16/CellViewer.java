@@ -82,6 +82,10 @@ public class CellViewer {
 		myBorderPane = new BorderPane();
 		//myGridPane = new GridPane();
 		myXMLParser = new XMLParsing();
+		
+		/*
+		 * ***HERE IS WHAT NEEDS TO BE CHANGED****
+		 */
 		myCellManager = new FireCellManager();
 
 		//Border Pane holds the scene graph		
@@ -201,9 +205,6 @@ public class CellViewer {
 		VBox vbox = new VBox();
 		vbox.setSpacing(myHeight/40);
 		vbox.setPadding(new Insets(myHeight/4, 0, 0, 2));
-
-
-
 
 		Text speed = new Text("Speed");
 
