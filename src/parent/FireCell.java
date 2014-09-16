@@ -58,9 +58,11 @@ public class FireCell extends Cell {
 		}
 		if (state.equals("TREE")) {
 			myState = TREE;
+			myUpdated = false;
 		}
 		if (state.equals("BURNING")) {
 			myState = BURNING;
+			myUpdated = false;
 		}
 	}
 }

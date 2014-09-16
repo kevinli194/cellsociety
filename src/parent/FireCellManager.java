@@ -56,7 +56,7 @@ public class FireCellManager extends CellManager {
 		for (int i = 0; i < myGrid.length; i++) {
 			for (int j = 0; j < myGrid[0].length; j++) {
 				if (myGrid[i][j].getState()==2){
-					System.out.println(i + " " + j);
+//					System.out.println(i + " " + j);
 				}
 
 			}
