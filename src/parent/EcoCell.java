@@ -99,5 +99,4 @@ public class EcoCell extends Cell {
 			myState = SHARK;
 		}
 	}
-
 }

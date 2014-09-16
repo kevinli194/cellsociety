@@ -17,7 +17,6 @@ public class SegCell extends Cell {
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
 		if(myUpdated == false)
 		{
 			myUpdated = true;

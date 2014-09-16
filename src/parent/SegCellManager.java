@@ -51,7 +51,17 @@ public class SegCellManager extends CellManager {
 	@Override
 	public void updateGrid() {
 		// TODO Auto-generated method stub
-		
+		for (int i = 0; i < myGrid.length; i++) {
+			for (int j = 0; j < myGrid[0].length; j++) {
+				((SegCell) myGrid[i][j]).update();
+			}
+		}
+
+		for (int i = 0; i < myGrid.length; i++) {
+			for (int j = 0; j < myGrid[0].length; j++) {
+				myGrid[i][j].reset();
+			}
+		}
 	}
 	
 	public Cell findFirstEmptyCell()

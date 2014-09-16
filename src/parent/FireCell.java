@@ -25,7 +25,6 @@ public class FireCell extends Cell {
 				if (probabilityValue < myThresholdValue) {
 					myState = BURNING;
 				}
-
 			}
 		}
 	}
@@ -50,7 +49,6 @@ public class FireCell extends Cell {
 				return true;
 			}
 		}
-
 		return false;
 	}
 
@@ -66,5 +64,4 @@ public class FireCell extends Cell {
 			myState = BURNING;
 		}
 	}
-
 }
