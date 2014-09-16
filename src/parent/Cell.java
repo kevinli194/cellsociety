@@ -20,12 +20,16 @@ public abstract class Cell {
 
 	// resets the myUpdate of the cell for use in next frame
 	public void reset() {
-		if (myState != 0) {
+		if (!(myState == 0)) {
 			myUpdated = false;
+		}
+		if (myState == 0){
+			myPreviousState = 0;
 		}
 	}
 
 	public abstract void update();
+
 	public abstract void setState(String state);
 
 }

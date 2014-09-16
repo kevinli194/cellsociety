@@ -32,8 +32,8 @@ public class FireCell extends Cell {
 	public void update2() {
 		if (myState == BURNING && myUpdated == false) {
 			myPreviousState = myState;
-			myState = EMPTY;
 			myUpdated = true;
+			myState = EMPTY;
 		}
 	}
 
