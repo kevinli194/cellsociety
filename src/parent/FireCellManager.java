@@ -6,14 +6,14 @@ public class FireCellManager extends CellManager {
 
 	@Override
 	protected void makeNewCell(int i, int j, double thresholdValue) {
-		// TODO Auto-generated method stub
-		myGrid[i][j] = new FireCell(i, j, true, 0, thresholdValue); // last parameter should
-														// be the threshold
+		myGrid[i][j] = new FireCell(i, j, true, 0, thresholdValue); // last
+																	// parameter
+																	// should
+		// be the threshold
 	}
 
 	@Override
 	protected void setNeighbors(int i, int j) {
-		// TODO Auto-generated method stub
 		if (i > 0) {
 			myGrid[i][j].addNeighbor(myGrid[i - 1][j]);
 		}
@@ -31,7 +31,6 @@ public class FireCellManager extends CellManager {
 
 	@Override
 	protected void setInitialState(ArrayList<InitialCell> initialState) {
-		// TODO Auto-generated method stub
 		for (InitialCell c : initialState) {
 			// System.out.println(c.myState.compareTo("BURNING"));
 			((FireCell) myGrid[c.myX][c.myY]).setState(c.myState.replaceAll(
@@ -41,7 +40,6 @@ public class FireCellManager extends CellManager {
 
 	@Override
 	public void updateGrid() {
-		// TODO Auto-generated method stub
 		for (int i = 0; i < myGrid.length; i++) {
 			for (int j = 0; j < myGrid[0].length; j++) {
 				((FireCell) myGrid[i][j]).update();
@@ -55,8 +53,8 @@ public class FireCellManager extends CellManager {
 		}
 		for (int i = 0; i < myGrid.length; i++) {
 			for (int j = 0; j < myGrid[0].length; j++) {
-				if (myGrid[i][j].getState()==2){
-//					System.out.println(i + " " + j);
+				if (myGrid[i][j].getState() == 2) {
+					// System.out.println(i + " " + j);
 				}
 
 			}
