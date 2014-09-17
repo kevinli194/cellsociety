@@ -5,8 +5,9 @@ public class SegCell extends Cell {
 	private static final int X = 1;
 	private static final int O = 2;
 	private SegCellManager mySegCellManager;
-	
-	public SegCell(int xCoord, int yCoord, boolean update, int state, SegCellManager segCellManager, double thresholdValue) {
+
+	public SegCell(int xCoord, int yCoord, boolean update, int state,
+			SegCellManager segCellManager, double thresholdValue) {
 		myCoordinates[0] = xCoord;
 		myCoordinates[1] = yCoord;
 		myUpdated = update;
@@ -17,37 +18,32 @@ public class SegCell extends Cell {
 
 	@Override
 	public void update() {
-		if(myUpdated == false)
-		{
+		if (myUpdated == false) {
 			myUpdated = true;
 			int satisfiedNeighbors = 0;
 			int totalNeighbors = 0;
-			for(Cell neighbor : myNeighbors)
-			{
-				if(neighbor.myState != EMPTY)
-				{
-					if(neighbor.myState == myState)
-					{
+			for (Cell neighbor : myNeighbors) {
+				if (neighbor.myState != EMPTY) {
+					if (neighbor.myState == myState) {
 						satisfiedNeighbors++;
 					}
-					
+
 					totalNeighbors++;
 				}
 			}
-			
-			double percentageOfNeighborsSatisfied = satisfiedNeighbors / totalNeighbors;
-			if(percentageOfNeighborsSatisfied < myThresholdValue)
-			{
-				moveToBeSatisfied();
+			if (totalNeighbors != 0) {
+				double percentageOfNeighborsSatisfied = satisfiedNeighbors
+						/ totalNeighbors;
+				if (percentageOfNeighborsSatisfied < myThresholdValue) {
+					moveToBeSatisfied();
+				}
 			}
 		}
 	}
-	
-	private void moveToBeSatisfied()
-	{
+
+	private void moveToBeSatisfied() {
 		Cell emptyCell = mySegCellManager.findFirstEmptyCell();
-		if(emptyCell != null)
-		{
+		if (emptyCell != null) {
 			emptyCell.myPreviousState = emptyCell.myState;
 			emptyCell.myState = myState;
 			emptyCell.myUpdated = true;
@@ -55,16 +51,18 @@ public class SegCell extends Cell {
 			myState = EMPTY;
 		}
 	}
-	
-	public void setState(String state){
-		if (state.equals("EMPTY")){
+
+	public void setState(String state) {
+		if (state.equals("EMPTY")) {
 			myState = EMPTY;
 		}
-		if (state.equals("X")){
+		if (state.equals("X")) {
 			myState = X;
+			myUpdated = false;
 		}
-		if (state.equals("O")){
+		if (state.equals("O")) {
 			myState = O;
+			myUpdated = false;
 		}
 	}
 

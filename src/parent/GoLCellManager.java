@@ -6,7 +6,7 @@ public class GoLCellManager extends CellManager {
 
 	@Override
 	protected void makeNewCell(int i, int j, double thresholdValue) {
-		myGrid[i][j] = new GoLCell(i, j, true, 1); // we should try to remove thresholdValue from here
+		myGrid[i][j] = new GoLCell(i, j, false, 1); // we should try to remove thresholdValue from here
 		// think of a better way
 	}
 

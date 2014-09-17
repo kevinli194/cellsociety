@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public abstract class Cell {
 	protected ArrayList<Cell> myNeighbors = new ArrayList<Cell>();
-	protected int[] myCoordinates;
+	protected int[] myCoordinates = new int[2];
 	protected boolean myUpdated;
 	protected int myState;
 	protected int myPreviousState;
@@ -23,9 +23,9 @@ public abstract class Cell {
 		if (!(myState == 0)) {
 			myUpdated = false;
 		}
-		if (myState == 0){
+		/*if (myState == 0){
 			myPreviousState = 0;
-		}
+		}*/
 	}
 
 	public abstract void update();

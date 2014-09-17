@@ -5,10 +5,10 @@ public class GoLCell extends Cell {
 	private static final int ALIVE = 2;
 
 	public GoLCell(int xCoord, int yCoord, boolean update, int state) {
-		myCoordinates = new int[2];
 		myCoordinates[0] = xCoord;
 		myCoordinates[1] = yCoord;
 		myUpdated = update;
+		myPreviousState = state;
 		myState = state;
 	}
 
@@ -53,6 +53,7 @@ public class GoLCell extends Cell {
 		if (state.equals("ALIVE")) {
 			myState = ALIVE;
 		}
+
 
 	}
 

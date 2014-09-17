@@ -9,7 +9,10 @@ import org.xml.sax.SAXException;
 
 import parent.Cell;
 import parent.CellManager;
+import parent.SegCellManager;
+import parent.EcoCellManager;
 import parent.FireCellManager;
+import parent.GoLCellManager;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -82,7 +85,11 @@ public class CellViewer {
 		myBorderPane = new BorderPane();
 		//myGridPane = new GridPane();
 		myXMLParser = new XMLParsing();
-		myCellManager = new FireCellManager();
+		
+		/*
+		 * ***HERE IS WHAT NEEDS TO BE CHANGED****
+		 */
+		myCellManager = new EcoCellManager();
 
 		//Border Pane holds the scene graph		
 		Scene scene = new Scene(myBorderPane, width, height);
@@ -201,9 +208,6 @@ public class CellViewer {
 		VBox vbox = new VBox();
 		vbox.setSpacing(myHeight/40);
 		vbox.setPadding(new Insets(myHeight/4, 0, 0, 2));
-
-
-
 
 		Text speed = new Text("Speed");
 

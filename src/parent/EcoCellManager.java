@@ -32,7 +32,8 @@ public class EcoCellManager extends CellManager {
 	protected void setInitialState(ArrayList<InitialCell> initialState) {
 		// TODO Auto-generated method stub
 		for(InitialCell c: initialState){
-			((EcoCell) myGrid[c.myX][c.myY]).setState(c.myState);
+			((EcoCell) myGrid[c.myX][c.myY]).setState(c.myState.replaceAll(
+					"\\s", ""));
 		}
 	}
 
