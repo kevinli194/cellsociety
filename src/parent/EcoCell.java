@@ -94,9 +94,11 @@ public class EcoCell extends Cell {
 		}
 		if (state.equals("FISH")){
 			myState = FISH;
+			myUpdated = false;
 		}
 		if (state.equals("SHARK")){
 			myState = SHARK;
+			myUpdated = false;
 		}
 	}
 }

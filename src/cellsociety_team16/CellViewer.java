@@ -10,6 +10,9 @@ import org.xml.sax.SAXException;
 import parent.Cell;
 import parent.CellManager;
 import parent.SegCellManager;
+import parent.EcoCellManager;
+import parent.FireCellManager;
+import parent.GoLCellManager;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -86,7 +89,7 @@ public class CellViewer {
 		/*
 		 * ***HERE IS WHAT NEEDS TO BE CHANGED****
 		 */
-		myCellManager = new SegCellManager();
+		myCellManager = new EcoCellManager();
 
 		//Border Pane holds the scene graph		
 		Scene scene = new Scene(myBorderPane, width, height);
