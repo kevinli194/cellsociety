@@ -7,7 +7,7 @@ public class GoLCellManager extends CellManager {
 	@Override
 	protected void makeNewCell(int i, int j) {
 		// TODO Auto-generated method stub
-		myGrid[i][j] = new GoLCell(i, j, true, 1); // last parameter should
+		myGrid[i][j] = new GoLCell(i, j, false, 1); // last parameter should
 													// be the threshold
 	}
 

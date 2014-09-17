@@ -7,7 +7,6 @@ public class FireCell extends Cell {
 
 	public FireCell(int xCoord, int yCoord, boolean update, int state,
 			double thresholdValue) {
-		myCoordinates = new int[2];
 		myCoordinates[0] = xCoord;
 		myCoordinates[1] = yCoord;
 		myUpdated = update;
@@ -18,7 +17,7 @@ public class FireCell extends Cell {
 	@Override
 	public void update() {
 		if (myState == TREE && myUpdated == false) {
-			myPreviousState = myState;
+			//myPreviousState = myState;
 			myUpdated = true;
 			if (anyNeighborIsBurning()) {
 				double probabilityValue = Math.random();
@@ -31,7 +30,7 @@ public class FireCell extends Cell {
 
 	public void update2() {
 		if (myState == BURNING && myUpdated == false) {
-			myPreviousState = myState;
+		//	myPreviousState = myState;
 			myUpdated = true;
 			myState = EMPTY;
 		}
@@ -39,14 +38,13 @@ public class FireCell extends Cell {
 
 	private boolean anyNeighborIsBurning() {
 		for (int i = 0; i < myNeighbors.size(); i++) {
-			if (myNeighbors.get(i).myState == BURNING
-					&& myNeighbors.get(i).myUpdated == false) {
+			if (myNeighbors.get(i).myState == BURNING) {
 				return true;
 			}
-			if (myNeighbors.get(i).myPreviousState == BURNING
+		/*	if (myNeighbors.get(i).myPreviousState == BURNING
 					&& myNeighbors.get(i).myUpdated == true) {
 				return true;
-			}
+			}*/
 		}
 		return false;
 	}
