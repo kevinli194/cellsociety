@@ -55,6 +55,7 @@ public class CellViewer {
 	private Button myStep = new Button("Step");
 	private Button myLastClicked = null;
 
+	private GridPane[][] myViewingGrid;
 	private Cell[][] myGrid;
 
 	// Stores File object .XML
@@ -129,8 +130,10 @@ public class CellViewer {
 	private void addIndividualCells() {
 		disableButtons(false);
 		myGridPane = new GridPane();
+		
+		myViewingGrid =  new GridPane[myGameParams.gridXSize][myGameParams.gridYSize];
 		myBorderPane.setCenter(myGridPane);
-
+		
 		for (int row = 0; row < myGameParams.gridXSize; row++) {
 			for (int col = 0; col < myGameParams.gridYSize; col++) {
 				GridPane square = new GridPane();
@@ -138,6 +141,7 @@ public class CellViewer {
 
 				square.setStyle("-fx-background-color: " + POSSIBLE_COLORS[cell.getState()] + ";");
 				myGridPane.add(square, col, row);
+				myViewingGrid[row][col] = square;
 			}
 		}
 		// Creates border for each cell
@@ -218,16 +222,6 @@ public class CellViewer {
 		hbox.getChildren().addAll(text, openButton);
 		myBorderPane.setTop(hbox);
 
-	}
-
-	private Node getNodeFromGridPane(int row, int col) {
-		for (Node node : myGridPane.getChildren()) {
-			if (GridPane.getColumnIndex(node) == col
-					&& GridPane.getRowIndex(node) == row) {
-				return node;
-			}
-		}
-		return null;
 	}
 
 	private void addButtons() {
@@ -325,7 +319,7 @@ public class CellViewer {
 	};
 
 	public KeyFrame start() {
-		return new KeyFrame(Duration.millis(1000), oneFrame);
+		return new KeyFrame(Duration.millis(1000/60), oneFrame);
 	}
 
 	private void checkFileSelectedAndSetFlags() {
@@ -348,9 +342,8 @@ public class CellViewer {
 		if (myGridSet) {
 			for (int i = 0; i < myGrid.length; i++) {
 				for (int j = 0; j < myGrid[0].length; j++) {
-					Node node = getNodeFromGridPane(i, j);
 					Cell cell = myGrid[i][j];
-					node.setStyle("-fx-background-color: "
+					myViewingGrid[i][j].setStyle("-fx-background-color: "
 							+ POSSIBLE_COLORS[cell.getState()] + ";");
 				}
 			}

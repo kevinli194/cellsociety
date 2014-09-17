@@ -23,8 +23,6 @@ public class CellWorld extends Application {
 		Scene view = myViewer.init(stage, ANIMATION_WIDTH, ANIMATION_HEIGHT);
 		stage.setScene(view);
 		stage.show();
-
-		
 	}
 	
 	public void startAnimation() {
@@ -33,13 +31,9 @@ public class CellWorld extends Application {
 		KeyFrame frame = myViewer.start();
 		animation.setCycleCount(Timeline.INDEFINITE);
 		animation.getKeyFrames().add(frame);
-
-		
 	}
 
-
 	private void getScreenBounds() {
-
 		Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds(); 
 		ANIMATION_HEIGHT =(int) (screenBounds.getHeight()/1.1); 
 		ANIMATION_WIDTH = (int) (screenBounds.getWidth()/1.7);
