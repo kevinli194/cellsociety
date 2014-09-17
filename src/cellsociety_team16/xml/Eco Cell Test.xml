@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<simulation>
+	<simulationMode>Seg</simulationMode>
+	<gridXSize> 5 </gridXSize>
+	<gridYSize> 5 </gridYSize>
+	<logicThreshold> .8 </logicThreshold>
+	<cell>
+		<state> FISH </state>
+		<x> 2 </x>
+		<y> 1 </y>
+	</cell>
+	<cell>
+		<state> SHARK </state>
+		<x> 2 </x>
+		<y> 2 </y>
+	</cell>
+	<cell>
+		<state> FISH </state>
+		<x> 2 </x>
+		<y> 3 </y>
+	</cell>
+	
+</simulation>

@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<simulation>
+	<simulationMode>GoL</simulationMode>
+	<gridXSize> 5 </gridXSize>
+	<gridYSize> 5 </gridYSize>
+	<thresholdValue> .8 </thresholdValue>
+	<cell>
+		<state> ALIVE </state>
+		<x> 2 </x>
+		<y> 1 </y>
+	</cell>
+	<cell>
+		<state> ALIVE </state>
+		<x> 2 </x>
+		<y> 2 </y>
+	</cell>
+	<cell>
+		<state> ALIVE </state>
+		<x> 2 </x>
+		<y> 3 </y>
+	</cell>
+	
+</simulation>
