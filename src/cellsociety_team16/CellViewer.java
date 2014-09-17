@@ -112,7 +112,7 @@ public class CellViewer {
 
 	private void generateManager() {
 		for (int i = 0; i < myAllCellManagers.length; i++) {
-			if (myAllCellManagers[i].getClass().getName().equals(CELL_MANAGERS_PACKAGE + "." + myGameParams.simulationMode + "CellManager")){
+			if (myAllCellManagers[i].getClass().getName().toLowerCase().equals(CELL_MANAGERS_PACKAGE + "." + myGameParams.simulationMode.toLowerCase() + "cellmanager")){
 				myCellManager = myAllCellManagers[i];
 				return;		
 			}
