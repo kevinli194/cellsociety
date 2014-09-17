@@ -2,6 +2,8 @@ package cellsociety_team16;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -63,11 +65,25 @@ public class CellViewer {
 	private BorderPane myBorderPane;
 
 	private CellManager myCellManager;
+
+	/**
+	 * THIS CHANGES IF THE CELL MANAGERS AND CORRESPONDING CELL CLASSES MOVE
+	 * TO A DIFFERENT PACKAGE
+	 */
+	private static final String CELL_MANAGERS_PACKAGE = "parent";
+
+	/**
+	 * ADD NEW CELL MANAGERS TO THE BELOW ARRAY FOR EXTENSIBILITY
+	 * 
+	 */
+	private CellManager [] myAllCellManagers = { new EcoCellManager(), new FireCellManager(),
+			new GoLCellManager(),new SegCellManager()};
+
 	private Timeline myAnimation = new Timeline();
 	private static final String[] POSSIBLE_COLORS = { "white", "red", "blue" };
 	private final FileChooser fileChooser = new FileChooser();
 	private final Button openButton = new Button("...");
-	private final ComboBox<String> speedOptions = new ComboBox<String>();
+	private final ComboBox<String> speedSelected = new ComboBox<String>();
 	private int myHeight;
 
 	public CellViewer(Timeline animation, CellWorld cellWorld) {
@@ -85,11 +101,6 @@ public class CellViewer {
 		// myGridPane = new GridPane();
 		myXMLParser = new XMLParsing();
 
-		/*
-		 * ***HERE IS WHAT NEEDS TO BE CHANGED****
-		 */
-		generateManager();
-
 		// Border Pane holds the scene graph
 		Scene scene = new Scene(myBorderPane, width, height);
 		addFileSelector(stage);
@@ -99,20 +110,13 @@ public class CellViewer {
 		return scene;
 	}
 
-	// the generateManager() class should chose manager based on simulation
-	// mode. Don't know where to best put the call to the function. Where is
-	// myGameParams initialized for usage.
 	private void generateManager() {
-		/*
-		 * if (myGameParams.simulationMode == "FIRE"){ myCellManager = new
-		 * FireCellManager(); } if (myGameParams.simulationMode == "SEG"){
-		 * myCellManager = new SegCellManager(); } if
-		 * (myGameParams.simulationMode == "ECO"){ myCellManager = new
-		 * EcoCellManager(); }
-		 */
-		// if (myGameParams.simulationMode == "GoL"){
-		myCellManager = new GoLCellManager();
-		// }
+		for (int i = 0; i < myAllCellManagers.length; i++) {
+			if (myAllCellManagers[i].getClass().getName().equals(CELL_MANAGERS_PACKAGE + "." + myGameParams.simulationMode + "CellManager")){
+				myCellManager = myAllCellManagers[i];
+				return;		
+			}
+		}
 	}
 
 	private void disableButtons(boolean disable) {
@@ -132,14 +136,12 @@ public class CellViewer {
 				GridPane square = new GridPane();
 				Cell cell = myGrid[row][col];
 
-				square.setStyle("-fx-background-color: "
-						+ POSSIBLE_COLORS[cell.getState()] + ";");
+				square.setStyle("-fx-background-color: " + POSSIBLE_COLORS[cell.getState()] + ";");
 				myGridPane.add(square, col, row);
 			}
 		}
 		// Creates border for each cell
-		myGridPane
-				.setStyle("-fx-background-color: black;-fx-hgap: 1; -fx-vgap: 1;");
+		myGridPane.setStyle("-fx-background-color: black;-fx-hgap: 1; -fx-vgap: 1;");
 	}
 
 	private void addGridConstraints() {
@@ -183,8 +185,8 @@ public class CellViewer {
 					dialog.initOwner(stage);
 					VBox textBox = new VBox();
 					textBox.getChildren()
-							.add(new Text(
-									"You haven't selected an XML file.\nPlease select one."));
+					.add(new Text(
+							"You haven't selected an XML file.\nPlease select one."));
 					Scene dialogScene = new Scene(textBox, 500, 100);
 					dialog.setScene(dialogScene);
 					dialog.show();
@@ -200,6 +202,7 @@ public class CellViewer {
 						e1.printStackTrace();
 					}
 					myAnimation.stop();
+					generateManager();
 					myGrid = myCellManager.initialize(
 							myGameParams.simulationMode,
 							myGameParams.gridXSize, myGameParams.gridYSize,
@@ -234,11 +237,11 @@ public class CellViewer {
 
 		Text speed = new Text("Speed");
 
-		speedOptions.getItems()
-				.addAll(VERY_SLOW, SLOW, NORMAL, FAST, VERY_FAST);
+		speedSelected.getItems()
+		.addAll(VERY_SLOW, SLOW, NORMAL, FAST, VERY_FAST);
 
 		// By default set this to normal speed
-		speedOptions.setValue(NORMAL);
+		speedSelected.setValue(NORMAL);
 
 		// Adding buttons to vertical box. This could have been cleaner with an
 		// array of Buttons but from
@@ -249,7 +252,7 @@ public class CellViewer {
 		vbox.getChildren().add(myStep);
 
 		vbox.getChildren().add(speed);
-		vbox.getChildren().add(speedOptions);
+		vbox.getChildren().add(speedSelected);
 
 		myBorderPane.setLeft(vbox);
 
@@ -355,22 +358,12 @@ public class CellViewer {
 	}
 
 	private void checkSpeedSelection() {
-		if (speedOptions.getValue().equals(VERY_SLOW)) {
-			myAnimation.setRate(0.25);
-		} else {
-			if ((speedOptions.getValue().equals(SLOW))) {
-				myAnimation.setRate(0.5);
-			} else {
-				if ((speedOptions.getValue().equals(NORMAL))) {
-					myAnimation.setRate(1.0);
-
-				} else {
-					if ((speedOptions.getValue().equals(FAST))) {
-						myAnimation.setRate(2.0);
-					} else {
-						myAnimation.setRate(4.0);
-					}
-				}
+		ArrayList<String> possibleSpeeds = new ArrayList<String>();
+		Collections.addAll(possibleSpeeds, VERY_SLOW, SLOW, NORMAL, FAST, VERY_FAST);
+		for (int i = 0; i < possibleSpeeds.size(); i++) {
+			if (speedSelected.getValue().equals(possibleSpeeds.get(i))){
+				myAnimation.setRate(0.25*(i+1));
+				return;
 			}
 		}
 	}

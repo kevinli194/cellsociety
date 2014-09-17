@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <simulation>
-	<simulationMode>FIRE</simulationMode>
+	<simulationMode>Fire</simulationMode>
 	<gridXSize> 4 </gridXSize>
 	<gridYSize> 4 </gridYSize>
 	<logicThreshold> .8 </logicThreshold>
