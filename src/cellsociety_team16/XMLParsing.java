@@ -34,6 +34,7 @@ public class XMLParsing {
 		igp.simulationMode = valueFromTagElement(doc, "simulationMode");
 		igp.gridXSize = Integer.parseInt(valueFromTagElement(doc, "gridXSize").replaceAll("\\s", ""));
 		igp.gridYSize = Integer.parseInt(valueFromTagElement(doc, "gridYSize").replaceAll("\\s", ""));
+		igp.thresholdValue = Double.parseDouble(valueFromTagElement(doc, "thresholdValue").replaceAll("\\s", ""));
 
 		NodeList nList = doc.getElementsByTagName("cell");
 		for (int temp = 0; temp < nList.getLength(); temp++)

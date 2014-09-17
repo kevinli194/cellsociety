@@ -5,9 +5,9 @@ import java.util.ArrayList;
 public class EcoCellManager extends CellManager {
 
 	@Override
-	protected void makeNewCell(int i, int j) {
+	protected void makeNewCell(int i, int j, double thresholdValue) {
 		// TODO Auto-generated method stub
-		myGrid[i][j] = new EcoCell(i, j, true, 0, 0); // LAST PARAMETER needs to be the threshold value
+		myGrid[i][j] = new EcoCell(i, j, true, 0, (int) thresholdValue);
 	}
 
 	@Override

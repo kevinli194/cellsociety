@@ -4,6 +4,7 @@ public class FireCell extends Cell {
 	private static final int EMPTY = 0;
 	private static final int TREE = 1;
 	private static final int BURNING = 2;
+	
 
 	public FireCell(int xCoord, int yCoord, boolean update, int state,
 			double thresholdValue) {

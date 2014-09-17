@@ -172,7 +172,7 @@ public class CellViewer {
 							}
 							myAnimation.stop();
 							myGrid = myCellManager.initialize(myGameParams.simulationMode, myGameParams.gridXSize,
-									myGameParams.gridYSize, myGameParams.initialCells);
+									myGameParams.gridYSize, myGameParams.thresholdValue, myGameParams.initialCells);
 							addIndividualCells();
 							addGridConstraints();
 							myCellWorld.startAnimation();
@@ -257,7 +257,7 @@ public class CellViewer {
 					public void handle(final ActionEvent e) {
 						myAnimation.stop();
 						myGrid = myCellManager.initialize(myGameParams.simulationMode, myGameParams.gridXSize,
-								myGameParams.gridYSize, myGameParams.initialCells);
+								myGameParams.gridYSize, myGameParams.thresholdValue, myGameParams.initialCells);
 						addIndividualCells();
 						addGridConstraints();
 						myCellWorld.startAnimation();

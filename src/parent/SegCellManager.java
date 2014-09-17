@@ -5,9 +5,9 @@ import java.util.ArrayList;
 public class SegCellManager extends CellManager {
 
 	@Override
-	protected void makeNewCell(int i, int j) {
+	protected void makeNewCell(int i, int j, double thresholdValue) {
 		// TODO Auto-generated method stub
-		myGrid[i][j] = new SegCell(i, j, true, 0, this, 0);
+		myGrid[i][j] = new SegCell(i, j, true, 0, this, thresholdValue);
 	}
 
 	@Override
