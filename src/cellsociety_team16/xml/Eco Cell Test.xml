@@ -1,8 +1,9 @@
 <?xml version="1.0"?>
 <simulation>
-	<simulationMode>Seg</simulationMode>
-	<gridXSize> 5 </gridXSize>
-	<gridYSize> 5 </gridYSize>
+
+	<simulationMode>Eco</simulationMode>
+	<gridXSize> 50 </gridXSize>
+	<gridYSize> 50 </gridYSize>
 	<thresholdValue> .8 </thresholdValue>
 	<cell>
 		<state> FISH </state>
