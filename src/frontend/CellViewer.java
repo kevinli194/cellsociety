@@ -86,7 +86,7 @@ public class CellViewer {
 			new GoLSimulation(),new SegSimulation()};
 
 	private Timeline myAnimation = new Timeline();
-	private static final String[] POSSIBLE_COLORS = { "white", "red", "blue" };
+	private String[] myColors;
 	private final FileChooser fileChooser = new FileChooser();
 	private final Button openButton = new Button("...");
 	private final ComboBox<String> speedSelected = new ComboBox<String>();
@@ -120,6 +120,7 @@ public class CellViewer {
 		for (int i = 0; i < mySimulations.length; i++) {
 			if (mySimulations[i].getClass().getName().toLowerCase().equals(SIMULATION_PACKAGE + "." + myGameParams.simulationMode.toLowerCase() + CLASS_SUFFIX)){
 				myCellSimulation = mySimulations[i];
+				myColors = myCellSimulation.myColors;
 				return;		
 			}
 		}
@@ -144,7 +145,7 @@ public class CellViewer {
 				GridPane square = new GridPane();
 				Cell cell = myCellsGrid[row][col];
 
-				square.setStyle("-fx-background-color: " + POSSIBLE_COLORS[cell.getState()] + ";");
+				square.setStyle("-fx-background-color: " + myColors[cell.getState()] + ";");
 				myGridPane.add(square, col, row);
 				// Storing individual cells in this array (easy to access later to update)
 				myViewingGrid[row][col] = square;
@@ -367,7 +368,7 @@ public class CellViewer {
 				for (int j = 0; j < myCellsGrid[0].length; j++) {
 					Cell cell = myCellsGrid[i][j];
 					myViewingGrid[i][j].setStyle("-fx-background-color: "
-							+ POSSIBLE_COLORS[cell.getState()] + ";");
+							+ myColors[cell.getState()] + ";");
 				}
 			}
 		}

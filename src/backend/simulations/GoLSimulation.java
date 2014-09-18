@@ -72,9 +72,9 @@ public class GoLSimulation extends Simulation {
 	@Override
 	protected void initializeColor() {
 		myColors = new String[3];
-		myColors[0] = "BLUE";
-		myColors[1] = "WHITE";
-		myColors[2] = "BLACK";
+		myColors[0] = "blue";
+		myColors[1] = "white";
+		myColors[2] = "black";
 		
 	}
 }
