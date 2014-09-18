@@ -6,13 +6,10 @@ import backend.cells.FireCell;
 import backend.xml.InitialCell;
 
 public class FireSimulation extends Simulation {
-	public String[] myColors = {"white","green","red"};
+
 	@Override
 	protected void makeNewCell(int i, int j, double thresholdValue) {
-		myGrid[i][j] = new FireCell(i, j, true, 0, thresholdValue); // last
-																	// parameter
-																	// should
-		// be the threshold
+		myGrid[i][j] = new FireCell(i, j, true, 0, thresholdValue); 
 	}
 
 	@Override
@@ -69,5 +66,14 @@ public class FireSimulation extends Simulation {
 
 			}
 		}
+	}
+
+	@Override
+	protected void initializeColor() {
+		myColors = new String[3];
+		myColors[0] = "white";
+		myColors[1] = "green";
+		myColors[2] = "red";
+		
 	}
 }

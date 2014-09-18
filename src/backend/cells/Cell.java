@@ -18,8 +18,10 @@ public abstract class Cell {
 	protected double myThresholdValue;
 
 	/*
-	 * Method that adds a cell to the arrayList myNeighbors if it is found to be
-	 * a neighbor in the simulation.
+	 * Method that adds a cell to the arrayList myNeighbors.
+	 * 
+	 * @param neighbor a cell that constitutes as a neighbor as defined by the
+	 * simulation.
 	 */
 	public void addNeighbor(Cell neighbor) {
 		myNeighbors.add(neighbor);
