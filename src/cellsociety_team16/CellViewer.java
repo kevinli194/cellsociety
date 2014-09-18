@@ -40,34 +40,34 @@ public class CellViewer {
 	private static final String NORMAL = "Normal";
 	private static final String SLOW = "Slow";
 	private static final String VERY_SLOW = "Slower";
-
 	private InitialGameParameters myGameParams;
 	private XMLParsing myXMLParser;
 	private CellWorld myCellWorld;
 	private boolean myGridSet = false;
 	private boolean myStepClicked = false;
-
 	private boolean myFileSelected = false;
 	private Button myLastClicked = null;
-
 	// Stores the Viewing Cells displayed
 	private GridPane[][] myViewingGrid;
 	// Stores the Cell objects that are mapped 1:1 to a cell in myViewingGrid
 	private Cell[][] myCellsGrid;
-
 	// Stores File object .XML
 	private File myFile;
 	// Stores the overall Grid (consisting of individual cells)
 	private GridPane myGridPane;
 	// Border Pane holds the scene graph
 	private BorderPane myBorderPane;
-
 	private Button myReset;
 	private Button myStart;
 	private Button myStop;
 	private Button myStep;
-
 	private CellManager myCellManager;
+	private Timeline myAnimation = new Timeline();
+	private static final String[] POSSIBLE_COLORS = { "white", "red", "blue" };
+	private final FileChooser fileChooser = new FileChooser();
+	private final Button openButton = new Button("...");
+	private final ComboBox<String> speedSelected = new ComboBox<String>();
+	private int myHeight;
 
 	/**
 	 * THIS CHANGES IF THE CELL MANAGERS AND CORRESPONDING CELL CLASSES MOVE
@@ -82,13 +82,6 @@ public class CellViewer {
 	private CellManager [] myAllCellManagers = { new EcoCellManager(), new FireCellManager(),
 			new GoLCellManager(),new SegCellManager()};
 
-	private Timeline myAnimation = new Timeline();
-	private static final String[] POSSIBLE_COLORS = { "white", "red", "blue" };
-	private final FileChooser fileChooser = new FileChooser();
-	private final Button openButton = new Button("...");
-	private final ComboBox<String> speedSelected = new ComboBox<String>();
-	private int myHeight;
-
 	public CellViewer(Timeline animation, CellWorld cellWorld) {
 		myAnimation = animation;
 		myCellWorld = cellWorld;
@@ -100,11 +93,9 @@ public class CellViewer {
 
 	public Scene init(Stage stage, int width, int height) {
 		setHeight(height);
-		myBorderPane = new BorderPane();
-		// myGridPane = new GridPane();
-		myXMLParser = new XMLParsing();
-
 		// Border Pane holds the scene graph
+		myBorderPane = new BorderPane();
+		myXMLParser = new XMLParsing();
 		Scene scene = new Scene(myBorderPane, width, height);
 		addFileSelector(stage);
 		addButtons();
@@ -113,9 +104,10 @@ public class CellViewer {
 		return scene;
 	}
 
-	private void generateManager() {
+	private void createManager() {
 		for (int i = 0; i < myAllCellManagers.length; i++) {
-			if (myAllCellManagers[i].getClass().getName().toLowerCase().equals(CELL_MANAGERS_PACKAGE + "." + myGameParams.simulationMode.toLowerCase() + "cellmanager")){
+			if (myAllCellManagers[i].getClass().getName().toLowerCase().equals(CELL_MANAGERS_PACKAGE
+					+ "." + myGameParams.simulationMode.toLowerCase() + "cellmanager")){
 				myCellManager = myAllCellManagers[i];
 				return;		
 			}
@@ -310,7 +302,7 @@ public class CellViewer {
 
 	private void resetGrid() {
 		myAnimation.stop();
-		generateManager();
+		createManager();
 		setCellsGrid();
 		addCellsToDisplay();
 		addGridConstraints();
@@ -325,14 +317,14 @@ public class CellViewer {
 			checkFileSelectedAndSetFlags();
 			if ((myLastClicked.equals(myStep))) {
 				if (myStepClicked) {
-					updateGrid();
+					updateCellsGrid();
 					updateDisplay();
 					// set boolean flag to false so that step works only once
 					myStepClicked = false;
 					myAnimation.pause();
 				}
 			} else {
-				updateGrid();
+				updateCellsGrid();
 				updateDisplay();
 			}
 			checkSpeedSelection();
@@ -351,7 +343,7 @@ public class CellViewer {
 		}
 	}
 
-	private void updateGrid() {
+	private void updateCellsGrid() {
 		if (myGridSet) {
 			myCellManager.updateGrid();
 		}
