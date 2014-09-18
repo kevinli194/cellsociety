@@ -120,7 +120,6 @@ public class CellViewer {
 		for (int i = 0; i < mySimulations.length; i++) {
 			if (mySimulations[i].getClass().getName().toLowerCase().equals(SIMULATION_PACKAGE + "." + myGameParams.simulationMode.toLowerCase() + CLASS_SUFFIX)){
 				myCellSimulation = mySimulations[i];
-				
 				return;		
 			}
 		}
@@ -136,10 +135,10 @@ public class CellViewer {
 	private void addCellsToDisplay() {
 		disableButtons(false);
 		myGridPane = new GridPane();
-
 		myViewingGrid =  new GridPane[myGameParams.gridXSize][myGameParams.gridYSize];
+		myColors = myCellSimulation.myColors;
 		myBorderPane.setCenter(myGridPane);
-
+		
 		for (int row = 0; row < myGameParams.gridXSize; row++) {
 			for (int col = 0; col < myGameParams.gridYSize; col++) {
 				GridPane square = new GridPane();
