@@ -1,9 +1,54 @@
 <?xml version="1.0"?>
 <simulation>
 	<simulationMode>Seg</simulationMode>
-	<gridXSize> 5 </gridXSize>
-	<gridYSize> 5 </gridYSize>
+	<gridXSize>4</gridXSize>
+	<gridYSize>4</gridYSize>
 	<thresholdValue> .8 </thresholdValue>
+	<cell>
+		<state> X </state>
+		<x> 0 </x>
+		<y> 0 </y>
+	</cell>
+	<cell>
+		<state> O </state>
+		<x> 0 </x>
+		<y> 1 </y>
+	</cell>
+	<cell>
+		<state> X </state>
+		<x> 0 </x>
+		<y> 2 </y>
+	</cell>
+	<cell>
+		<state> O </state>
+		<x> 0 </x>
+		<y> 3 </y>
+	</cell>
+	<cell>
+		<state> O </state>
+		<x> 1 </x>
+		<y> 0 </y>
+	</cell>
+	<cell>
+		<state> X </state>
+		<x> 1 </x>
+		<y> 1 </y>
+	</cell>
+	<cell>
+		<state> O </state>
+		<x> 1 </x>
+		<y> 2 </y>
+	</cell>
+	<cell>
+		<state> X </state>
+		<x> 1 </x>
+		<y> 3 </y>
+	</cell>
+	<cell>
+		<state> O </state>
+		<x> 2 </x>
+		<y> 0 </y>
+	</cell>
 	<cell>
 		<state> X </state>
 		<x> 2 </x>
@@ -16,13 +61,22 @@
 	</cell>
 	<cell>
 		<state> X </state>
-		<x> 2 </x>
-		<y> 3 </y>
+		<x> 3 </x>
+		<y> 0 </y>
 	</cell>
 	<cell>
 		<state> O </state>
-		<x> 2 </x>
-		<y> 4 </y>
+		<x> 3 </x>
+		<y> 1 </y>
 	</cell>
-	
+	<cell>
+		<state> X </state>
+		<x> 3 </x>
+		<y> 2 </y>
+	</cell>
+	<cell>
+		<state> O </state>
+		<x> 3 </x>
+		<y> 3 </y>
+	</cell>
 </simulation>

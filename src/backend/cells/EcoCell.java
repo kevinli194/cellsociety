@@ -23,7 +23,6 @@ public class EcoCell extends Cell {
 	 * This method is for updating the sharks
 	 */
 	public void update() {
-		// TODO Auto-generated method stub
 		if(myState == SHARK && myUpdated == false)
 		{
 			myUpdated = true;
@@ -31,16 +30,20 @@ public class EcoCell extends Cell {
 			Cell emptyNeighbor = findNeighborOfType(EMPTY);
 			if(fishNeighbor != null)
 			{
+				System.out.print("Found a fish! ");
 				updateNeighbor(fishNeighbor, EMPTY);
 			}
-			else if(emptyNeighbor != null)
+			if(emptyNeighbor != null)
 			{
 				updateNeighbor(emptyNeighbor, SHARK);
 				breed(SHARK);
 			}
+			myTurnsAlive++;
 		}
-		
-		myTurnsAlive++;
+		else
+		{
+			myTurnsAlive = 0;
+		}
 	}
 	
 	/*
@@ -56,9 +59,13 @@ public class EcoCell extends Cell {
 				updateNeighbor(emptyNeighbor, FISH);
 				breed(FISH);
 			}
+
+			myTurnsAlive++;
 		}
-		
-		myTurnsAlive++;
+		else
+		{
+			myTurnsAlive = 0;
+		}
 	}
 	
 	private void breed(int stateID)
@@ -74,6 +81,8 @@ public class EcoCell extends Cell {
 	{
 		neighbor.myPreviousState = neighbor.myState;
 		neighbor.myState = state;
+		neighbor.myUpdated = true;
+		
 	}
 	
 	private Cell findNeighborOfType(int stateID)

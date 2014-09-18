@@ -51,16 +51,16 @@ public class EcoSimulation extends Simulation {
 		for (int i = 0; i < myGrid.length; i++) {
 			for (int j = 0; j < myGrid[0].length; j++) {
 				((EcoCell) myGrid[i][j]).update2();
-
 			}
 		}
 
 		for (int i = 0; i < myGrid.length; i++) {
 			for (int j = 0; j < myGrid[0].length; j++) {
 				myGrid[i][j].reset();
-
 			}
 		}
+		
+		System.out.println();
 	}
 
 	@Override
