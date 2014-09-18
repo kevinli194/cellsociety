@@ -22,7 +22,6 @@ import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -49,14 +48,12 @@ public class CellViewer {
 	private boolean myStepClicked = false;
 
 	private boolean myFileSelected = false;
-	private Button myReset = new Button("Reset");
-	private Button myStart = new Button("Start/Resume");
-	private Button myStop = new Button("Stop/Pause");
-	private Button myStep = new Button("Step");
 	private Button myLastClicked = null;
 
+	// Stores the Viewing Cells displayed
 	private GridPane[][] myViewingGrid;
-	private Cell[][] myGrid;
+	// Stores the Cell objects that are mapped 1:1 to a cell in myViewingGrid
+	private Cell[][] myCellsGrid;
 
 	// Stores File object .XML
 	private File myFile;
@@ -64,6 +61,11 @@ public class CellViewer {
 	private GridPane myGridPane;
 	// Border Pane holds the scene graph
 	private BorderPane myBorderPane;
+
+	private Button myReset;
+	private Button myStart;
+	private Button myStop;
+	private Button myStep;
 
 	private CellManager myCellManager;
 
@@ -127,20 +129,21 @@ public class CellViewer {
 		myStep.setDisable(disable);
 	}
 
-	private void addIndividualCells() {
+	private void addCellsToDisplay() {
 		disableButtons(false);
 		myGridPane = new GridPane();
-		
+
 		myViewingGrid =  new GridPane[myGameParams.gridXSize][myGameParams.gridYSize];
 		myBorderPane.setCenter(myGridPane);
-		
+
 		for (int row = 0; row < myGameParams.gridXSize; row++) {
 			for (int col = 0; col < myGameParams.gridYSize; col++) {
 				GridPane square = new GridPane();
-				Cell cell = myGrid[row][col];
+				Cell cell = myCellsGrid[row][col];
 
 				square.setStyle("-fx-background-color: " + POSSIBLE_COLORS[cell.getState()] + ";");
 				myGridPane.add(square, col, row);
+				// Storing individual cells in this array (easy to access later to update)
 				myViewingGrid[row][col] = square;
 			}
 		}
@@ -182,41 +185,13 @@ public class CellViewer {
 				fileChooser.getExtensionFilters().addAll(
 						new ExtensionFilter("XML Files", "*.xml"));
 				myFile = fileChooser.showOpenDialog(stage);
-				if (myFile == null) {
-					System.out.println("No file selected");
-					Stage dialog = new Stage();
-					dialog.initModality(Modality.APPLICATION_MODAL);
-					dialog.initOwner(stage);
-					VBox textBox = new VBox();
-					textBox.getChildren()
-					.add(new Text(
-							"You haven't selected an XML file.\nPlease select one."));
-					Scene dialogScene = new Scene(textBox, 500, 100);
-					dialog.setScene(dialogScene);
-					dialog.show();
-
+				if (myFile != null) {
+					parseXML();
 				} else {
-					try {
-						myGameParams = myXMLParser
-								.parseInitialCellsFromFile(myFile);
-						myFileSelected = true;
-
-					} catch (ParserConfigurationException | SAXException
-							| IOException e1) {
-						e1.printStackTrace();
-					}
-					myAnimation.stop();
-					generateManager();
-					myGrid = myCellManager.initialize(
-							myGameParams.simulationMode,
-							myGameParams.gridXSize, myGameParams.gridYSize,
-							myGameParams.thresholdValue,
-							myGameParams.initialCells);
-					addIndividualCells();
-					addGridConstraints();
-					myCellWorld.startAnimation();
-
+					fileNotSelected(stage);
 				}
+				resetGrid();
+
 			}
 		});
 		hbox.getChildren().addAll(text, openButton);
@@ -224,30 +199,63 @@ public class CellViewer {
 
 	}
 
-	private void addButtons() {
+	private void fileNotSelected(Stage stage) {
+		// Create new stage for separate dialog
+		Stage dialog = new Stage();
+		dialog.initModality(Modality.APPLICATION_MODAL);
+		dialog.initOwner(stage);
+		VBox textBox = new VBox();
+		textBox.getChildren()
+		.add(new Text(
+				"You haven't selected an XML file.\nPlease select one."));
+		Scene dialogScene = new Scene(textBox, 500, 100);
+		dialog.setScene(dialogScene);
+		dialog.show();
+	}
+
+
+	private void parseXML() {
+		try {
+			myGameParams = myXMLParser
+					.parseInitialCellsFromFile(myFile);
+			myFileSelected = true;
+
+		} catch (ParserConfigurationException | SAXException
+				| IOException e1) {
+			e1.printStackTrace();
+		}
+	} 
+
+	private VBox createButtonsVBox() {
+
 		VBox vbox = new VBox();
 		vbox.setSpacing(myHeight / 40);
 		vbox.setPadding(new Insets(myHeight / 4, 0, 0, 2));
 
-		Text speed = new Text("Speed");
-
-		speedSelected.getItems()
-		.addAll(VERY_SLOW, SLOW, NORMAL, FAST, VERY_FAST);
-
-		// By default set this to normal speed
-		speedSelected.setValue(NORMAL);
-
-		// Adding buttons to vertical box. This could have been cleaner with an
-		// array of Buttons but from
-		// a readability standpoint, this is probably better
 		vbox.getChildren().add(myReset);
 		vbox.getChildren().add(myStart);
 		vbox.getChildren().add(myStop);
 		vbox.getChildren().add(myStep);
-
-		vbox.getChildren().add(speed);
+		vbox.getChildren().add(new Text("Speed"));
 		vbox.getChildren().add(speedSelected);
 
+		return vbox;
+	}
+	
+	private void addButtons() {
+
+		speedSelected.getItems()
+		.addAll(VERY_SLOW, SLOW, NORMAL, FAST, VERY_FAST);
+
+		// By default set speedSelected to normal speed
+		speedSelected.setValue(NORMAL);
+
+		myReset = new Button("Reset");
+		myStart = new Button("Start/Resume");
+		myStop = new Button("Stop/Pause");
+		myStep = new Button("Step");
+		
+		VBox vbox = createButtonsVBox();
 		myBorderPane.setLeft(vbox);
 
 	}
@@ -275,14 +283,7 @@ public class CellViewer {
 		myReset.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(final ActionEvent e) {
-				myAnimation.stop();
-				myGrid = myCellManager.initialize(myGameParams.simulationMode,
-						myGameParams.gridXSize, myGameParams.gridYSize,
-						myGameParams.thresholdValue, myGameParams.initialCells);
-				addIndividualCells();
-				addGridConstraints();
-				myCellWorld.startAnimation();
-				myAnimation.pause();
+				resetGrid();
 			}
 
 		});
@@ -299,6 +300,25 @@ public class CellViewer {
 		});
 	}
 
+	private void setCellsGrid() {
+		myCellsGrid = myCellManager.initialize(
+				myGameParams.simulationMode,
+				myGameParams.gridXSize, myGameParams.gridYSize,
+				myGameParams.thresholdValue,
+				myGameParams.initialCells);
+	}
+
+	private void resetGrid() {
+		myAnimation.stop();
+		generateManager();
+		setCellsGrid();
+		addCellsToDisplay();
+		addGridConstraints();
+		myCellWorld.startAnimation();
+		myAnimation.pause();
+	}
+	
+	
 	private EventHandler<ActionEvent> oneFrame = new EventHandler<ActionEvent>() {
 		@Override
 		public void handle(ActionEvent evt) {
@@ -307,6 +327,7 @@ public class CellViewer {
 				if (myStepClicked) {
 					updateGrid();
 					updateDisplay();
+					// set boolean flag to false so that step works only once
 					myStepClicked = false;
 					myAnimation.pause();
 				}
@@ -337,12 +358,11 @@ public class CellViewer {
 
 	}
 
-	// Currently updating display by picking a random color;
 	private void updateDisplay() {
 		if (myGridSet) {
-			for (int i = 0; i < myGrid.length; i++) {
-				for (int j = 0; j < myGrid[0].length; j++) {
-					Cell cell = myGrid[i][j];
+			for (int i = 0; i < myCellsGrid.length; i++) {
+				for (int j = 0; j < myCellsGrid[0].length; j++) {
+					Cell cell = myCellsGrid[i][j];
 					myViewingGrid[i][j].setStyle("-fx-background-color: "
 							+ POSSIBLE_COLORS[cell.getState()] + ";");
 				}
