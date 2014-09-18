@@ -6,6 +6,7 @@ import backend.cells.EcoCell;
 import backend.xml.InitialCell;
 
 public class EcoSimulation extends Simulation {
+	public String[] myColors = { "blue", "yellow", "gray" };
 
 	@Override
 	protected void makeNewCell(int i, int j, double thresholdValue) {
@@ -61,15 +62,6 @@ public class EcoSimulation extends Simulation {
 
 			}
 		}
-	}
-
-	@Override
-	protected void initializeColor() {
-		super.myColors = new String[3];
-		myColors[0] = "BLUE";
-		myColors[1] = "YELLOW";
-		myColors[2] = "GRAY";
-
 	}
 
 }
