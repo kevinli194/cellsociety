@@ -1,4 +1,4 @@
-package cellsociety_team16;
+package frontend;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,12 +9,14 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
-import parent.Cell;
-import parent.CellManager;
-import parent.SegCellManager;
-import parent.EcoCellManager;
-import parent.FireCellManager;
-import parent.GoLCellManager;
+import backend.cells.Cell;
+import backend.simulations.EcoSimulation;
+import backend.simulations.FireSimulation;
+import backend.simulations.GoLSimulation;
+import backend.simulations.SegSimulation;
+import backend.simulations.Simulation;
+import backend.xml.InitialGameParameters;
+import backend.xml.XMLParsing;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -67,20 +69,21 @@ public class CellViewer {
 	private Button myStop;
 	private Button myStep;
 
-	private CellManager myCellManager;
+	private Simulation myCellSimulation;
 
 	/**
-	 * THIS CHANGES IF THE CELL MANAGERS AND CORRESPONDING CELL CLASSES MOVE
+	 * THIS CHANGES IF THE SIMULATION AND CORRESPONDING CELL CLASS MOVE
 	 * TO A DIFFERENT PACKAGE
 	 */
-	private static final String CELL_MANAGERS_PACKAGE = "parent";
+	private static final String SIMULATION_PACKAGE = "backend.simulations";
+	private static final String CLASS_SUFFIX = "simulation";
 
 	/**
-	 * ADD NEW CELL MANAGERS TO THE BELOW ARRAY FOR EXTENSIBILITY
+	 * ADD NEW SIMULATION TO THE BELOW ARRAY FOR EXTENSIBILITY
 	 * 
 	 */
-	private CellManager [] myAllCellManagers = { new EcoCellManager(), new FireCellManager(),
-			new GoLCellManager(),new SegCellManager()};
+	private Simulation [] mySimulations = { new EcoSimulation(), new FireSimulation(),
+			new GoLSimulation(),new SegSimulation()};
 
 	private Timeline myAnimation = new Timeline();
 	private static final String[] POSSIBLE_COLORS = { "white", "red", "blue" };
@@ -113,10 +116,10 @@ public class CellViewer {
 		return scene;
 	}
 
-	private void generateManager() {
-		for (int i = 0; i < myAllCellManagers.length; i++) {
-			if (myAllCellManagers[i].getClass().getName().toLowerCase().equals(CELL_MANAGERS_PACKAGE + "." + myGameParams.simulationMode.toLowerCase() + "cellmanager")){
-				myCellManager = myAllCellManagers[i];
+	private void generateSimulation() {
+		for (int i = 0; i < mySimulations.length; i++) {
+			if (mySimulations[i].getClass().getName().toLowerCase().equals(SIMULATION_PACKAGE + "." + myGameParams.simulationMode.toLowerCase() + CLASS_SUFFIX)){
+				myCellSimulation = mySimulations[i];
 				return;		
 			}
 		}
@@ -301,7 +304,7 @@ public class CellViewer {
 	}
 
 	private void setCellsGrid() {
-		myCellsGrid = myCellManager.initialize(
+		myCellsGrid = myCellSimulation.initialize(
 				myGameParams.simulationMode,
 				myGameParams.gridXSize, myGameParams.gridYSize,
 				myGameParams.thresholdValue,
@@ -310,7 +313,7 @@ public class CellViewer {
 
 	private void resetGrid() {
 		myAnimation.stop();
-		generateManager();
+		generateSimulation();
 		setCellsGrid();
 		addCellsToDisplay();
 		addGridConstraints();
@@ -353,7 +356,7 @@ public class CellViewer {
 
 	private void updateGrid() {
 		if (myGridSet) {
-			myCellManager.updateGrid();
+			myCellSimulation.updateGrid();
 		}
 
 	}

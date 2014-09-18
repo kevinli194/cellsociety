@@ -1,4 +1,4 @@
-package parent;
+package backend.xml;
 
 public class InitialCell {
 public String myState;

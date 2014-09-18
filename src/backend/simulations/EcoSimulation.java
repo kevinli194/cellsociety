@@ -1,17 +1,21 @@
-package parent;
+package backend.simulations;
 
 import java.util.ArrayList;
 
-public class GoLCellManager extends CellManager {
+import backend.cells.EcoCell;
+import backend.xml.InitialCell;
+
+public class EcoSimulation extends Simulation {
 
 	@Override
 	protected void makeNewCell(int i, int j, double thresholdValue) {
-		myGrid[i][j] = new GoLCell(i, j, false, 1); // we should try to remove thresholdValue from here
-		// think of a better way
+		// TODO Auto-generated method stub
+		myGrid[i][j] = new EcoCell(i, j, true, 0, (int) thresholdValue);
 	}
 
 	@Override
 	protected void setNeighbors(int i, int j) {
+		// TODO Auto-generated method stub
 		if (i > 0) {
 			myGrid[i][j].addNeighbor(myGrid[i - 1][j]);
 		}
@@ -24,54 +28,48 @@ public class GoLCellManager extends CellManager {
 		if (j < myGrid[0].length - 1) {
 			myGrid[i][j].addNeighbor(myGrid[i][j + 1]);
 		}
-		if (i > 0 && j > 0) {
-			myGrid[i][j].addNeighbor(myGrid[i - 1][j - 1]);
-		}
-		if (i > 0 && j < myGrid[0].length - 1) {
-			myGrid[i][j].addNeighbor(myGrid[i - 1][j + 1]);
-		}
-		if (i < myGrid.length - 1 && j > 0) {
-			myGrid[i][j].addNeighbor(myGrid[i + 1][j - 1]);
-		}
-		if (i < myGrid.length - 1 && j < myGrid[0].length - 1) {
-			myGrid[i][j].addNeighbor(myGrid[i + 1][j + 1]);
-		}
 
 	}
 
 	@Override
 	protected void setInitialState(ArrayList<InitialCell> initialState) {
+		// TODO Auto-generated method stub
 		for (InitialCell c : initialState) {
-			// System.out.println(c.myState.compareTo("BURNING"));
-			((GoLCell) myGrid[c.myX][c.myY]).setState(c.myState.replaceAll(
+			((EcoCell) myGrid[c.myX][c.myY]).setState(c.myState.replaceAll(
 					"\\s", ""));
 		}
 	}
 
 	@Override
 	public void updateGrid() {
+		// TODO Auto-generated method stub
 		for (int i = 0; i < myGrid.length; i++) {
 			for (int j = 0; j < myGrid[0].length; j++) {
-				myGrid[i][j].update();
+				((EcoCell) myGrid[i][j]).update();
+			}
+		}
+		for (int i = 0; i < myGrid.length; i++) {
+			for (int j = 0; j < myGrid[0].length; j++) {
+				((EcoCell) myGrid[i][j]).update2();
 
 			}
-
 		}
+
 		for (int i = 0; i < myGrid.length; i++) {
 			for (int j = 0; j < myGrid[0].length; j++) {
 				myGrid[i][j].reset();
 
 			}
 		}
-
 	}
 
 	@Override
 	protected void initializeColor() {
-		myColors = new String[3];
+		super.myColors = new String[3];
 		myColors[0] = "BLUE";
-		myColors[1] = "WHITE";
-		myColors[2] = "BLACK";
-		
+		myColors[1] = "YELLOW";
+		myColors[2] = "GRAY";
+
 	}
+
 }

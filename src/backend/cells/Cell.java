@@ -1,4 +1,4 @@
-package parent;
+package backend.cells;
 
 import java.util.ArrayList;
 
@@ -23,9 +23,6 @@ public abstract class Cell {
 		if (myState != 0) {
 			myUpdated = false;
 		}
-		/*if (myState == 0){
-			myPreviousState = 0;
-		}*/
 	}
 
 	public abstract void update();

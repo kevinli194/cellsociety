@@ -1,4 +1,5 @@
-package parent;
+package backend.cells;
+
 
 public class FireCell extends Cell {
 	private static final int EMPTY = 0;

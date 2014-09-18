@@ -1,4 +1,5 @@
-package parent;
+package backend.cells;
+
 
 public class GoLCell extends Cell {
 	private static final int DEAD = 1;

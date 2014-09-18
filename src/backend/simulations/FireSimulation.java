@@ -1,8 +1,11 @@
-package parent;
+package backend.simulations;
 
 import java.util.ArrayList;
 
-public class FireCellManager extends CellManager {
+import backend.cells.FireCell;
+import backend.xml.InitialCell;
+
+public class FireSimulation extends Simulation {
 
 	@Override
 	protected void makeNewCell(int i, int j, double thresholdValue) {
