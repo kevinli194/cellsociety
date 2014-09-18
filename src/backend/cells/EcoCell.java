@@ -19,8 +19,8 @@ public class EcoCell extends Cell {
 
 	@Override
 	/*
-	 * Method containing the update logic if the state is a shark. Sharks hold priority over fish when
-	 * updating.
+	 * Method containing the update logic if the state is a shark. Sharks hold
+	 * priority over fish when updating.
 	 */
 	public void update() {
 
@@ -29,18 +29,26 @@ public class EcoCell extends Cell {
 			Cell fishNeighbor = findNeighborOfType(FISH);
 			Cell emptyNeighbor = findNeighborOfType(EMPTY);
 			if (fishNeighbor != null) {
+				System.out.print("Found a fish! ");
 				updateNeighbor(fishNeighbor, EMPTY);
-			} else if (emptyNeighbor != null) {
+			}
+			if (emptyNeighbor != null) {
+
 				updateNeighbor(emptyNeighbor, SHARK);
 				breed();
 			}
+			myTurnsAlive++;
+		} else {
+			myTurnsAlive = 0;
 		}
 
 		myTurnsAlive++;
+
 	}
 
 	/*
-	 * Method containing the update logic for fish. Fish have lower priority than shark.
+	 * Method containing the update logic for fish. Fish have lower priority
+	 * than shark.
 	 */
 	public void update2() {
 		if (myState == FISH && myUpdated == false) {
@@ -51,11 +59,16 @@ public class EcoCell extends Cell {
 				breed();
 				myTurnsAlive = 0;
 			}
+
+			myTurnsAlive++;
+		} else {
+			myTurnsAlive = 0;
 		}
 
 		myTurnsAlive++;
+
 	}
-	
+
 	/*
 	 * Method for determining whether fish/shark can breed and reproduce
 	 */
@@ -69,7 +82,10 @@ public class EcoCell extends Cell {
 	private void updateNeighbor(Cell neighbor, int state) {
 		neighbor.myPreviousState = neighbor.myState;
 		neighbor.myState = state;
-		((EcoCell)neighbor).myTurnsAlive = myTurnsAlive;
+		((EcoCell) neighbor).myTurnsAlive = myTurnsAlive;
+
+		neighbor.myUpdated = true;
+
 	}
 
 	private Cell findNeighborOfType(int stateID) {

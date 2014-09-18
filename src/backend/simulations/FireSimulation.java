@@ -9,10 +9,7 @@ public class FireSimulation extends Simulation {
 
 	@Override
 	protected void makeNewCell(int i, int j, double thresholdValue) {
-		myGrid[i][j] = new FireCell(i, j, true, 0, thresholdValue); // last
-																	// parameter
-																	// should
-		// be the threshold
+		myGrid[i][j] = new FireCell(i, j, true, 0, thresholdValue); 
 	}
 
 	@Override
@@ -74,10 +71,9 @@ public class FireSimulation extends Simulation {
 	@Override
 	protected void initializeColor() {
 		myColors = new String[3];
-		myColors[0] = "WHITE";
-		myColors[1] = "GREEN";
-		myColors[2] = "RED";
+		myColors[0] = "white";
+		myColors[1] = "green";
+		myColors[2] = "red";
 		
 	}
-
 }

@@ -6,7 +6,6 @@ import backend.cells.EcoCell;
 import backend.xml.InitialCell;
 
 public class EcoSimulation extends Simulation {
-	public String[] myColors = {"blue","yellow","gray"};
 	@Override
 	protected void makeNewCell(int i, int j, double thresholdValue) {
 		// TODO Auto-generated method stub
@@ -51,24 +50,24 @@ public class EcoSimulation extends Simulation {
 		for (int i = 0; i < myGrid.length; i++) {
 			for (int j = 0; j < myGrid[0].length; j++) {
 				((EcoCell) myGrid[i][j]).update2();
-
 			}
 		}
 
 		for (int i = 0; i < myGrid.length; i++) {
 			for (int j = 0; j < myGrid[0].length; j++) {
 				myGrid[i][j].reset();
-
 			}
 		}
+		
+		System.out.println();
 	}
 
 	@Override
 	protected void initializeColor() {
 		myColors = new String[3];
-		myColors[0] = "BLUE";
-		myColors[1] = "YELLOW";
-		myColors[2] = "GRAY";
+		myColors[0] = "blue";
+		myColors[1] = "yellow";
+		myColors[2] = "gray";
 
 	}
 

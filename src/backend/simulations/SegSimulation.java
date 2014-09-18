@@ -86,13 +86,13 @@ public class SegSimulation extends Simulation {
 		
 		return null;
 	}
-
+	
 	@Override
 	protected void initializeColor() {
 		myColors = new String[3];
-		myColors[0] = "WHITE";
-		myColors[1] = "BLACK";
-		myColors[2] = "RED";
+		myColors[0] = "white";
+		myColors[1] = "black";
+		myColors[2] = "red";
 		
 	}
 }
