@@ -8,6 +8,7 @@ import backend.xml.InitialCell;
 //double-check to see if boundaries are correct
 public abstract class Simulation {
 	protected Cell[][] myGrid;
+	public String[] myColors;
 
 	public Cell[][] initialize(String modelType, int xDimension,
 			int yDimension, double thresholdValue,
@@ -24,6 +25,7 @@ public abstract class Simulation {
 			}
 		}
 		setInitialState(initialCells);
+		initializeColor();
 		return myGrid;
 	}
 
@@ -32,6 +34,8 @@ public abstract class Simulation {
 	protected abstract void setInitialState(ArrayList<InitialCell> initialState);
 
 	protected abstract void setNeighbors(int i, int j);
+
+	protected abstract void initializeColor();
 
 	public abstract void updateGrid();
 

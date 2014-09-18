@@ -6,8 +6,8 @@ import backend.cells.Cell;
 import backend.cells.SegCell;
 import backend.xml.InitialCell;
 
+
 public class SegSimulation extends Simulation {
-	public String[] myColors = { "white", "black", "red" };
 
 	@Override
 	protected void makeNewCell(int i, int j, double thresholdValue) {
@@ -69,19 +69,30 @@ public class SegSimulation extends Simulation {
 			}
 		}
 	}
-
-	public Cell findFirstEmptyCell() {
-		for (int i = 0; i < myGrid.length; i++) {
-			for (int j = 0; j < myGrid[i].length; j++) {
+	
+	public Cell findFirstEmptyCell()
+	{
+		for(int i = 0; i < myGrid.length; i++)
+		{
+			for(int j = 0; j < myGrid[i].length; j++)
+			{
 				Cell currentCell = myGrid[i][j];
-				if (currentCell.getState() == 0) // EMPTY
+				if(currentCell.getState() == 0) // EMPTY
 				{
 					return currentCell;
 				}
 			}
 		}
-
+		
 		return null;
 	}
 
+	@Override
+	protected void initializeColor() {
+		myColors = new String[3];
+		myColors[0] = "WHITE";
+		myColors[1] = "BLACK";
+		myColors[2] = "RED";
+		
+	}
 }
