@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <simulation>
+
 	<simulationMode>Eco</simulationMode>
 	<gridXSize> 50 </gridXSize>
 	<gridYSize> 50 </gridYSize>
