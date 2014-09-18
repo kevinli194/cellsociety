@@ -120,7 +120,7 @@ public class CellViewer {
 		for (int i = 0; i < mySimulations.length; i++) {
 			if (mySimulations[i].getClass().getName().toLowerCase().equals(SIMULATION_PACKAGE + "." + myGameParams.simulationMode.toLowerCase() + CLASS_SUFFIX)){
 				myCellSimulation = mySimulations[i];
-				myColors = myCellSimulation.myColors;
+				
 				return;		
 			}
 		}

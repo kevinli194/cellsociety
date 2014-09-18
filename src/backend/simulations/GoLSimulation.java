@@ -6,10 +6,12 @@ import backend.cells.GoLCell;
 import backend.xml.InitialCell;
 
 public class GoLSimulation extends Simulation {
+	public String[] myColors = { "pink", "white", "black" };
 
 	@Override
 	protected void makeNewCell(int i, int j, double thresholdValue) {
-		myGrid[i][j] = new GoLCell(i, j, false, 1); // we should try to remove thresholdValue from here
+		myGrid[i][j] = new GoLCell(i, j, false, 1); // we should try to remove
+													// thresholdValue from here
 		// think of a better way
 	}
 
@@ -67,14 +69,5 @@ public class GoLSimulation extends Simulation {
 			}
 		}
 
-	}
-
-	@Override
-	protected void initializeColor() {
-		myColors = new String[3];
-		myColors[0] = "blue";
-		myColors[1] = "white";
-		myColors[2] = "black";
-		
 	}
 }
