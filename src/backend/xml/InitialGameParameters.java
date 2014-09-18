@@ -1,7 +1,5 @@
-package cellsociety_team16;
+package backend.xml;
 import java.util.ArrayList;
-
-import parent.InitialCell;
 
 public class InitialGameParameters
 {

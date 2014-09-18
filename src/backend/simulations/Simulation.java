@@ -1,11 +1,14 @@
-package parent;
+package backend.simulations;
 
 import java.util.ArrayList;
 
+import backend.cells.Cell;
+import backend.xml.InitialCell;
+
 //double-check to see if boundaries are correct
-public abstract class CellManager {
+public abstract class Simulation {
 	protected Cell[][] myGrid;
-	private static double myThresholdValue;
+	public String[] myColors;
 
 	public Cell[][] initialize(String modelType, int xDimension,
 			int yDimension, double thresholdValue,
@@ -22,7 +25,7 @@ public abstract class CellManager {
 			}
 		}
 		setInitialState(initialCells);
-
+		initializeColor();
 		return myGrid;
 	}
 
@@ -32,5 +35,8 @@ public abstract class CellManager {
 
 	protected abstract void setNeighbors(int i, int j);
 
+	protected abstract void initializeColor();
+
 	public abstract void updateGrid();
+
 }

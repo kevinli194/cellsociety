@@ -1,4 +1,4 @@
-package cellsociety_team16;
+package frontend;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;

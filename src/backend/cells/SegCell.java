@@ -1,13 +1,15 @@
-package parent;
+package backend.cells;
+
+import backend.simulations.SegSimulation;
 
 public class SegCell extends Cell {
 	private static final int EMPTY = 0;
 	private static final int X = 1;
 	private static final int O = 2;
-	private SegCellManager mySegCellManager;
+	private SegSimulation mySegCellManager;
 
 	public SegCell(int xCoord, int yCoord, boolean update, int state,
-			SegCellManager segCellManager, double thresholdValue) {
+			SegSimulation segCellManager, double thresholdValue) {
 		myCoordinates[0] = xCoord;
 		myCoordinates[1] = yCoord;
 		myUpdated = update;
