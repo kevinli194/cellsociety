@@ -31,7 +31,7 @@ public class EcoCellManager extends CellManager {
 	@Override
 	protected void setInitialState(ArrayList<InitialCell> initialState) {
 		// TODO Auto-generated method stub
-		for(InitialCell c: initialState){
+		for (InitialCell c : initialState) {
 			((EcoCell) myGrid[c.myX][c.myY]).setState(c.myState.replaceAll(
 					"\\s", ""));
 		}
@@ -58,6 +58,15 @@ public class EcoCellManager extends CellManager {
 
 			}
 		}
+	}
+
+	@Override
+	protected void initializeColor() {
+		super.myColors = new String[3];
+		myColors[0] = "BLUE";
+		myColors[1] = "YELLOW";
+		myColors[2] = "GRAY";
+
 	}
 
 }

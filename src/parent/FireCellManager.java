@@ -68,4 +68,13 @@ public class FireCellManager extends CellManager {
 		}
 	}
 
+	@Override
+	protected void initializeColor() {
+		myColors = new String[3];
+		myColors[0] = "WHITE";
+		myColors[1] = "GREEN";
+		myColors[2] = "RED";
+		
+	}
+
 }

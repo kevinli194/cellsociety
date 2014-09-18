@@ -81,4 +81,13 @@ public class SegCellManager extends CellManager {
 		
 		return null;
 	}
+
+	@Override
+	protected void initializeColor() {
+		myColors = new String[3];
+		myColors[0] = "WHITE";
+		myColors[1] = "BLACK";
+		myColors[2] = "RED";
+		
+	}
 }

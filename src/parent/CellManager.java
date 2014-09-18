@@ -5,7 +5,7 @@ import java.util.ArrayList;
 //double-check to see if boundaries are correct
 public abstract class CellManager {
 	protected Cell[][] myGrid;
-	private static double myThresholdValue;
+	public String[] myColors;
 
 	public Cell[][] initialize(String modelType, int xDimension,
 			int yDimension, double thresholdValue,
@@ -22,7 +22,7 @@ public abstract class CellManager {
 			}
 		}
 		setInitialState(initialCells);
-
+		initializeColor();
 		return myGrid;
 	}
 
@@ -32,5 +32,8 @@ public abstract class CellManager {
 
 	protected abstract void setNeighbors(int i, int j);
 
+	protected abstract void initializeColor();
+
 	public abstract void updateGrid();
+
 }

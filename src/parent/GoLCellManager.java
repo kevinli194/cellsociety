@@ -65,4 +65,13 @@ public class GoLCellManager extends CellManager {
 		}
 
 	}
+
+	@Override
+	protected void initializeColor() {
+		myColors = new String[3];
+		myColors[0] = "BLUE";
+		myColors[1] = "WHITE";
+		myColors[2] = "BLACK";
+		
+	}
 }
