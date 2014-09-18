@@ -30,6 +30,8 @@ public abstract class Cell {
 	/*
 	 * Method that returns the state of an object. Used when getting to state to
 	 * display in CellViewer.
+	 * 
+	 * @ return the state of the object (integer)
 	 */
 
 	public int getState() {
@@ -39,6 +41,8 @@ public abstract class Cell {
 	/*
 	 * Method that sets the state of an object. Used when setting the initial
 	 * state of the cells.
+	 * 
+	 * @ param state the state of the object as defined as a string from the xml
 	 */
 	public abstract void setState(String state);
 

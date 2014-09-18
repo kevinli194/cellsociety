@@ -1,13 +1,14 @@
 package backend.cells;
 
-
 public class EcoCell extends Cell {
+
 	private static final int EMPTY = 0;
 	private static final int FISH = 1;
 	private static final int SHARK = 2;
 	private int myTurnsAlive;
-	
-	public EcoCell(int xCoord, int yCoord, boolean update, int state, int breedingTime) {
+
+	public EcoCell(int xCoord, int yCoord, boolean update, int state,
+			int breedingTime) {
 		myCoordinates[0] = xCoord;
 		myCoordinates[1] = yCoord;
 		myUpdated = update;
@@ -18,86 +19,78 @@ public class EcoCell extends Cell {
 
 	@Override
 	/*
-	 * (non-Javadoc)
-	 * @see parent.Cell#update()
-	 * This method is for updating the sharks
+	 * Method containing the update logic if the state is a shark. Sharks hold priority over fish when
+	 * updating.
 	 */
 	public void update() {
-		// TODO Auto-generated method stub
-		if(myState == SHARK && myUpdated == false)
-		{
+
+		if (myState == SHARK && myUpdated == false) {
 			myUpdated = true;
 			Cell fishNeighbor = findNeighborOfType(FISH);
 			Cell emptyNeighbor = findNeighborOfType(EMPTY);
-			if(fishNeighbor != null)
-			{
+			if (fishNeighbor != null) {
 				updateNeighbor(fishNeighbor, EMPTY);
-			}
-			else if(emptyNeighbor != null)
-			{
+			} else if (emptyNeighbor != null) {
 				updateNeighbor(emptyNeighbor, SHARK);
-				breed(SHARK);
+				breed();
 			}
 		}
-		
+
+		myTurnsAlive++;
+	}
+
+	/*
+	 * Method containing the update logic for fish. Fish have lower priority than shark.
+	 */
+	public void update2() {
+		if (myState == FISH && myUpdated == false) {
+			myUpdated = true;
+			Cell emptyNeighbor = findNeighborOfType(EMPTY);
+			if (emptyNeighbor != null) {
+				updateNeighbor(emptyNeighbor, FISH);
+				breed();
+				myTurnsAlive = 0;
+			}
+		}
+
 		myTurnsAlive++;
 	}
 	
 	/*
-	 * This method is for updating the fish
+	 * Method for determining whether fish/shark can breed and reproduce
 	 */
-	public void update2() {
-		if(myState == FISH && myUpdated == false)
-		{
-			myUpdated = true;
-			Cell emptyNeighbor = findNeighborOfType(EMPTY);
-			if(emptyNeighbor != null)
-			{
-				updateNeighbor(emptyNeighbor, FISH);
-				breed(FISH);
-			}
-		}
-		
-		myTurnsAlive++;
-	}
-	
-	private void breed(int stateID)
-	{
-		if(myTurnsAlive >= myThresholdValue)
-		{
-			myState = stateID;
-			myTurnsAlive = 0;
+
+	private void breed() {
+		if (myTurnsAlive < myThresholdValue) {
+			myState = EMPTY;
 		}
 	}
-	
-	private void updateNeighbor(Cell neighbor, int state)
-	{
+
+	private void updateNeighbor(Cell neighbor, int state) {
 		neighbor.myPreviousState = neighbor.myState;
 		neighbor.myState = state;
+		((EcoCell)neighbor).myTurnsAlive = myTurnsAlive;
 	}
-	
-	private Cell findNeighborOfType(int stateID)
-	{
-		for(Cell neighbor : myNeighbors)
-		{
-			if(neighbor.myState == stateID)
-			{
+
+	private Cell findNeighborOfType(int stateID) {
+		for (Cell neighbor : myNeighbors) {
+			if (neighbor.myState == stateID) {
 				return neighbor;
 			}
 		}
-		
+
 		return null;
 	}
-	
-	public void setState(String state){
-		if (state.equals("EMPTY")){
+
+	public void setState(String state) {
+		if (state.equals("EMPTY")) {
 			myState = EMPTY;
 		}
-		if (state.equals("FISH")){
+		if (state.equals("FISH")) {
 			myState = FISH;
 			myUpdated = false;
 		}
-		if (state.equals("SHARK")){
+		if (state.equals("SHARK")) {
 			myState = SHARK;
 			myUpdated = false;
 		}
