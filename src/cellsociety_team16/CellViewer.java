@@ -319,7 +319,7 @@ public class CellViewer {
 	};
 
 	public KeyFrame start() {
-		return new KeyFrame(Duration.millis(1000/60), oneFrame);
+		return new KeyFrame(Duration.millis(1000), oneFrame);
 	}
 
 	private void checkFileSelectedAndSetFlags() {

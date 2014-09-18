@@ -31,12 +31,11 @@ public class SegCell extends Cell {
 					totalNeighbors++;
 				}
 			}
-			if (totalNeighbors != 0) {
-				double percentageOfNeighborsSatisfied = satisfiedNeighbors
-						/ totalNeighbors;
-				if (percentageOfNeighborsSatisfied < myThresholdValue) {
-					moveToBeSatisfied();
-				}
+			 
+			 double percentageOfNeighborsSatisfied = (totalNeighbors != 0) ? 
+					 satisfiedNeighbors / totalNeighbors : 0;
+			if (percentageOfNeighborsSatisfied < myThresholdValue) {
+				moveToBeSatisfied();
 			}
 		}
 	}

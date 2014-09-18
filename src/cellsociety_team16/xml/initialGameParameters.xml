@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <simulation>
 	<simulationMode>Fire</simulationMode>
-	<gridXSize> 100 </gridXSize>
-	<gridYSize> 100 </gridYSize>
+	<gridXSize> 200 </gridXSize>
+	<gridYSize> 200 </gridYSize>
 	<thresholdValue> .8 </thresholdValue>
 	<cell>
 		<state> TREE </state>
