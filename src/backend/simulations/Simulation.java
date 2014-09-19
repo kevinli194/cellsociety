@@ -1,11 +1,9 @@
 package backend.simulations;
 
 import java.util.ArrayList;
-
 import backend.cells.Cell;
 import backend.xml.InitialCell;
 
-//double-check to see if boundaries are correct
 public abstract class Simulation {
 	protected Cell[][] myGrid;
 	public String[] myColors;
