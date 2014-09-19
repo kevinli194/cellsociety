@@ -26,23 +26,21 @@ public class SegCell extends Cell {
 			int totalNeighbors = 0;
 			for (Cell neighbor : myNeighbors) {
 				if (neighbor.myState != EMPTY) {
-					if (neighbor.myState == myState) {
+					if (neighbor.myState == myState)
 						satisfiedNeighbors++;
-					}
 					totalNeighbors++;
 				}
 			}
 			
 			double percentageOfNeighborsSatisfied = (totalNeighbors != 0) ? 
 					 satisfiedNeighbors / totalNeighbors : 0;
-			if (percentageOfNeighborsSatisfied < myThresholdValue) {
+			if (percentageOfNeighborsSatisfied < myThresholdValue)
 				moveToBeSatisfied();
-			}
 		}
 	}
 
 	private void moveToBeSatisfied() {
-		Cell emptyCell = mySegCellManager.findRandomEmptyCell();
+		Cell emptyCell = mySegCellManager.selectRandomEmptyCell();
 		if (emptyCell != null) {
 			emptyCell.myPreviousState = emptyCell.myState;
 			emptyCell.myState = myState;

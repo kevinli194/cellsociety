@@ -10,13 +10,11 @@ public class SegSimulation extends Simulation {
 
 	@Override
 	protected void makeNewCell(int i, int j, double thresholdValue) {
-		// TODO Auto-generated method stub
 		myGrid[i][j] = new SegCell(i, j, true, 0, this, thresholdValue);
 	}
 
 	@Override
 	protected void setNeighbors(int i, int j) {
-		// TODO Auto-generated method stub
 		if (i > 0)
 			myGrid[i][j].addNeighbor(myGrid[i - 1][j]);
 		if (j > 0)
@@ -37,7 +35,6 @@ public class SegSimulation extends Simulation {
 
 	@Override
 	protected void setInitialState(ArrayList<InitialCell> initialState) {
-		// TODO Auto-generated method stub
 		for (InitialCell c : initialState) {
 			((SegCell) myGrid[c.myX][c.myY]).setState(c.myState);
 		}
@@ -45,7 +42,6 @@ public class SegSimulation extends Simulation {
 
 	@Override
 	public void updateGrid() {
-		// TODO Auto-generated method stub
 		for (int i = 0; i < myGrid.length; i++) {
 			for (int j = 0; j < myGrid[0].length; j++) {
 				((SegCell) myGrid[i][j]).update();
@@ -59,7 +55,20 @@ public class SegSimulation extends Simulation {
 		}
 	}
 	
-	public Cell findRandomEmptyCell()
+	public Cell selectRandomEmptyCell()
+	{
+		ArrayList<Cell> emptyCells = findEmptyCells();
+		
+		if(emptyCells.isEmpty())
+			return null;
+		else
+		{
+			int randomIndex = (int) Math.floor(Math.random() * emptyCells.size());
+			return emptyCells.get(randomIndex);
+		}
+	}
+	
+	private ArrayList<Cell> findEmptyCells()
 	{
 		ArrayList<Cell> emptyCells = new ArrayList<Cell>();
 		for(int i = 0; i < myGrid.length; i++)
@@ -73,14 +82,7 @@ public class SegSimulation extends Simulation {
 				}
 			}
 		}
-		
-		if(emptyCells.isEmpty())
-			return null;
-		else
-		{
-			int randomIndex = (int) Math.floor(Math.random() * emptyCells.size());
-			return emptyCells.get(randomIndex);
-		}
+		return emptyCells;
 	}
 	
 	@Override

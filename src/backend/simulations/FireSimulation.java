@@ -6,7 +6,6 @@ import backend.cells.FireCell;
 import backend.xml.InitialCell;
 
 public class FireSimulation extends Simulation {
-
 	@Override
 	protected void makeNewCell(int i, int j, double thresholdValue) {
 		myGrid[i][j] = new FireCell(i, j, true, 0, thresholdValue); 
@@ -26,7 +25,6 @@ public class FireSimulation extends Simulation {
 		if (j < myGrid[0].length - 1) {
 			myGrid[i][j].addNeighbor(myGrid[i][j + 1]);
 		}
-
 	}
 
 	@Override
@@ -46,14 +44,12 @@ public class FireSimulation extends Simulation {
 		for (int i = 0; i < myGrid.length; i++) {
 			for (int j = 0; j < myGrid[0].length; j++) {
 				((FireCell) myGrid[i][j]).updateFire();
-
 			}
 		}
 		for (int i = 0; i < myGrid.length; i++) {
 			for (int j = 0; j < myGrid[0].length; j++) {
 				if (myGrid[i][j].getState() == 2) {
 				}
-
 			}
 		}
 
