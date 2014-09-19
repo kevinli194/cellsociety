@@ -1,11 +1,14 @@
 package backend.cells;
 
+import java.util.Collections;
+
 public class EcoCell extends Cell {
 
 	private static final int EMPTY = 0;
 	private static final int FISH = 1;
 	private static final int SHARK = 2;
 	private int myTurnsAlive;
+	private int myStarveTime;
 
 	public EcoCell(int xCoord, int yCoord, boolean update, int state,
 			int breedingTime) {
@@ -14,6 +17,7 @@ public class EcoCell extends Cell {
 		myUpdated = update;
 		myState = state;
 		myThresholdValue = breedingTime;
+		myStarveTime = 2 * breedingTime - 1;
 		myTurnsAlive = 0;
 	}
 
@@ -23,7 +27,6 @@ public class EcoCell extends Cell {
 	 * priority over fish when updating.
 	 */
 	public void update() {
-
 		if (myState == SHARK && myUpdated == false) {
 			myUpdated = true;
 			myTurnsAlive++;
@@ -31,15 +34,16 @@ public class EcoCell extends Cell {
 			Cell emptyNeighbor = findNeighborOfType(EMPTY);
 			if (fishNeighbor != null) {
 				updateNeighbor(fishNeighbor, EMPTY);
+			} else {
+				if(deathOfShark())
+					return;
 			}
 			if (emptyNeighbor != null) {
-
 				updateNeighbor(emptyNeighbor, SHARK);
 				breedorMove();
 				myTurnsAlive = 0;
 			}
 		}
-
 	}
 
 	/*
@@ -56,9 +60,20 @@ public class EcoCell extends Cell {
 				breedorMove();
 				myTurnsAlive = 0;
 			}
-
 		}
+	}
 
+	/*
+	 * Method for determining whether shark will die from starvation
+	 */
+	private boolean deathOfShark() {
+		if (myTurnsAlive >= myStarveTime)
+		{
+			myState = EMPTY;
+			myTurnsAlive = 0;
+			return true;
+		}
+		return false;
 	}
 
 	/*
@@ -78,9 +93,7 @@ public class EcoCell extends Cell {
 			((EcoCell) neighbor).myTurnsAlive = myTurnsAlive;
 		} else {
 			myTurnsAlive = 0;
-
 		}
-
 	}
 
 	private Cell findNeighborOfType(int stateID) {
@@ -89,7 +102,7 @@ public class EcoCell extends Cell {
 				return neighbor;
 			}
 		}
-
+		Collections.shuffle(myNeighbors);
 		return null;
 	}
 

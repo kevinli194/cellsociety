@@ -8,12 +8,10 @@ import javafx.scene.Scene;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-
 public class CellWorld extends Application {
 	private CellViewer myViewer;
 	private int ANIMATION_WIDTH;
 	private int ANIMATION_HEIGHT;
-
 
 	@Override
 	public void start(Stage stage) {
