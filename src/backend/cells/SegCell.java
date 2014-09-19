@@ -42,7 +42,7 @@ public class SegCell extends Cell {
 	}
 
 	private void moveToBeSatisfied() {
-		Cell emptyCell = mySegCellManager.findFirstEmptyCell();
+		Cell emptyCell = mySegCellManager.findRandomEmptyCell();
 		if (emptyCell != null) {
 			emptyCell.myPreviousState = emptyCell.myState;
 			emptyCell.myState = myState;

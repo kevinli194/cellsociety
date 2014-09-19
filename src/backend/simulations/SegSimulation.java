@@ -1,10 +1,9 @@
 package backend.simulations;
-
-import java.util.ArrayList;
-
 import backend.cells.Cell;
 import backend.cells.SegCell;
 import backend.xml.InitialCell;
+
+import java.util.ArrayList;
 
 
 public class SegSimulation extends Simulation {
@@ -70,21 +69,28 @@ public class SegSimulation extends Simulation {
 		}
 	}
 	
-	public Cell findFirstEmptyCell()
+	public Cell findRandomEmptyCell()
 	{
+		ArrayList<Cell> emptyCells = new ArrayList<Cell>();
 		for(int i = 0; i < myGrid.length; i++)
 		{
 			for(int j = 0; j < myGrid[i].length; j++)
 			{
 				Cell currentCell = myGrid[i][j];
-				if(currentCell.getState() == 0) // EMPTY
+				if(currentCell.getState() == 0)
 				{
-					return currentCell;
+					emptyCells.add(currentCell);
 				}
 			}
 		}
 		
-		return null;
+		if(emptyCells.isEmpty())
+			return null;
+		else
+		{
+			int randomIndex = (int) Math.floor(Math.random() * emptyCells.size());
+			return emptyCells.get(randomIndex);
+		}
 	}
 	
 	@Override

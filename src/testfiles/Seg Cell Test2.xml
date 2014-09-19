@@ -21,16 +21,6 @@
 	</cell>
 	<cell>
 		<state> O </state>
-		<x> 0 </x>
-		<y> 3 </y>
-	</cell>
-	<cell>
-		<state> O </state>
-		<x> 1 </x>
-		<y> 0 </y>
-	</cell>
-	<cell>
-		<state> O </state>
 		<x> 1 </x>
 		<y> 2 </y>
 	</cell>
