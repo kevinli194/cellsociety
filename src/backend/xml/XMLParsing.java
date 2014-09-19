@@ -18,13 +18,6 @@ import java.io.IOException;
 
 public class XMLParsing {
 
-/*	public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException
-	{
-		XMLParsing xmlp = new XMLParsing();
-		InitialGameParameters igp = xmlp.parseInitialCellsFromFile();
-		System.out.println("done");
-	}*/
-
 	public InitialGameParameters parseInitialCellsFromFile(File file) throws ParserConfigurationException, SAXException, IOException
 	{	
 		Document doc = createDocumentFromFile(file);
@@ -55,7 +48,7 @@ public class XMLParsing {
 	private InitialCell createNewCellFromFileData(Element eElement)
 	{
 		InitialCell initialCell = new InitialCell();
-		initialCell.myState = getTagValue("state", eElement);
+		initialCell.myState = getTagValue("state", eElement).replaceAll("\\s", "");
 		initialCell.myX = Integer.parseInt(getTagValue("x", eElement).replaceAll("\\s", ""));
 		initialCell.myY = Integer.parseInt(getTagValue("y", eElement).replaceAll("\\s", ""));
 		return initialCell;
