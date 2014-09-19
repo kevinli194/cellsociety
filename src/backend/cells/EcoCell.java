@@ -18,7 +18,7 @@ public class EcoCell extends Cell {
 		myUpdated = update;
 		myState = state;
 		myThresholdValue = breedingTime;
-		myStarveTime = 2*breedingTime - 1;
+		myStarveTime = breedingTime -1;
 		myTurnsAlive = 0;
 		myTurnsStarved = 0;
 	}
