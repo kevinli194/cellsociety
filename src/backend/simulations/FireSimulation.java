@@ -32,9 +32,7 @@ public class FireSimulation extends Simulation {
 	@Override
 	protected void setInitialState(ArrayList<InitialCell> initialState) {
 		for (InitialCell c : initialState) {
-			// System.out.println(c.myState.compareTo("BURNING"));
-			((FireCell) myGrid[c.myX][c.myY]).setState(c.myState.replaceAll(
-					"\\s", ""));
+			((FireCell) myGrid[c.myX][c.myY]).setState(c.myState);
 		}
 	}
 
@@ -47,14 +45,13 @@ public class FireSimulation extends Simulation {
 		}
 		for (int i = 0; i < myGrid.length; i++) {
 			for (int j = 0; j < myGrid[0].length; j++) {
-				((FireCell) myGrid[i][j]).update2();
+				((FireCell) myGrid[i][j]).updateFire();
 
 			}
 		}
 		for (int i = 0; i < myGrid.length; i++) {
 			for (int j = 0; j < myGrid[0].length; j++) {
 				if (myGrid[i][j].getState() == 2) {
-					// System.out.println(i + " " + j);
 				}
 
 			}
