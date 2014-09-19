@@ -9,6 +9,7 @@ public class EcoCell extends Cell {
 	private static final int SHARK = 2;
 	private int myTurnsAlive;
 	private int myStarveTime;
+	private int myTurnsStarved;
 
 	public EcoCell(int xCoord, int yCoord, boolean update, int state,
 			int breedingTime) {
@@ -17,8 +18,9 @@ public class EcoCell extends Cell {
 		myUpdated = update;
 		myState = state;
 		myThresholdValue = breedingTime;
-		myStarveTime = 2 * breedingTime - 1;
+		myStarveTime = 2*breedingTime - 1;
 		myTurnsAlive = 0;
+		myTurnsStarved = 0;
 	}
 
 	@Override
@@ -33,15 +35,18 @@ public class EcoCell extends Cell {
 			Cell fishNeighbor = findNeighborOfType(FISH);
 			Cell emptyNeighbor = findNeighborOfType(EMPTY);
 			if (fishNeighbor != null) {
-				updateNeighbor(fishNeighbor, EMPTY);
+				eatFish(fishNeighbor);
+				checkandBreed(SHARK);
 			} else {
-				if(deathOfShark())
-					return;
-			}
-			if (emptyNeighbor != null) {
-				updateNeighbor(emptyNeighbor, SHARK);
-				breedorMove();
-				myTurnsAlive = 0;
+				boolean sharkDead = checkSharkDeath();
+				if (emptyNeighbor != null && !sharkDead) {
+					movetoNeighbor(emptyNeighbor);
+					((EcoCell) emptyNeighbor).checkandBreed(SHARK);
+				} else {
+					if (!sharkDead) {
+						checkandBreed(SHARK);
+					}
+				}
 			}
 		}
 	}
@@ -56,9 +61,8 @@ public class EcoCell extends Cell {
 			myTurnsAlive++;
 			Cell emptyNeighbor = findNeighborOfType(EMPTY);
 			if (emptyNeighbor != null) {
-				updateNeighbor(emptyNeighbor, FISH);
-				breedorMove();
-				myTurnsAlive = 0;
+				movetoNeighbor(emptyNeighbor);
+				((EcoCell) emptyNeighbor).checkandBreed(FISH);
 			}
 		}
 	}
@@ -66,43 +70,61 @@ public class EcoCell extends Cell {
 	/*
 	 * Method for determining whether shark will die from starvation
 	 */
-	private boolean deathOfShark() {
-		if (myTurnsAlive >= myStarveTime)
-		{
-			myState = EMPTY;
-			myTurnsAlive = 0;
+	private void eatFish(Cell fish) {
+		myTurnsStarved = 0;
+		((EcoCell) fish).clearCell();
+	}
+
+	private boolean checkSharkDeath() {
+		if (myTurnsStarved >= myStarveTime) {
+			clearCell();
 			return true;
+
+		} else {
+			myTurnsStarved++;
+			return false;
 		}
-		return false;
+
+	}
+
+	private void clearCell() {
+		myState = EMPTY;
+		myUpdated = true;
+		myTurnsStarved = 0;
+		myTurnsAlive = 0;
 	}
 
 	/*
 	 * Method for determining whether fish/shark can breed and reproduce
 	 */
 
-	private void breedorMove() {
-		if (myTurnsAlive < myThresholdValue) {
-			myState = EMPTY;
+	private void checkandBreed(int type) {
+		if (myTurnsAlive >= myThresholdValue) {
+			Cell emptyNeighbor = findNeighborOfType(EMPTY);
+			if (emptyNeighbor != null) {
+				emptyNeighbor.myState = type;
+				emptyNeighbor.myUpdated = true;
+				((EcoCell) emptyNeighbor).myTurnsAlive = 0;
+				((EcoCell) emptyNeighbor).myTurnsStarved = 0;
+			}
 		}
 	}
 
-	private void updateNeighbor(Cell neighbor, int state) {
-		neighbor.myState = state;
+	private void movetoNeighbor(Cell neighbor) {
+		neighbor.myState = myState;
 		neighbor.myUpdated = true;
-		if (state != EMPTY) {
-			((EcoCell) neighbor).myTurnsAlive = myTurnsAlive;
-		} else {
-			myTurnsAlive = 0;
-		}
+		((EcoCell) neighbor).myTurnsAlive = myTurnsAlive;
+		((EcoCell) neighbor).myTurnsStarved = myTurnsStarved;
+		clearCell();
 	}
 
 	private Cell findNeighborOfType(int stateID) {
+		Collections.shuffle(myNeighbors);
 		for (Cell neighbor : myNeighbors) {
 			if (neighbor.myState == stateID) {
 				return neighbor;
 			}
 		}
-		Collections.shuffle(myNeighbors);
 		return null;
 	}
 
