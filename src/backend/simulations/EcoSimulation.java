@@ -58,8 +58,6 @@ public class EcoSimulation extends Simulation {
 				myGrid[i][j].reset();
 			}
 		}
-		
-		System.out.println();
 	}
 
 	@Override

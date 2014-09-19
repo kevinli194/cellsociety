@@ -32,7 +32,7 @@ public class SegCell extends Cell {
 					totalNeighbors++;
 				}
 			}
-			 
+			
 			double percentageOfNeighborsSatisfied = (totalNeighbors != 0) ? 
 					 satisfiedNeighbors / totalNeighbors : 0;
 			if (percentageOfNeighborsSatisfied < myThresholdValue) {

@@ -2,8 +2,8 @@
 <simulation>
 
 	<simulationMode>Eco</simulationMode>
-	<gridXSize> 15 </gridXSize>
-	<gridYSize> 15 </gridYSize>
+	<gridXSize> 50 </gridXSize>
+	<gridYSize> 50 </gridYSize>
 	<thresholdValue> 3 </thresholdValue>
 	<cell>
 		<state> FISH </state>
