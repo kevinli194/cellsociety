@@ -38,6 +38,10 @@ public class SegCell extends Cell {
 				moveToBeSatisfied();
 		}
 	}
+	
+	/**
+	 *  Moves a cell to a empty cell if dissatisfied.
+	 */
 
 	private void moveToBeSatisfied() {
 		Cell emptyCell = mySegCellManager.selectRandomEmptyCell();

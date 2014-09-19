@@ -18,13 +18,13 @@ public class EcoCell extends Cell {
 		myUpdated = update;
 		myState = state;
 		myThresholdValue = breedingTime;
-		myStarveTime = breedingTime -1;
+		myStarveTime = breedingTime - 1;
 		myTurnsAlive = 0;
 		myTurnsStarved = 0;
 	}
 
 	@Override
-	/*
+	/**
 	 * Method containing the update logic if the state is a shark. Sharks hold
 	 * priority over fish when updating.
 	 */
@@ -51,7 +51,7 @@ public class EcoCell extends Cell {
 		}
 	}
 
-	/*
+	/**
 	 * Method containing the update logic for fish. Fish have lower priority
 	 * than shark.
 	 */
@@ -67,13 +67,38 @@ public class EcoCell extends Cell {
 		}
 	}
 
-	/*
-	 * Method for determining whether shark will die from starvation
+	/**
+	 * Method for clearing the contents of a cell to empty. Useful method call
+	 * when calling methods that require the cell to be emptied, such as
+	 * eatFish.
+	 */
+	private void clearCell() {
+		myState = EMPTY;
+		myUpdated = true;
+		myTurnsStarved = 0;
+		myTurnsAlive = 0;
+	}
+
+	/**
+	 * Method for eating a fish. Takes in a cell to clear. Also sets turns
+	 * starved to 0, because the shark is now full.
+	 * 
+	 * @param fish Cell to be eaten.
 	 */
 	private void eatFish(Cell fish) {
 		myTurnsStarved = 0;
 		((EcoCell) fish).clearCell();
 	}
+
+	/**
+	 * Checks to see if the shark has passed dued to starvation. Called when it
+	 * has no access to food. Kills off the shark if its past the starve time
+	 * and returns true to indicate that the shark is dead. Increments the turns
+	 * it is not eaten if it has not starved to death yet and returns false.
+	 * 
+	 * @return Returns whether the shark is dead (true) or alive (false) as a
+	 * boolean.
+	 */
 
 	private boolean checkSharkDeath() {
 		if (myTurnsStarved >= myStarveTime) {
@@ -87,15 +112,12 @@ public class EcoCell extends Cell {
 
 	}
 
-	private void clearCell() {
-		myState = EMPTY;
-		myUpdated = true;
-		myTurnsStarved = 0;
-		myTurnsAlive = 0;
-	}
-
-	/*
-	 * Method for determining whether fish/shark can breed and reproduce
+	/**
+	 * Method for checking whether a fish or shark can breed and then proceeding
+	 * to breed.
+	 * 
+	 * @param type which type of animal you are breeding given as a state
+	 * (int).
 	 */
 
 	private void checkandBreed(int type) {
@@ -110,6 +132,13 @@ public class EcoCell extends Cell {
 		}
 	}
 
+	/**
+	 * moves the contents in the current cell to a neighboring cell and clears
+	 * the contents of the current cell.
+	 * 
+	 * @param neighbor The cell to move to.
+	 */
+
 	private void movetoNeighbor(Cell neighbor) {
 		neighbor.myState = myState;
 		neighbor.myUpdated = true;
@@ -117,6 +146,15 @@ public class EcoCell extends Cell {
 		((EcoCell) neighbor).myTurnsStarved = myTurnsStarved;
 		clearCell();
 	}
+
+	/**
+	 * Finds the a neighboring cell that has the given state randomly.
+	 * 
+	 * @param stateID The state (type) of cell we are looking for.
+	 * 
+	 * @return Cell returns the neighboring cell that contains the state we are
+	 * looking for.
+	 */
 
 	private Cell findNeighborOfType(int stateID) {
 		Collections.shuffle(myNeighbors);

@@ -57,6 +57,12 @@ public class GoLCell extends Cell {
 
 
 	}
+	
+	/**
+	 * method that gets a count of how many neighbors are in the ALIVE state.
+	 * 
+	 * @return returns the number of ALIVE state neighbors as an integer.
+	 */
 
 	public int getAliveCount() {
 		int count = 0;

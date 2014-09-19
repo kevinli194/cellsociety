@@ -54,6 +54,10 @@ public class SegSimulation extends Simulation {
 			}
 		}
 	}
+	/**
+	 *  finds a random empty cell to move the contents of the cell to.
+	 * @return returns a random empty cell
+	 */
 	
 	public Cell selectRandomEmptyCell()
 	{

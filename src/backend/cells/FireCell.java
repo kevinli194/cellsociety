@@ -6,7 +6,7 @@ public class FireCell extends Cell {
 	private static final int TREE = 1;
 	private static final int BURNING = 2;
 	
-
+	
 	public FireCell(int xCoord, int yCoord, boolean update, int state,
 			double thresholdValue) {
 		myCoordinates[0] = xCoord;
@@ -17,6 +17,9 @@ public class FireCell extends Cell {
 	}
 
 	@Override
+	/**
+	 * Updates the trees. 
+	 */
 	public void update() {
 		if (myState == TREE && myUpdated == false) {
 			myUpdated = true;
@@ -29,14 +32,21 @@ public class FireCell extends Cell {
 		}
 	}
 
+	/**
+	 * Updates the fires. Called first in updateGrid() because fire has priority over trees in turns of order.
+	 */
 	public void updateFire() {
 		if (myState == BURNING && myUpdated == false) {
-		//	myPreviousState = myState;
 			myUpdated = true;
 			myState = EMPTY;
 		}
 	}
 
+	/**
+	 * Method that checks if neighbors are in the state of burning.
+	 * 
+	 * @return returns whether any neighbors are burning.
+	 */
 	private boolean anyNeighborIsBurning() {
 		for (Cell neighbor : myNeighbors)
 		{
