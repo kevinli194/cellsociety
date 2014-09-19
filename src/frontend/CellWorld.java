@@ -8,6 +8,11 @@ import javafx.scene.Scene;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+/**
+ * 
+ * Entry point of Cell Society simulations
+ *
+ */
 public class CellWorld extends Application {
 	private CellViewer myViewer;
 	private int ANIMATION_WIDTH;

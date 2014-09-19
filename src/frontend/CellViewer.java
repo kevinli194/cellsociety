@@ -43,20 +43,45 @@ public class CellViewer {
 	private static final String SLOW = "Slow";
 	private static final String VERY_SLOW = "Slower";
 
+	/**
+	 * XML parsing output stored in this object
+	 */
 	private InitialGameParameters myGameParams;
 	private XMLParsing myXMLParser;
 	private CellWorld myCellWorld;
 	private boolean myGridSet = false;
 	private boolean myStepClicked = false;
 
+	/**
+	 * Whether file is currently selected used to display cells only after created 
+	 */
 	private boolean myFileSelected = false;
+	/**
+	 * Button last clicked to handle processing "stepping into" simulation frames
+	 */
 	private Button myLastClicked = null;
 
+	/**
+	 * Array of cells that are viewed during the simulation
+	 */
 	private GridPane[][] myViewingGrid;
+	/**
+	 * Array of cell objects mapped 1:1 to a viewing cell 
+	 */
 	private Cell[][] myCellsGrid;
 
+	/**
+	 * Currently loaded file used in XML parsing
+	 */
 	private File myFile;
+	
+	/**
+	 * Stores the individual grid panes (cells) as children
+	 */
 	private GridPane myGridPane;
+	/**
+	 * Holds layout of the whole GUI
+	 */
 	private BorderPane myBorderPane;
 
 	private Button myReset;
@@ -64,16 +89,28 @@ public class CellViewer {
 	private Button myStop;
 	private Button myStep;
 
+	/**
+	 * Stores the previously loaded XML file to avoid reloading the
+	 */
 	private File myPreviousFile;
 
+	/**
+	 * Superclass object that get instantiated with the appropriate simulation
+	 * retrieved from the XML file
+	 */
 	private Simulation myCellSimulation;
 
+	
 	/**
+	 * Used in reflection to match simulation mode to appropriate Simulation subclass. 
 	 * This changes if the simulation and corresponding cell classes move
 	 * to a different package
-	 * 
 	 */
 	private static final String SIMULATION_PACKAGE = "backend.simulations";
+	/**
+	 * Used in matching simulation mode (testing equality of class names) with appropriate
+	 * Simulation subclass
+	 */
 	private static final String CLASS_SUFFIX = "simulation";
 
 	/**
@@ -91,9 +128,10 @@ public class CellViewer {
 	private int myHeight;
 
 	/**
+	 * Creates CellViewer object which acquires the animation timeline for 
+	 * start/stop/reset interaction and CellWorld object to get the initial state
+	 * of the grid.
 	 * 
-	 * @param animation
-	 * @param cellWorld
 	 */
 	public CellViewer(Timeline animation, CellWorld cellWorld) {
 		myAnimation = animation;
@@ -101,19 +139,16 @@ public class CellViewer {
 	}
 
 	/**
-	 * 
-	 * @param height
+	 * Set the height of the simulation window
+	 *
 	 */
 	private void setHeight(int height) {
 		myHeight = height;
 	}
 
 	/**
+	 * This method returns the GUI scene with buttons, file chooser, and simulation grid
 	 * 
-	 * @param stage
-	 * @param width
-	 * @param height
-	 * @return
 	 */
 	public Scene init(Stage stage, int width, int height) {
 		setHeight(height);
@@ -129,6 +164,7 @@ public class CellViewer {
 	}
 
 	/**
+	 * Generates simulation with reflection by matching simulation name and corresponding class
 	 * 
 	 */
 	private void generateSimulation() {
@@ -139,11 +175,13 @@ public class CellViewer {
 			}
 		}
 	}
-
+	
 	/**
+	 * Enables/disables buttons based on boolean passed in. Ensures buttons are not active
+	 * until necessary
 	 * 
-	 * @param disable
 	 */
+
 	private void disableButtons(boolean disable) {
 		myReset.setDisable(disable);
 		myStart.setDisable(disable);
@@ -151,9 +189,8 @@ public class CellViewer {
 		myStep.setDisable(disable);
 	}
 
-
 	/**
-	 * 
+	 * Initial call to add starting position and states of cells on viewing grid
 	 */
 	private void addCellsToDisplay() {
 		disableButtons(false);
@@ -179,7 +216,7 @@ public class CellViewer {
 	}
 
 	/**
-	 * 
+	 * Adds width and height of rows and columns to ensure identically sized cells
 	 */
 	private void addGridConstraints() {
 
@@ -201,8 +238,8 @@ public class CellViewer {
 	}
 
 	/**
+	 * Adds file selector button to choose XML file with simulation parameters
 	 * 
-	 * @param stage
 	 */
 	private void addFileSelector(Stage stage) {
 		HBox hbox = new HBox();
@@ -223,7 +260,6 @@ public class CellViewer {
 				} else {
 					fileNotSelected(stage);
 				}
-
 			}
 		});
 		hbox.getChildren().addAll(text, openButton);
@@ -232,16 +268,19 @@ public class CellViewer {
 	}
 
 	/**
+	 * Handles user notification (pop-up window) when XML file not selected
 	 * 
-	 * @param stage
 	 */
 	private void fileNotSelected(Stage stage) {
-		/**
-		 * Setting separate stage to show pop-up window (missing XML file)
-		 */
+
 		if (myPreviousFile != null) {
 			myFile = myPreviousFile;
 		} else {
+			/**
+			 * Setting separate stage to show pop-up window (missing XML file)
+			 * when there is no previously loaded file.
+			 * 
+			 */
 			Stage dialog = new Stage();
 			dialog.initModality(Modality.APPLICATION_MODAL);
 			dialog.initOwner(stage);
@@ -256,7 +295,7 @@ public class CellViewer {
 	}
 
 	/**
-	 * 
+	 * Parses XML file selected into simulation parameters
 	 */
 	private void parseXML() {
 		try {
@@ -272,11 +311,10 @@ public class CellViewer {
 	} 
 
 	/**
+	 * Returns layout with vertically aligned buttons
 	 * 
-	 * @return
 	 */
 	private VBox createButtonsVBox() {
-
 		VBox vbox = new VBox();
 		vbox.setSpacing(myHeight / 40);
 		vbox.setPadding(new Insets(myHeight / 4, 0, 0, 2));
@@ -292,7 +330,7 @@ public class CellViewer {
 	}
 
 	/**
-	 * 
+	 * Add buttons placed on left side of window
 	 */
 	private void addButtons() {
 		speedSelected.getItems()
@@ -310,7 +348,7 @@ public class CellViewer {
 	}
 
 	/**
-	 * 
+	 * Sets event handlers for all buttons and action on clicked
 	 * 
 	 */
 	private void setButtonsOnAction() {
@@ -354,7 +392,7 @@ public class CellViewer {
 	}
 
 	/**
-	 * 
+	 * Sets the original of Cell objects
 	 */
 	private void setCellsGrid() {
 		myCellsGrid = myCellSimulation.initialize(
@@ -364,8 +402,9 @@ public class CellViewer {
 				myGameParams.initialCells);
 	}
 
+
 	/**
-	 * 
+	 * Reset viewing grid to original states
 	 */
 	private void resetGrid() {
 		myAnimation.stop();
@@ -377,11 +416,12 @@ public class CellViewer {
 		myAnimation.pause();
 	}
 
-	/**
-	 * 
-	 */
-	private EventHandler<ActionEvent> oneFrame = new EventHandler<ActionEvent>() {
+	private EventHandler<ActionEvent> myOneFrame = new EventHandler<ActionEvent>() {
 		@Override
+
+		/**
+		 * Update routine for each frame of the simulation
+		 */
 		public void handle(ActionEvent evt) {
 			checkFileSelectedAndSetFlags();
 			if ((myLastClicked.equals(myStep))) {
@@ -399,18 +439,15 @@ public class CellViewer {
 		}
 	};
 
-	/**
-	 * 
-	 * @return
-	 */
 
+	/**
+	 * Creates animation frame for simulation
+	 * 
+	 */
 	public KeyFrame start() {
-		return new KeyFrame(Duration.millis(1000), oneFrame);
+		return new KeyFrame(Duration.millis(1000), myOneFrame);
 	}
 
-	/**
-	 * 
-	 */
 	private void checkFileSelectedAndSetFlags() {
 
 		if ((myFile != null) && (myFileSelected)) {
@@ -420,16 +457,16 @@ public class CellViewer {
 	}
 
 	/**
-	 * 
+	 * Update states of simulation cells 
 	 */
 	private void updateGrid() {
-		if (myGridSet) {
+		if (myGridSet) 
 			myCellSimulation.updateGrid();
-		}
-
 	}
 
 	/**
+	 *
+	 * Display updated states of simulation cells
 	 * 
 	 */
 	private void updateDisplay() {
@@ -445,7 +482,7 @@ public class CellViewer {
 	}
 
 	/**
-	 * 
+	 * Update animation speed based on selection 
 	 */
 	private void checkSpeedSelection() {
 		ArrayList<String> possibleSpeeds = new ArrayList<String>();
