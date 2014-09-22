@@ -10,6 +10,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
 import frontend.gridshapes.HexagonCell;
+import frontend.gridshapes.ShapeCell;
 import backend.cells.Cell;
 import backend.simulations.EcoSimulation;
 import backend.simulations.FireSimulation;
@@ -208,7 +209,7 @@ public class CellViewer {
 		myColors = myCellSimulation.myColors;
 		myBorderPane.setCenter(myGridPane);
 
-		HexagonCell[][] grid = new HexagonCell[myGameParams.gridXSize][myGameParams.gridYSize];
+		ShapeCell[][] grid = new HexagonCell[myGameParams.gridXSize][myGameParams.gridYSize];
 		 double s = (myHeight/(myGameParams.gridXSize*1.9));
 		 double a = (Math.sqrt(3)*(s/2));
 		 grid[0][0] = new HexagonCell(0,0,s);
@@ -223,20 +224,20 @@ public class CellViewer {
 				
 				//Cell cell = myCellsGrid[row][col];
 				
-				grid[row][col].getHexagon().setFill(Color.GREEN);
-				grid[row][col].getHexagon().setStroke(Color.BLACK);
+				grid[row][col].getShape().setFill(Color.GREEN);
+				grid[row][col].getShape().setStroke(Color.BLACK);
 //								shape.setStyle("-fx-background-color: black");// black; fx-hgap: 10;-fx-vgap: 10;");
-				myGridPane.getChildren().add(grid[row][col].getHexagon());
+				myGridPane.getChildren().add(grid[row][col].getShape());
 //				shape.add(poly,  0,  0);
 				
 				//circle.setRadius(myHeight/(myGameParams.gridXSize*2.2));
 				//myViewingGrid[row][col] = shape;
 			}
 		}
-		grid[0][0].getHexagon().setFill(Color.YELLOW);
-		grid[0][1].getHexagon().setFill(Color.PURPLE);
-		grid[1][1].getHexagon().setFill(Color.BLUE);
-		grid[1][0].getHexagon().setFill(Color.MAGENTA);
+		grid[0][0].getShape().setFill(Color.YELLOW);
+		grid[0][1].getShape().setFill(Color.PURPLE);
+		grid[1][1].getShape().setFill(Color.BLUE);
+		grid[1][0].getShape().setFill(Color.MAGENTA);
 		
 
 		/**

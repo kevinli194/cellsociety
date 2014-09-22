@@ -3,49 +3,27 @@ package frontend.gridshapes;
 import javafx.scene.shape.Polygon;
 
 public class HexagonCell extends ShapeCell {
-	private Polygon myHexagon;
-	private double myXCenter;
-	private double myYCenter;
 	private double mySideLength;
 	
 	public HexagonCell(double xCenter, double yCenter, double sideLength) {
 		mySideLength = sideLength;
-		setCenter(xCenter, yCenter);
+		super.setCenter(xCenter, yCenter);
 		calculateVertices();
 	}
 	
-	
-	private void setCenter(double xCenter, double yCenter) {
-		myXCenter = xCenter;
-		myYCenter =  yCenter;
-	}
-	
-	private void calculateVertices() {
+
+	public void calculateVertices() {
 		double centerToVertices = (Math.sqrt(3)*(mySideLength/2)); 
 				
 				
-		myHexagon =  new Polygon(myXCenter, myYCenter - mySideLength, 
+		myShape =  new Polygon(myXCenter, myYCenter - mySideLength, 
 				myXCenter + centerToVertices, myYCenter - (mySideLength/2), 
 				myXCenter + centerToVertices, myYCenter + (mySideLength/2), 
 				myXCenter, myYCenter + mySideLength, 
 				myXCenter - centerToVertices, myYCenter + (mySideLength/2), 
 				myXCenter - centerToVertices, myYCenter - (mySideLength/2));
 		
-	}
-	
-	public Polygon getHexagon() {
-		return myHexagon;
-	}
-
-
-	public double getX() {
-		return myXCenter;
-	}
-	
-	public double getY() {
-		return myYCenter;
-	}
-	
+	}	
 	
 	/*public HexagonCell(int height, int numXCells, int numYCells) {
 	Polygon polyTop = new Polygon();

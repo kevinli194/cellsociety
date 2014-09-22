@@ -1,4 +1,4 @@
-package frontend.gridshapes;
+/*package frontend.gridshapes;
 
 import javafx.scene.shape.Rectangle;
 
@@ -8,3 +8,4 @@ public class RectangleCell extends ShapeCell {
 		myShape = new Rectangle(windowHeight/(numCellsRow*1.15), windowHeight/(numCellsCol*1.15));
 	}
 }
+*/
