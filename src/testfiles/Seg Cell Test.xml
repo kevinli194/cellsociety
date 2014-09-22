@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <simulation>
 	<simulationMode>Seg</simulationMode>
-	<gridXSize>4</gridXSize>
-	<gridYSize>4</gridYSize>
+	<gridXSize>50</gridXSize>
+	<gridYSize>50</gridYSize>
 	<thresholdValue> .5 </thresholdValue>
 	<cell>
 		<state> X </state>
