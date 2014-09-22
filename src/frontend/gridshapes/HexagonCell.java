@@ -14,8 +14,7 @@ public class HexagonCell extends ShapeCell {
 
 	public void calculateVertices() {
 		double centerToVertices = (Math.sqrt(3)*(mySideLength/2)); 
-				
-				
+	
 		myShape =  new Polygon(myXCenter, myYCenter - mySideLength, 
 				myXCenter + centerToVertices, myYCenter - (mySideLength/2), 
 				myXCenter + centerToVertices, myYCenter + (mySideLength/2), 

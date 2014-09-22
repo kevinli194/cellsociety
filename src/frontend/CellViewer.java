@@ -10,6 +10,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
 import frontend.gridshapes.HexagonCell;
+import frontend.gridshapes.RectangleCell;
 import frontend.gridshapes.ShapeCell;
 import backend.cells.Cell;
 import backend.simulations.EcoSimulation;
@@ -209,17 +210,23 @@ public class CellViewer {
 		myColors = myCellSimulation.myColors;
 		myBorderPane.setCenter(myGridPane);
 
-		ShapeCell[][] grid = new HexagonCell[myGameParams.gridXSize][myGameParams.gridYSize];
-		 double s = (myHeight/(myGameParams.gridXSize*1.9));
+		//ShapeCell[][] grid = new HexagonalCell[myGameParams.gridXSize][myGameParams.gridYSize];
+		 ShapeCell[][] grid = new RectangleCell[myGameParams.gridXSize][myGameParams.gridYSize];
+		 // Length of hexagonal grid 
+		 //double s = (myHeight/(myGameParams.gridXSize*1.9));
+		 // Length of square grid 
+		 double s = Math.min((myHeight/(myGameParams.gridXSize)), (myWidth/(myGameParams.gridYSize*1.5)));
 		 double a = (Math.sqrt(3)*(s/2));
-		 grid[0][0] = new HexagonCell(0,0,s);
+		 //grid[0][0] = new HexagonCell(0,0,s);
+		  grid[0][0] = new RectangleCell(50, 50, s);
 
 		for (int row = 0; row < myGameParams.gridXSize; row++) {
 			for (int col = 0; col < myGameParams.gridYSize; col++) {
 				//addGridConstraints(shape, 1, 1);
 				//Rectangle circle = new Rectangle(myHeight/(myGameParams.gridXSize*1.15), myHeight/(myGameParams.gridXSize*1.15));
 				
-				grid[row][col] = new HexagonCell((grid[0][0].getX() + ((row%2)*a) + (2*col*a)), grid[0][0].getY() + (row*((3*s)/2)), s);
+				//grid[row][col] = new HexagonCell((grid[0][0].getX() + ((row%2)*a) + (2*col*a)), grid[0][0].getY() + (row*((3*s)/2)), s);
+				 grid[row][col] = new RectangleCell(grid[0][0].getX() + row*s, grid[0][0].getY()+ col*s, s);
 				
 				
 				//Cell cell = myCellsGrid[row][col];

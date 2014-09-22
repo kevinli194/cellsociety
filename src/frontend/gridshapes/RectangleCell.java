@@ -1,11 +1,24 @@
-/*package frontend.gridshapes;
+package frontend.gridshapes;
 
-import javafx.scene.shape.Rectangle;
-
+import javafx.scene.shape.Polygon;
 public class RectangleCell extends ShapeCell {
+	private double mySideLength;
 
-	public RectangleCell(int windowHeight, int numCellsRow, int numCellsCol) {
-		myShape = new Rectangle(windowHeight/(numCellsRow*1.15), windowHeight/(numCellsCol*1.15));
+	public RectangleCell(double xCenter, double yCenter, double sideLength) {
+		mySideLength = sideLength;
+		super.setCenter(xCenter, yCenter);
+		calculateVertices();
+
 	}
+
+	public void calculateVertices() {
+		myShape =  new Polygon(myXCenter-(mySideLength/2), (myYCenter + (mySideLength/2)), 
+				myXCenter-(mySideLength/2), myYCenter - (mySideLength/2), 
+				myXCenter+(mySideLength/2), myYCenter - (mySideLength/2), 
+				myXCenter+(mySideLength/2), myYCenter + (mySideLength/2));
+	}	
+
+
+
 }
-*/
+
