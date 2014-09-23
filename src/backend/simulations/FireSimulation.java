@@ -2,6 +2,7 @@ package backend.simulations;
 
 import java.util.ArrayList;
 
+import javafx.scene.paint.Color;
 import backend.cells.FireCell;
 import backend.xml.InitialCell;
 
@@ -63,10 +64,10 @@ public class FireSimulation extends Simulation {
 
 	@Override
 	protected void initializeColor() {
-		myColors = new String[3];
-		myColors[0] = "white";
-		myColors[1] = "green";
-		myColors[2] = "red";
+		myColors = new Color[3];
+		myColors[0] = Color.WHITE;
+		myColors[1] = Color.GREEN;
+		myColors[2] = Color.RED;
 		
 	}
 }

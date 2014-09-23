@@ -5,6 +5,8 @@ import backend.xml.InitialCell;
 
 import java.util.ArrayList;
 
+import javafx.scene.paint.Color;
+
 
 public class SegSimulation extends Simulation {
 
@@ -91,10 +93,10 @@ public class SegSimulation extends Simulation {
 	
 	@Override
 	protected void initializeColor() {
-		myColors = new String[3];
-		myColors[0] = "white";
-		myColors[1] = "black";
-		myColors[2] = "red";
+		myColors = new Color[3];
+		myColors[0] = Color.WHITE;
+		myColors[1] = Color.BLACK;
+		myColors[2] = Color.RED;
 		
 	}
 }

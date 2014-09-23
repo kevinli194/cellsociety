@@ -2,6 +2,7 @@ package backend.simulations;
 
 import java.util.ArrayList;
 
+import javafx.scene.paint.Color;
 import backend.cells.GoLCell;
 import backend.xml.InitialCell;
 
@@ -55,9 +56,9 @@ public class GoLSimulation extends Simulation {
 	
 	@Override
 	protected void initializeColor() {
-		myColors = new String[3];
-		myColors[0] = "blue";
-		myColors[1] = "white";
-		myColors[2] = "black";	
+		myColors = new Color[3];
+		myColors[0] = Color.BLUE;
+		myColors[1] = Color.WHITE;
+		myColors[2] = Color.BLACK;	
 	}
 }
