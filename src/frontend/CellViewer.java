@@ -10,8 +10,9 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
 import frontend.gridshapes.HexagonCell;
-import frontend.gridshapes.RectangleCell;
+import frontend.gridshapes.SquareCell;
 import frontend.gridshapes.ShapeCell;
+import frontend.gridshapes.TriangleCell;
 import backend.cells.Cell;
 import backend.simulations.EcoSimulation;
 import backend.simulations.FireSimulation;
@@ -29,6 +30,9 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
@@ -131,6 +135,7 @@ public class CellViewer {
 	private final ComboBox<String> speedSelected = new ComboBox<String>();
 	private int myHeight;
 	private int myWidth;
+	private Scene myScene;
 
 	/**
 	 * Creates CellViewer object which acquires the animation timeline for 
@@ -150,11 +155,11 @@ public class CellViewer {
 	private void setHeight(int height) {
 		myHeight = height;
 	}
-	
+
 	private void setWidth(int width) {
 		myWidth = width;
 	}
-	
+
 
 	/**
 	 * This method returns the GUI scene with buttons, file chooser, and simulation grid
@@ -166,12 +171,12 @@ public class CellViewer {
 		myBorderPane = new BorderPane();
 		myXMLParser = new XMLParsing();
 
-		Scene scene = new Scene(myBorderPane, width, height);
+		myScene = new Scene(myBorderPane, width, height);
 		addFileSelector(stage);
 		addButtons();
 		disableButtons(true);
 		setButtonsOnAction();
-		return scene;
+		return myScene;
 	}
 
 	/**
@@ -211,41 +216,53 @@ public class CellViewer {
 		myBorderPane.setCenter(myGridPane);
 
 		//ShapeCell[][] grid = new HexagonalCell[myGameParams.gridXSize][myGameParams.gridYSize];
-		 ShapeCell[][] grid = new RectangleCell[myGameParams.gridXSize][myGameParams.gridYSize];
-		 // Length of hexagonal grid 
-		 //double s = (myHeight/(myGameParams.gridXSize*1.9));
-		 // Length of square grid 
-		 double s = Math.min((myHeight/(myGameParams.gridXSize)), (myWidth/(myGameParams.gridYSize*1.5)));
-		 double a = (Math.sqrt(3)*(s/2));
-		 //grid[0][0] = new HexagonCell(0,0,s);
-		  grid[0][0] = new RectangleCell(50, 50, s);
+		// ShapeCell[][] grid = new SquareCell[myGameParams.gridXSize][myGameParams.gridYSize];
+		ShapeCell[][] grid = new TriangleCell[myGameParams.gridXSize][myGameParams.gridYSize];
+
+		// Length of hexagonal grid 
+		double s = (myHeight/(myGameParams.gridXSize*1.7));
+		// Length of square grid 
+		// double s = Math.min((myHeight/(myGameParams.gridXSize)), (myWidth/(myGameParams.gridYSize*1.5)));
+		double a = (Math.sqrt(3)*(s/2));
+		//grid[0][0] = new HexagonCell(0,0,s);
+		// grid[0][0] = new SquareCell(50, 50, s);
+		grid[0][0] = new TriangleCell(0, 0, s, 0);
 
 		for (int row = 0; row < myGameParams.gridXSize; row++) {
 			for (int col = 0; col < myGameParams.gridYSize; col++) {
 				//addGridConstraints(shape, 1, 1);
 				//Rectangle circle = new Rectangle(myHeight/(myGameParams.gridXSize*1.15), myHeight/(myGameParams.gridXSize*1.15));
-				
+
 				//grid[row][col] = new HexagonCell((grid[0][0].getX() + ((row%2)*a) + (2*col*a)), grid[0][0].getY() + (row*((3*s)/2)), s);
-				 grid[row][col] = new RectangleCell(grid[0][0].getX() + row*s, grid[0][0].getY()+ col*s, s);
-				
+				// grid[row][col] = new SquareCell(grid[0][0].getX() + row*s, grid[0][0].getY()+ col*s, s);
+				//grid[row][col] = new TriangleCell((grid[0][0].getX() + (row*Math.sqrt(3))/2), grid[0][0].getY() + col*s/2, s);
+				grid[row][col] = new TriangleCell(((s*Math.sqrt(3))/2)*col, s*(3*row/2.0) - (((row+col)%2))*(s/2), s, ((row+col)%2));
 				
 				//Cell cell = myCellsGrid[row][col];
-				
+
 				grid[row][col].getShape().setFill(Color.GREEN);
 				grid[row][col].getShape().setStroke(Color.BLACK);
-//								shape.setStyle("-fx-background-color: black");// black; fx-hgap: 10;-fx-vgap: 10;");
+				//								shape.setStyle("-fx-background-color: black");// black; fx-hgap: 10;-fx-vgap: 10;");
 				myGridPane.getChildren().add(grid[row][col].getShape());
-//				shape.add(poly,  0,  0);
-				
+				//				shape.add(poly,  0,  0);
+
 				//circle.setRadius(myHeight/(myGameParams.gridXSize*2.2));
 				//myViewingGrid[row][col] = shape;
 			}
 		}
+
+		grid[0][0].myShape.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent ke) {
+				grid[0][0].myShape.setFill(Color.CHOCOLATE);
+			}
+		});
+
 		grid[0][0].getShape().setFill(Color.YELLOW);
 		grid[0][1].getShape().setFill(Color.PURPLE);
 		grid[1][1].getShape().setFill(Color.BLUE);
 		grid[1][0].getShape().setFill(Color.MAGENTA);
-		
+
 
 		/**
 		 * Add borders for the cell grid
@@ -489,29 +506,29 @@ public class CellViewer {
 	 */
 
 
-private void updateDisplay() {
-	if (myGridSet) {
-		for (int i = 0; i < myCellsGrid.length; i++) {
-			for (int j = 0; j < myCellsGrid[0].length; j++) {
-				Cell cell = myCellsGrid[i][j];
-				((Scene) myViewingGrid[i][j].getChildren()).setFill(Color.AQUA);/*.setStyle("-fx-background-color: "
+	private void updateDisplay() {
+		if (myGridSet) {
+			for (int i = 0; i < myCellsGrid.length; i++) {
+				for (int j = 0; j < myCellsGrid[0].length; j++) {
+					Cell cell = myCellsGrid[i][j];
+					((Scene) myViewingGrid[i][j].getChildren()).setFill(Color.AQUA);/*.setStyle("-fx-background-color: "
 						+ myColors[cell.getState()] + ";");*/
+				}
 			}
 		}
 	}
-}
 
-/**
- * Update animation speed based on selection 
- */
-private void checkSpeedSelection() {
-	ArrayList<String> possibleSpeeds = new ArrayList<String>();
-	Collections.addAll(possibleSpeeds, VERY_SLOW, SLOW, NORMAL, FAST, VERY_FAST);
-	for (int i = 0; i < possibleSpeeds.size(); i++) {
-		if (speedSelected.getValue().equals(possibleSpeeds.get(i))){
-			myAnimation.setRate(0.25*(i+1));
-			return;
+	/**
+	 * Update animation speed based on selection 
+	 */
+	private void checkSpeedSelection() {
+		ArrayList<String> possibleSpeeds = new ArrayList<String>();
+		Collections.addAll(possibleSpeeds, VERY_SLOW, SLOW, NORMAL, FAST, VERY_FAST);
+		for (int i = 0; i < possibleSpeeds.size(); i++) {
+			if (speedSelected.getValue().equals(possibleSpeeds.get(i))){
+				myAnimation.setRate(0.25*(i+1));
+				return;
+			}
 		}
 	}
-}
 }

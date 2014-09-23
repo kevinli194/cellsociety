@@ -1,10 +1,10 @@
 package frontend.gridshapes;
 
 import javafx.scene.shape.Polygon;
-public class RectangleCell extends ShapeCell {
+public class SquareCell extends ShapeCell {
 	private double mySideLength;
 
-	public RectangleCell(double xCenter, double yCenter, double sideLength) {
+	public SquareCell(double xCenter, double yCenter, double sideLength) {
 		mySideLength = sideLength;
 		super.setCenter(xCenter, yCenter);
 		calculateVertices();
