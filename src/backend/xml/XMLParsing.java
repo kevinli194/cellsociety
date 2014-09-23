@@ -22,10 +22,10 @@ public class XMLParsing {
 	{	
 		Document doc = createDocumentFromFile(file);
 		InitialGameParameters igp = new InitialGameParameters();
-		igp.simulationMode = valueFromTagElement(doc, "simulationMode");
-		igp.gridXSize = Integer.parseInt(valueFromTagElement(doc, "gridXSize").replaceAll("\\s", ""));
-		igp.gridYSize = Integer.parseInt(valueFromTagElement(doc, "gridYSize").replaceAll("\\s", ""));
-		igp.thresholdValue = Double.parseDouble(valueFromTagElement(doc, "thresholdValue").replaceAll("\\s", ""));
+		igp.simulationMode = getTagValueFromDoc(doc, "simulationMode");
+		igp.gridXSize = Integer.parseInt(getTagValueFromDoc(doc, "gridXSize"));
+		igp.gridYSize = Integer.parseInt(getTagValueFromDoc(doc, "gridYSize"));
+		igp.thresholdValue = Double.parseDouble(getTagValueFromDoc(doc, "thresholdValue"));
 
 		NodeList nList = doc.getElementsByTagName("cell");
 		for (int temp = 0; temp < nList.getLength(); temp++)
@@ -40,17 +40,12 @@ public class XMLParsing {
 		return igp;
 	}
 	
-	private String valueFromTagElement(Document doc, String tagName)
-	{
-		return doc.getElementsByTagName(tagName).item(0).getChildNodes().item(0).getNodeValue();
-	}
-
 	private InitialCell createNewCellFromFileData(Element eElement)
 	{
 		InitialCell initialCell = new InitialCell();
-		initialCell.myState = getTagValue("state", eElement).replaceAll("\\s", "");
-		initialCell.myX = Integer.parseInt(getTagValue("x", eElement).replaceAll("\\s", ""));
-		initialCell.myY = Integer.parseInt(getTagValue("y", eElement).replaceAll("\\s", ""));
+		initialCell.myState = getTagValueFromElement("state", eElement);
+		initialCell.myX = Integer.parseInt(getTagValueFromElement("x", eElement));
+		initialCell.myY = Integer.parseInt(getTagValueFromElement("y", eElement));
 		return initialCell;
 	}
 
@@ -64,9 +59,12 @@ public class XMLParsing {
 		return doc;
 	}
 
-	private String getTagValue(String sTag, Element eElement) {
-		NodeList nlList = eElement.getElementsByTagName(sTag).item(0).getChildNodes();
-		Node nValue = (Node) nlList.item(0);
-		return nValue.getNodeValue();
+	private String getTagValueFromDoc(Document doc, String tagName)
+	{
+		return doc.getElementsByTagName(tagName).item(0).getChildNodes().item(0).getNodeValue().replaceAll("\\s", "");
+	}
+	
+	private String getTagValueFromElement(String sTag, Element eElement) {
+		return eElement.getElementsByTagName(sTag).item(0).getChildNodes().item(0).getNodeValue().replaceAll("\\s", "");
 	}
 }
