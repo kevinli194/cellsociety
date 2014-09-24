@@ -1,12 +1,15 @@
 package backend.simulations;
 
 import java.util.ArrayList;
+
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import backend.cells.Cell;
 import backend.xml.InitialCell;
 
 public abstract class Simulation {
 	protected Cell[][] myGrid;
-	public String[] myColors;
+	public Paint[] myColors;
 
 	/**
 	 * Initializes the grid based on initial dimensions and threshhold values,

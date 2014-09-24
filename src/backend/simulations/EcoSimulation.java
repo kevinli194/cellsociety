@@ -2,6 +2,8 @@ package backend.simulations;
 
 import java.util.ArrayList;
 
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import backend.cells.EcoCell;
 import backend.xml.InitialCell;
 
@@ -52,9 +54,9 @@ public class EcoSimulation extends Simulation {
 
 	@Override
 	protected void initializeColor() {
-		myColors = new String[3];
-		myColors[0] = "blue";
-		myColors[1] = "yellow";
-		myColors[2] = "gray";
+		myColors = new Color[3];
+		myColors[0] = Color.BLUE;
+		myColors[1] = Color.YELLOW;
+		myColors[2] = Color.GRAY;
 	}
 }

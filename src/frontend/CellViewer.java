@@ -4,33 +4,40 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
+import frontend.gridshapes.HexagonCell;
+import frontend.gridshapes.SquareCell;
+import frontend.gridshapes.ShapeCell;
+import frontend.gridshapes.TriangleCell;
 import backend.cells.Cell;
 import backend.simulations.EcoSimulation;
 import backend.simulations.FireSimulation;
 import backend.simulations.GoLSimulation;
 import backend.simulations.SegSimulation;
 import backend.simulations.Simulation;
-import backend.xml.InitialCell;
 import backend.xml.InitialGameParameters;
 import backend.xml.XMLParsing;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.VPos;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Control;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -51,26 +58,25 @@ public class CellViewer {
 	private InitialGameParameters myGameParams;
 	private XMLParsing myXMLParser;
 	private CellWorld myCellWorld;
+	private int myCounter;
 	private boolean myGridSet = false;
 	private boolean myStepClicked = false;
 
 	/**
-	 * Whether file is currently selected used to display cells only after
-	 * created
+	 * Whether file is currently selected used to display cells only after created 
 	 */
 	private boolean myFileSelected = false;
 	/**
-	 * Button last clicked to handle processing "stepping into" simulation
-	 * frames
+	 * Button last clicked to handle processing "stepping into" simulation frames
 	 */
 	private Button myLastClicked = null;
 
 	/**
 	 * Array of cells that are viewed during the simulation
 	 */
-	private GridPane[][] myViewingGrid;
+	private ShapeCell[][] myViewingGrid;
 	/**
-	 * Array of cell objects mapped 1:1 to a viewing cell
+	 * Array of cell objects mapped 1:1 to a viewing cell 
 	 */
 	private Cell[][] myCellsGrid;
 
@@ -78,12 +84,11 @@ public class CellViewer {
 	 * Currently loaded file used in XML parsing
 	 */
 	private File myFile;
-	private boolean myFileValid;
 
 	/**
 	 * Stores the individual grid panes (cells) as children
 	 */
-	private GridPane myGridPane;
+	private Group myGridPane;
 	/**
 	 * Holds layout of the whole GUI
 	 */
@@ -105,15 +110,16 @@ public class CellViewer {
 	 */
 	private Simulation myCellSimulation;
 
+
 	/**
-	 * Used in reflection to match simulation mode to appropriate Simulation
-	 * subclass. This changes if the simulation and corresponding cell classes
-	 * move to a different package
+	 * Used in reflection to match simulation mode to appropriate Simulation subclass. 
+	 * This changes if the simulation and corresponding cell classes move
+	 * to a different package
 	 */
 	private static final String SIMULATION_PACKAGE = "backend.simulations";
 	/**
-	 * Used in matching simulation mode (testing equality of class names) with
-	 * appropriate Simulation subclass
+	 * Used in matching simulation mode (testing equality of class names) with appropriate
+	 * Simulation subclass
 	 */
 	private static final String CLASS_SUFFIX = "simulation";
 
@@ -121,20 +127,22 @@ public class CellViewer {
 	 * Add new simulation to the below array for extensibility
 	 * 
 	 */
-	private Simulation[] mySimulations = { new EcoSimulation(),
-			new FireSimulation(), new GoLSimulation(), new SegSimulation() };
+	private Simulation [] mySimulations = { new EcoSimulation(), new FireSimulation(),
+			new GoLSimulation(),new SegSimulation()};
 
 	private Timeline myAnimation = new Timeline();
-	private String[] myColors;
+	private Paint[] myColors;
 	private final FileChooser fileChooser = new FileChooser();
 	private final Button openButton = new Button("...");
 	private final ComboBox<String> speedSelected = new ComboBox<String>();
 	private int myHeight;
+	private int myWidth;
+	private Scene myScene;
 
 	/**
-	 * Creates CellViewer object which acquires the animation timeline for
-	 * start/stop/reset interaction and CellWorld object to get the initial
-	 * state of the grid.
+	 * Creates CellViewer object which acquires the animation timeline for 
+	 * start/stop/reset interaction and CellWorld object to get the initial state
+	 * of the grid.
 	 * 
 	 */
 	public CellViewer(Timeline animation, CellWorld cellWorld) {
@@ -150,47 +158,45 @@ public class CellViewer {
 		myHeight = height;
 	}
 
+	private void setWidth(int width) {
+		myWidth = width;
+	}
+
+
 	/**
-	 * This method returns the GUI scene with buttons, file chooser, and
-	 * simulation grid
+	 * This method returns the GUI scene with buttons, file chooser, and simulation grid
 	 * 
 	 */
 	public Scene init(Stage stage, int width, int height) {
 		setHeight(height);
+		setWidth(width);
 		myBorderPane = new BorderPane();
 		myXMLParser = new XMLParsing();
 
-		Scene scene = new Scene(myBorderPane, width, height);
+		myScene = new Scene(myBorderPane, width, height);
 		addFileSelector(stage);
 		addButtons();
 		disableButtons(true);
 		setButtonsOnAction();
-		return scene;
+		return myScene;
 	}
 
 	/**
-	 * Generates simulation with reflection by matching simulation name and
-	 * corresponding class
+	 * Generates simulation with reflection by matching simulation name and corresponding class
 	 * 
 	 */
 	private void generateSimulation() {
 		for (int i = 0; i < mySimulations.length; i++) {
-			if (mySimulations[i]
-					.getClass()
-					.getName()
-					.toLowerCase()
-					.equals(SIMULATION_PACKAGE + "."
-							+ myGameParams.simulationMode.toLowerCase()
-							+ CLASS_SUFFIX)) {
+			if (mySimulations[i].getClass().getName().toLowerCase().equals(SIMULATION_PACKAGE + "." + myGameParams.simulationMode.toLowerCase() + CLASS_SUFFIX)){
 				myCellSimulation = mySimulations[i];
-				return;
+				return;		
 			}
 		}
 	}
 
 	/**
-	 * Enables/disables buttons based on boolean passed in. Ensures buttons are
-	 * not active until necessary
+	 * Enables/disables buttons based on boolean passed in. Ensures buttons are not active
+	 * until necessary
 	 * 
 	 */
 
@@ -206,50 +212,69 @@ public class CellViewer {
 	 */
 	private void addCellsToDisplay() {
 		disableButtons(false);
-		myGridPane = new GridPane();
-		myViewingGrid = new GridPane[myGameParams.gridXSize][myGameParams.gridYSize];
+		myGridPane = new Group();
+		myViewingGrid =  new TriangleCell[myGameParams.gridXSize][myGameParams.gridYSize];
 		myColors = myCellSimulation.myColors;
 		myBorderPane.setCenter(myGridPane);
 
+		//ShapeCell[][] grid = new HexagonCell[myGameParams.gridXSize][myGameParams.gridYSize];
+		//  ShapeCell[][] grid = new SquareCell[myGameParams.gridXSize][myGameParams.gridYSize];
+		ShapeCell[][] grid = new TriangleCell[myGameParams.gridXSize][myGameParams.gridYSize];
+
+		// Length of hexagonal grid 
+		// double s = (myHeight/(myGameParams.gridXSize*2.2));
+		// Length of square grid 
+		double s = Math.min((myHeight/(myGameParams.gridXSize*2.2)), (myWidth/(myGameParams.gridYSize*1.5)));
+		double a = (Math.sqrt(3)*(s/2));
+		//grid[0][0] = new HexagonCell(0,0,s);
+		// grid[0][0] = new SquareCell(50, 50, s);
+		grid[0][0] = new TriangleCell(0, 0, s, 0);
+
 		for (int row = 0; row < myGameParams.gridXSize; row++) {
 			for (int col = 0; col < myGameParams.gridYSize; col++) {
-				GridPane square = new GridPane();
+				//addGridConstraints(shape, 1, 1);
+				//Rectangle circle = new Rectangle(myHeight/(myGameParams.gridXSize*1.15), myHeight/(myGameParams.gridXSize*1.15));
+
+				//grid[row][col] = new HexagonCell((grid[0][0].getX() + ((row%2)*a) + (2*col*a)), grid[0][0].getY() + (row*((3*s)/2)), s);
+				// grid[row][col] = new SquareCell(grid[0][0].getX() + row*s, grid[0][0].getY()+ col*s, s);
+				// Delete the following line
+				//grid[row][col] = new TriangleCell((grid[0][0].getX() + (row*Math.sqrt(3))/2), grid[0][0].getY() + col*s/2, s);
+				grid[row][col] = new TriangleCell(((s*Math.sqrt(3))/2)*col, s*(3*row/2.0) - (((row+col)%2))*(s/2), s, ((row+col)%2));
+				
 				Cell cell = myCellsGrid[row][col];
 
-				square.setStyle("-fx-background-color: "
-						+ myColors[cell.getState()] + ";");
-				myGridPane.add(square, col, row);
-				myViewingGrid[row][col] = square;
+				grid[row][col].getShape().setFill(myColors[cell.getState()]);
+				grid[row][col].getShape().setStroke(Color.WHITE);
+				//			shape.setStyle("-fx-background-color: black");// black; fx-hgap: 10;-fx-vgap: 10;");
+				myGridPane.getChildren().add(grid[row][col].getShape());
+				//				shape.add(poly,  0,  0);
+
+				//circle.setRadius(myHeight/(myGameParams.gridXSize*2.2));
+				myViewingGrid[row][col] = grid[row][col];
 			}
 		}
+
+		grid[0][0].myShape.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent ke) {
+				myCounter++;
+				grid[0][0].myShape.setFill(Color.CHOCOLATE);
+				System.out.println(myCounter);
+			}
+		});
+
+/*		grid[0][0].getShape().setFill(Color.YELLOW);
+		grid[0][1].getShape().setFill(Color.PURPLE);
+		grid[1][1].getShape().setFill(Color.BLUE);
+		grid[1][0].getShape().setFill(Color.MAGENTA);
+*/
+
 		/**
 		 * Add borders for the cell grid
 		 */
-		myGridPane
-				.setStyle("-fx-background-color: black;-fx-hgap: 1; -fx-vgap: 1;");
-	}
+		myGridPane.setStyle("-fx-background-color: purple;-fx-hgap: 1; -fx-vgap: 1;");
+		//myGridPane.setPadding(new Insets(5, 5, 5, 5));
 
-	/**
-	 * Adds width and height of rows and columns to ensure identically sized
-	 * cells
-	 */
-	private void addGridConstraints() {
-
-		for (int i = 0; i < myGameParams.gridXSize; i++) {
-			myGridPane.getRowConstraints().add(
-					new RowConstraints(5, Control.USE_COMPUTED_SIZE,
-							Double.POSITIVE_INFINITY, Priority.ALWAYS,
-							VPos.CENTER, true));
-		}
-
-		for (int i = 0; i < myGameParams.gridYSize; i++) {
-			myGridPane.getColumnConstraints().add(
-					new ColumnConstraints(5, Control.USE_COMPUTED_SIZE,
-							Double.POSITIVE_INFINITY, Priority.ALWAYS,
-							HPos.CENTER, true));
-
-		}
-		myGridPane.setPadding(new Insets(5, 5, 5, 5));
 	}
 
 	/**
@@ -264,15 +289,13 @@ public class CellViewer {
 		openButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(final ActionEvent e) {
+
 				fileChooser.setTitle("Open XML File");
 				fileChooser.getExtensionFilters().addAll(
 						new ExtensionFilter("XML Files", "*.xml"));
 				myFile = fileChooser.showOpenDialog(stage);
 				if (myFile != null) {
 					parseXML();
-					checkFileValid(stage);
-					if (!myFileValid)
-						return;
 					resetGrid();
 				} else {
 					fileNotSelected(stage);
@@ -284,43 +307,6 @@ public class CellViewer {
 
 	}
 
-	private void checkFileValid(Stage stage) {
-		if (myGameParams.simulationMode == null)
-			popUpNotification(stage, "Simulation mode not specified!");
-		if (myGameParams.gridXSize < 1 && myGameParams.gridYSize < 1)
-			popUpNotification(stage, "Grid size needs to be positive!");
-		if (myGameParams.thresholdValue < 0)
-			popUpNotification(stage, "Threshold parameter invalid!");
-		if (cellOutOfBounds(myGameParams.initialCells))
-			popUpNotification(stage, "Cell out of bounds!");
-	}
-
-	private boolean cellOutOfBounds(List<InitialCell> initialCells) {
-		for (InitialCell ic : initialCells) {
-			if (ic.myX < 0 || ic.myX > myGameParams.gridXSize || ic.myY < 0
-					|| ic.myY > myGameParams.gridYSize)
-				return true;
-		}
-		return false;
-	}
-
-	private void popUpNotification(Stage stage, String message) {
-		/**
-		 * Setting separate stage to show pop-up window (missing XML file) when
-		 * there is no previously loaded file.
-		 * 
-		 */
-		Stage dialog = new Stage();
-		dialog.initModality(Modality.APPLICATION_MODAL);
-		dialog.initOwner(stage);
-		VBox textBox = new VBox();
-		textBox.getChildren().add(new Text(message));
-		Scene dialogScene = new Scene(textBox, 500, 100);
-		dialog.setScene(dialogScene);
-		dialog.show();
-		myFileValid = false;
-	}
-
 	/**
 	 * Handles user notification (pop-up window) when XML file not selected
 	 * 
@@ -330,8 +316,21 @@ public class CellViewer {
 		if (myPreviousFile != null) {
 			myFile = myPreviousFile;
 		} else {
-			popUpNotification(stage,
-					"You haven't selected an XML file.\nPlease select one.");
+			/**
+			 * Setting separate stage to show pop-up window (missing XML file)
+			 * when there is no previously loaded file.
+			 * 
+			 */
+			Stage dialog = new Stage();
+			dialog.initModality(Modality.APPLICATION_MODAL);
+			dialog.initOwner(stage);
+			VBox textBox = new VBox();
+			textBox.getChildren()
+			.add(new Text(
+					"You haven't selected an XML file.\nPlease select one."));
+			Scene dialogScene = new Scene(textBox, 500, 100);
+			dialog.setScene(dialogScene);
+			dialog.show();
 		}
 	}
 
@@ -340,14 +339,16 @@ public class CellViewer {
 	 */
 	private void parseXML() {
 		try {
-			myGameParams = myXMLParser.parseInitialCellsFromFile(myFile);
+			myGameParams = myXMLParser
+					.parseInitialCellsFromFile(myFile);
 			myFileSelected = true;
 			myPreviousFile = myFile;
-			myFileValid = true;
-		} catch (ParserConfigurationException | SAXException | IOException e1) {
+
+		} catch (ParserConfigurationException | SAXException
+				| IOException e1) {
 			e1.printStackTrace();
 		}
-	}
+	} 
 
 	/**
 	 * Returns layout with vertically aligned buttons
@@ -372,8 +373,8 @@ public class CellViewer {
 	 * Add buttons placed on left side of window
 	 */
 	private void addButtons() {
-		speedSelected.getItems().addAll(VERY_SLOW, SLOW, NORMAL, FAST,
-				VERY_FAST);
+		speedSelected.getItems()
+		.addAll(VERY_SLOW, SLOW, NORMAL, FAST, VERY_FAST);
 		speedSelected.setValue(NORMAL);
 
 		myReset = new Button("Reset");
@@ -434,10 +435,13 @@ public class CellViewer {
 	 * Sets the original of Cell objects
 	 */
 	private void setCellsGrid() {
-		myCellsGrid = myCellSimulation.initialize(myGameParams.simulationMode,
+		myCellsGrid = myCellSimulation.initialize(
+				myGameParams.simulationMode,
 				myGameParams.gridXSize, myGameParams.gridYSize,
-				myGameParams.thresholdValue, myGameParams.initialCells);
+				myGameParams.thresholdValue,
+				myGameParams.initialCells);
 	}
+
 
 	/**
 	 * Reset viewing grid to original states
@@ -447,13 +451,14 @@ public class CellViewer {
 		generateSimulation();
 		setCellsGrid();
 		addCellsToDisplay();
-		addGridConstraints();
+		//addGridConstraints(myGridPane, myGameParams.gridXSize, myGameParams.gridYSize);
 		myCellWorld.startAnimation();
 		myAnimation.pause();
 	}
 
 	private EventHandler<ActionEvent> myOneFrame = new EventHandler<ActionEvent>() {
 		@Override
+
 		/**
 		 * Update routine for each frame of the simulation
 		 */
@@ -474,6 +479,7 @@ public class CellViewer {
 		}
 	};
 
+
 	/**
 	 * Creates animation frame for simulation
 	 * 
@@ -491,10 +497,10 @@ public class CellViewer {
 	}
 
 	/**
-	 * Update states of simulation cells
+	 * Update states of simulation cells 
 	 */
 	private void updateGrid() {
-		if (myGridSet)
+		if (myGridSet) 
 			myCellSimulation.updateGrid();
 	}
 
@@ -503,28 +509,29 @@ public class CellViewer {
 	 * Display updated states of simulation cells
 	 * 
 	 */
+
+
 	private void updateDisplay() {
 		if (myGridSet) {
 			for (int i = 0; i < myCellsGrid.length; i++) {
 				for (int j = 0; j < myCellsGrid[0].length; j++) {
 					Cell cell = myCellsGrid[i][j];
-					myViewingGrid[i][j].setStyle("-fx-background-color: "
-							+ myColors[cell.getState()] + ";");
+					myViewingGrid[i][j].myShape.setFill(myColors[cell.getState()]);//Color.AQUA);/*.setStyle("-fx-background-color: "
+						//+ myColors[cell.getState()] + ";");*/
 				}
 			}
 		}
 	}
 
 	/**
-	 * Update animation speed based on selection
+	 * Update animation speed based on selection 
 	 */
 	private void checkSpeedSelection() {
 		ArrayList<String> possibleSpeeds = new ArrayList<String>();
-		Collections.addAll(possibleSpeeds, VERY_SLOW, SLOW, NORMAL, FAST,
-				VERY_FAST);
+		Collections.addAll(possibleSpeeds, VERY_SLOW, SLOW, NORMAL, FAST, VERY_FAST);
 		for (int i = 0; i < possibleSpeeds.size(); i++) {
-			if (speedSelected.getValue().equals(possibleSpeeds.get(i))) {
-				myAnimation.setRate(0.25 * (i + 1));
+			if (speedSelected.getValue().equals(possibleSpeeds.get(i))){
+				myAnimation.setRate(0.25*(i+1));
 				return;
 			}
 		}
