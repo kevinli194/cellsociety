@@ -1,6 +1,7 @@
 package backend.cells;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The cell class is an abstract class that defines the shared characteristics
@@ -11,7 +12,7 @@ import java.util.ArrayList;
  */
 
 public abstract class Cell {
-	protected ArrayList<Cell> myNeighbors = new ArrayList<Cell>();
+	protected List<Cell> myNeighbors = new ArrayList<Cell>();
 	protected int[] myCoordinates = new int[2];
 	protected boolean myUpdated;
 	protected int myState;

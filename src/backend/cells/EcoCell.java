@@ -9,7 +9,7 @@ public class EcoCell extends Cell {
 	private static final int SHARK = 2;
 	private int myTurnsAlive;
 	private int myStarveTime;
-	private int myTurnsStarved;
+	protected int myTurnsStarved;
 
 	public EcoCell(int xCoord, int yCoord, boolean update, int state,
 			int breedingTime) {
@@ -100,7 +100,7 @@ public class EcoCell extends Cell {
 	 * boolean.
 	 */
 
-	private boolean checkSharkDeath() {
+	protected boolean checkSharkDeath() {
 		if (myTurnsStarved >= myStarveTime) {
 			clearCell();
 			return true;
