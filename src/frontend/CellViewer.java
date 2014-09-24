@@ -58,6 +58,7 @@ public class CellViewer {
 	private InitialGameParameters myGameParams;
 	private XMLParsing myXMLParser;
 	private CellWorld myCellWorld;
+	private int myCounter;
 	private boolean myGridSet = false;
 	private boolean myStepClicked = false;
 
@@ -212,13 +213,13 @@ public class CellViewer {
 	private void addCellsToDisplay() {
 		disableButtons(false);
 		myGridPane = new Group();
-		myViewingGrid =  new SquareCell[myGameParams.gridXSize][myGameParams.gridYSize];
+		myViewingGrid =  new TriangleCell[myGameParams.gridXSize][myGameParams.gridYSize];
 		myColors = myCellSimulation.myColors;
 		myBorderPane.setCenter(myGridPane);
 
 		//ShapeCell[][] grid = new HexagonCell[myGameParams.gridXSize][myGameParams.gridYSize];
-		 ShapeCell[][] grid = new SquareCell[myGameParams.gridXSize][myGameParams.gridYSize];
-		//ShapeCell[][] grid = new TriangleCell[myGameParams.gridXSize][myGameParams.gridYSize];
+		//  ShapeCell[][] grid = new SquareCell[myGameParams.gridXSize][myGameParams.gridYSize];
+		ShapeCell[][] grid = new TriangleCell[myGameParams.gridXSize][myGameParams.gridYSize];
 
 		// Length of hexagonal grid 
 		// double s = (myHeight/(myGameParams.gridXSize*2.2));
@@ -226,8 +227,8 @@ public class CellViewer {
 		double s = Math.min((myHeight/(myGameParams.gridXSize*2.2)), (myWidth/(myGameParams.gridYSize*1.5)));
 		double a = (Math.sqrt(3)*(s/2));
 		//grid[0][0] = new HexagonCell(0,0,s);
-		grid[0][0] = new SquareCell(50, 50, s);
-		//grid[0][0] = new TriangleCell(0, 0, s, 0);
+		// grid[0][0] = new SquareCell(50, 50, s);
+		grid[0][0] = new TriangleCell(0, 0, s, 0);
 
 		for (int row = 0; row < myGameParams.gridXSize; row++) {
 			for (int col = 0; col < myGameParams.gridYSize; col++) {
@@ -235,10 +236,10 @@ public class CellViewer {
 				//Rectangle circle = new Rectangle(myHeight/(myGameParams.gridXSize*1.15), myHeight/(myGameParams.gridXSize*1.15));
 
 				//grid[row][col] = new HexagonCell((grid[0][0].getX() + ((row%2)*a) + (2*col*a)), grid[0][0].getY() + (row*((3*s)/2)), s);
-				grid[row][col] = new SquareCell(grid[0][0].getX() + row*s, grid[0][0].getY()+ col*s, s);
+				// grid[row][col] = new SquareCell(grid[0][0].getX() + row*s, grid[0][0].getY()+ col*s, s);
 				// Delete the following line
 				//grid[row][col] = new TriangleCell((grid[0][0].getX() + (row*Math.sqrt(3))/2), grid[0][0].getY() + col*s/2, s);
-				//grid[row][col] = new TriangleCell(((s*Math.sqrt(3))/2)*col, s*(3*row/2.0) - (((row+col)%2))*(s/2), s, ((row+col)%2));
+				grid[row][col] = new TriangleCell(((s*Math.sqrt(3))/2)*col, s*(3*row/2.0) - (((row+col)%2))*(s/2), s, ((row+col)%2));
 				
 				Cell cell = myCellsGrid[row][col];
 
@@ -256,7 +257,9 @@ public class CellViewer {
 		grid[0][0].myShape.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent ke) {
+				myCounter++;
 				grid[0][0].myShape.setFill(Color.CHOCOLATE);
+				System.out.println(myCounter);
 			}
 		});
 
