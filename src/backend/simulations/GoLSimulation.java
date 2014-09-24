@@ -3,52 +3,55 @@ package backend.simulations;
 import java.util.ArrayList;
 
 import backend.cells.GoLCell;
+import backend.patch.GoLPatch;
 import backend.xml.InitialCell;
 
 public class GoLSimulation extends Simulation {
 
 	@Override
 	protected void makeNewCell(int i, int j, double thresholdValue) {
-		myGrid[i][j] = new GoLCell(i, j, false, 1);
+		myPatchGrid[i][j] = new GoLPatch(i, j, false, 1);
 	}
 
 	@Override
 	protected void setNeighbors(int i, int j) {
 		if (i > 0)
-			myGrid[i][j].addNeighbor(myGrid[i - 1][j]);
+			myPatchGrid[i][j].addNeighbor(myPatchGrid[i - 1][j]);
 		if (j > 0)
-			myGrid[i][j].addNeighbor(myGrid[i][j - 1]);
-		if (i < myGrid.length - 1)
-			myGrid[i][j].addNeighbor(myGrid[i + 1][j]);
-		if (j < myGrid[0].length - 1)
-			myGrid[i][j].addNeighbor(myGrid[i][j + 1]);
+			myPatchGrid[i][j].addNeighbor(myPatchGrid[i][j - 1]);
+		if (i < myPatchGrid.length - 1)
+			myPatchGrid[i][j].addNeighbor(myPatchGrid[i + 1][j]);
+		if (j < myPatchGrid[0].length - 1)
+			myPatchGrid[i][j].addNeighbor(myPatchGrid[i][j + 1]);
 		if (i > 0 && j > 0)
-			myGrid[i][j].addNeighbor(myGrid[i - 1][j - 1]);
-		if (i > 0 && j < myGrid[0].length - 1)
-			myGrid[i][j].addNeighbor(myGrid[i - 1][j + 1]);
-		if (i < myGrid.length - 1 && j > 0)
-			myGrid[i][j].addNeighbor(myGrid[i + 1][j - 1]);
-		if (i < myGrid.length - 1 && j < myGrid[0].length - 1)
-			myGrid[i][j].addNeighbor(myGrid[i + 1][j + 1]);
+			myPatchGrid[i][j].addNeighbor(myPatchGrid[i - 1][j - 1]);
+		if (i > 0 && j < myPatchGrid[0].length - 1)
+			myPatchGrid[i][j].addNeighbor(myPatchGrid[i - 1][j + 1]);
+		if (i < myPatchGrid.length - 1 && j > 0)
+			myPatchGrid[i][j].addNeighbor(myPatchGrid[i + 1][j - 1]);
+		if (i < myPatchGrid.length - 1 && j < myPatchGrid[0].length - 1)
+			myPatchGrid[i][j].addNeighbor(myPatchGrid[i + 1][j + 1]);
 	}
 
 	@Override
 	protected void setInitialState(ArrayList<InitialCell> initialState) {
 		for (InitialCell c : initialState) {
-			((GoLCell) myGrid[c.myX][c.myY]).setState(c.myState);
+			GoLPatch patch = (GoLPatch) myPatchGrid[c.myX][c.myY];
+			patch.setCellState(c.myState);
+			System.out.println(c.myState);
 		}
 	}
 
 	@Override
 	public void updateGrid() {
-		for (int i = 0; i < myGrid.length; i++) {
-			for (int j = 0; j < myGrid[0].length; j++) {
-				myGrid[i][j].update();
+		for (int i = 0; i < myPatchGrid.length; i++) {
+			for (int j = 0; j < myPatchGrid[0].length; j++) {
+				myPatchGrid[i][j].updatePatch();
 			}
 		}
-		for (int i = 0; i < myGrid.length; i++) {
-			for (int j = 0; j < myGrid[0].length; j++) {
-				myGrid[i][j].reset();
+		for (int i = 0; i < myPatchGrid.length; i++) {
+			for (int j = 0; j < myPatchGrid[0].length; j++) {
+				myPatchGrid[i][j].reset();
 			}
 		}
 	}

@@ -1,21 +1,19 @@
 package backend.cells;
 
+import backend.patch.GoLPatch;
+
 
 public class GoLCell extends Cell {
 	private static final int DEAD = 1;
 	private static final int ALIVE = 2;
 
-	public GoLCell(int xCoord, int yCoord, boolean update, int state) {
-		myCoordinates[0] = xCoord;
-		myCoordinates[1] = yCoord;
+	public GoLCell(GoLPatch patch, boolean update) {
+		myPatch = patch;
 		myUpdated = update;
-		myPreviousState = state;
-		myState = state;
 	}
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
 		if (myUpdated == false) {
 			if (myState == ALIVE && getAliveCount() < 2) {
 				myPreviousState = myState;
@@ -41,7 +39,6 @@ public class GoLCell extends Cell {
 				myUpdated = true;
 				return;
 			}
-
 		}
 	}
 

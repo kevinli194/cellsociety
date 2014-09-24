@@ -11,6 +11,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
 import backend.cells.Cell;
+import backend.patch.Patch;
 import backend.simulations.EcoSimulation;
 import backend.simulations.FireSimulation;
 import backend.simulations.GoLSimulation;
@@ -70,9 +71,9 @@ public class CellViewer {
 	 */
 	private GridPane[][] myViewingGrid;
 	/**
-	 * Array of cell objects mapped 1:1 to a viewing cell
+	 * Array of patch objects mapped 1:1 to a viewing cell
 	 */
-	private Cell[][] myCellsGrid;
+	private Patch[][] myGrid;
 
 	/**
 	 * Currently loaded file used in XML parsing
@@ -214,10 +215,10 @@ public class CellViewer {
 		for (int row = 0; row < myGameParams.gridXSize; row++) {
 			for (int col = 0; col < myGameParams.gridYSize; col++) {
 				GridPane square = new GridPane();
-				Cell cell = myCellsGrid[row][col];
-
+				Patch patch = myGrid[row][col];
+				
 				square.setStyle("-fx-background-color: "
-						+ myColors[cell.getState()] + ";");
+						+ myColors[patch.getCellState()] + ";");
 				myGridPane.add(square, col, row);
 				myViewingGrid[row][col] = square;
 			}
@@ -228,7 +229,7 @@ public class CellViewer {
 		myGridPane
 				.setStyle("-fx-background-color: black;-fx-hgap: 1; -fx-vgap: 1;");
 	}
-
+	
 	/**
 	 * Adds width and height of rows and columns to ensure identically sized
 	 * cells
@@ -431,10 +432,10 @@ public class CellViewer {
 	}
 
 	/**
-	 * Sets the original of Cell objects
+	 * Sets the original grid of Cell objects
 	 */
 	private void setCellsGrid() {
-		myCellsGrid = myCellSimulation.initialize(myGameParams.simulationMode,
+		myGrid = myCellSimulation.initialize(myGameParams.simulationMode,
 				myGameParams.gridXSize, myGameParams.gridYSize,
 				myGameParams.thresholdValue, myGameParams.initialCells);
 	}
@@ -505,11 +506,11 @@ public class CellViewer {
 	 */
 	private void updateDisplay() {
 		if (myGridSet) {
-			for (int i = 0; i < myCellsGrid.length; i++) {
-				for (int j = 0; j < myCellsGrid[0].length; j++) {
-					Cell cell = myCellsGrid[i][j];
+			for (int i = 0; i < myGrid.length; i++) {
+				for (int j = 0; j < myGrid[0].length; j++) {
+					Patch patch = myGrid[i][j];
 					myViewingGrid[i][j].setStyle("-fx-background-color: "
-							+ myColors[cell.getState()] + ";");
+							+ myColors[patch.getCellState()] + ";");
 				}
 			}
 		}

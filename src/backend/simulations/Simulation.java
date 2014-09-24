@@ -1,11 +1,13 @@
 package backend.simulations;
 
 import java.util.ArrayList;
+
 import backend.cells.Cell;
+import backend.patch.Patch;
 import backend.xml.InitialCell;
 
 public abstract class Simulation {
-	protected Cell[][] myGrid;
+	protected Patch[][] myPatchGrid;
 	public String[] myColors;
 
 	/**
@@ -28,10 +30,10 @@ public abstract class Simulation {
 	 * @return returns an array of array of cells in a grid.
 	 */
 
-	public Cell[][] initialize(String modelType, int xDimension,
+	public Patch[][] initialize(String modelType, int xDimension,
 			int yDimension, double thresholdValue,
 			ArrayList<InitialCell> initialCells) {
-		myGrid = new Cell[xDimension][yDimension];
+		myPatchGrid = new Patch[xDimension][yDimension];
 		for (int i = 0; i < xDimension; i++) {
 			for (int j = 0; j < yDimension; j++) {
 				makeNewCell(i, j, thresholdValue);
@@ -44,7 +46,7 @@ public abstract class Simulation {
 		}
 		setInitialState(initialCells);
 		initializeColor();
-		return myGrid;
+		return myPatchGrid;
 	}
 
 	/**
@@ -57,7 +59,6 @@ public abstract class Simulation {
 	 * @param thresholdValue
 	 *            feeds in thresholdvalue to be used in cell
 	 */
-
 	protected abstract void makeNewCell(int i, int j, double thresholdValue);
 
 	/**
@@ -67,7 +68,6 @@ public abstract class Simulation {
 	 *            an array of cell like structures that contain the state and
 	 *            location of each cell.
 	 */
-
 	protected abstract void setInitialState(ArrayList<InitialCell> initialState);
 
 	/**

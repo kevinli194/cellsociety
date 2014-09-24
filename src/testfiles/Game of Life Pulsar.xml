@@ -5,7 +5,7 @@
 	<gridYSize> 5 </gridYSize>
 	<thresholdValue> .8 </thresholdValue>
 	<cell>
-		<state> ALIVE </state>
+		<state>DEAD</state>
 		<x> 2 </x>
 		<y> 1 </y>
 	</cell>
