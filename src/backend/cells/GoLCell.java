@@ -28,13 +28,13 @@ public class GoLCell extends Cell {
 					&& (getAliveCount() == 2 || getAliveCount() == 3)) {
 				myPreviousState = myState;
 				myUpdated = true;
+				System.out.println("case 2");
 				return;
 			}
 			if (myState == ALIVE && getAliveCount() > 3) {
 				myPreviousState = myState;
 				myState = DEAD;
 				myUpdated = true;
-				System.out.println("case 3");
 				return;
 			}
 			if (myState == DEAD && getAliveCount() == 3) {

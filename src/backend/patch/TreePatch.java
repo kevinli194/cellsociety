@@ -5,8 +5,8 @@ import backend.cells.FireCell;
 public class TreePatch extends Patch {
 
 	protected static final int EMPTY = 0;
-	protected static final int TREE = 1;
-	protected static final int BURNING = 2;
+	protected static final int TREE = 1; 	// PATCH STATE
+	protected static final int BURNING = 1; // CELL STATE
 	
 	public TreePatch(int xCoord, int yCoord, double thresholdValue) {
 		myCoordinates[0] = xCoord;
@@ -56,7 +56,7 @@ public class TreePatch extends Patch {
 		for (Patch neighbor : myNeighbors)
 		{
 			FireCell cellNeighbor = (FireCell) neighbor.myCell;
-			if(cellNeighbor.getState() == 1) {
+			if(cellNeighbor.getState() == BURNING) {
 				return true;
 			}
 		}

@@ -2,7 +2,7 @@ package backend.cells;
 
 public class FireCell extends Cell {
 	private static final int EMPTY = 0;
-	private static final int BURNING = 2;
+	private static final int BURNING = 1;
 	
 	public FireCell(double thresholdValue) {
 		myUpdated = false;
