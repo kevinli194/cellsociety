@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import backend.cells.Cell;
+import backend.neighborsetters.NeighborSetter;
+import backend.neighborsetters.SegNeighborSetter;
 import backend.xml.InitialCell;
 
 public abstract class Simulation {
@@ -40,11 +42,8 @@ public abstract class Simulation {
 				makeNewCell(i, j, thresholdValue);
 			}
 		}
-		for (int i = 0; i < xDimension; i++) {
-			for (int j = 0; j < yDimension; j++) {
-				setNeighbors(i, j);
-			}
-		}
+		NeighborSetter setter = new SegNeighborSetter();
+		setter.setNeighbors(myGrid, "toroidal", "rectangle");
 		setInitialState(initialCells);
 		initializeColor();
 		return myGrid;

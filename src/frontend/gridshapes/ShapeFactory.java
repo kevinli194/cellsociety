@@ -9,40 +9,57 @@ public class ShapeFactory {
 	private double myCenterToVerticesDistance;
 
 
-
-
-	public ShapeFactory(String shape, double sideLength, double centerToVertices) {
+	public ShapeFactory(String shape, int rowSize, int colSize, double sideLength, double centerToVertices) {
 		mySideLength = sideLength;
 		myCenterToVerticesDistance = centerToVertices;
-		chooseShape(shape);
-
+		chooseShape(shape, rowSize, colSize);
+		populateCellShapes(shape, rowSize, colSize);
 	}
 
-	private void chooseShape(String shape) {
+	/**
+	 * Selects the appropriate type of ShapeCell to implement and allocates space for this [][]
+	 * @param shape - string indicating shape name
+	 * @param rowSize - number of rows of the shape
+	 * @param colSize - number of columns of the shape
+	 */
+	private void chooseShape(String shape, int rowSize, int colSize) {
 
 		if (shape.equals(HEXAGON))
-			myCellShapes = new HexagonCell[4][4];
+			myCellShapes = new HexagonCell[rowSize][colSize];
 
 		if (shape.equals(SQUARE))  
-			myCellShapes = new SquareCell[4][4];
+			myCellShapes = new SquareCell[rowSize][colSize];
 
 		if (shape.equals(TRIANGLE)) 
-			myCellShapes = new TriangleCell[4][4];
-
-
+			myCellShapes = new TriangleCell[rowSize][colSize];
 	}
 
-
-	private void populateCellShapes(int rowSize, int colSize) {
-
+	/**
+	 * Creates individual shapes of the view for the cells by iterating through the rows and columns 
+	 * of the grid.
+	 * @param shape - string indicating shape name
+	 * @param rowSize - number of rows of the shape
+	 * @param colSize - number of columns of the shape
+	 */
+	private void populateCellShapes(String shape, int rowSize, int colSize) {
 		for (int row = 0; row < rowSize; row++) {
 			for (int col = 0; col < colSize; col++) {
+				if (shape.equals(HEXAGON))
+					myCellShapes[row][col] = new HexagonCell(((row%2)*myCenterToVerticesDistance) + (2*col*myCenterToVerticesDistance),
+							(row*((3*mySideLength)/2)), mySideLength);
 
-				// grid[row][col] = new HexagonCell((grid[0][0].getX() + ((row%2)*centerToVertices) + (2*col*centerToVertices)), grid[0][0].getY() + (row*((3*sideLength)/2)), sideLength);
-				// grid[row][col] = new SquareCell(grid[0][0].getX() + row*s, grid[0][0].getY()+ col*s, s);
-				//grid[row][col] = new TriangleCell(((sideLength*Math.sqrt(3))/2)*col, sideLength*(3*row/2.0) - (((row+col+1)%2))*(sideLength/2), sideLength, ((row+col+1)%2));
+				if (shape.equals(SQUARE))
+					myCellShapes[row][col] = new SquareCell(row*mySideLength, col*mySideLength, mySideLength);
+
+				if (shape.equals(TRIANGLE))
+					myCellShapes[row][col] = new TriangleCell(((mySideLength*Math.sqrt(3))/2)*col, 
+							mySideLength*(3*row/2.0) - (((row+col+1)%2))*(mySideLength/2), mySideLength, ((row+col+1)%2));
 			}
 		}
+	}
+
+	public ShapeCell[][] getShapes() {
+		return myCellShapes; 
 	}
 
 }
