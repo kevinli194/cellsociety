@@ -34,7 +34,7 @@ public class GoLSimulation extends Simulation {
 	}
 
 	@Override
-	protected void setInitialState(ArrayList<InitialCell> initialState, double thresholdValue) {
+	protected void setInitialState(ArrayList<InitialCell> initialState) {
 		for (InitialCell c : initialState) {
 			GoLPatch patch = (GoLPatch) myPatchGrid[c.myX][c.myY];
 			patch.setCellState(c.myState);

@@ -2,15 +2,14 @@ package backend.cells;
 
 import backend.patch.EcoPatch;
 
-public class SharkCell extends EcoCell {
+public class SharkCell extends AnimalCell {
 	private int myStarveTime;
 
-	public SharkCell(EcoPatch patch, int state, int breedingTime) {
+	public SharkCell(EcoPatch patch, int state) {
 		myPatch = patch;
 		myUpdated = false;
 		myState = state;
-		myThresholdValue = breedingTime;
-		myStarveTime = breedingTime - 1;
+		myStarveTime = (int) myThresholdValue - 1;
 		myTurnsAlive = 0;
 		myTurnsStarved = 0;
 	}
@@ -27,8 +26,8 @@ public class SharkCell extends EcoCell {
 			myTurnsAlive++;
 			
 			
-			EcoCell fishNeighbor = findNeighborOfType(FISH);
-			EcoCell emptyNeighbor = findNeighborOfType(EMPTY);
+			AnimalCell fishNeighbor = findNeighborOfType(FISH);
+			AnimalCell emptyNeighbor = findNeighborOfType(EMPTY);
 			if (fishNeighbor != null) {
 				eatFish(fishNeighbor);
 				checkandBreed(SHARK);
@@ -55,7 +54,7 @@ public class SharkCell extends EcoCell {
 	 * @param fish
 	 *            Cell to be eaten.
 	 */
-	private void eatFish(EcoCell fish) {
+	private void eatFish(AnimalCell fish) {
 		myTurnsStarved = 0;
 		((FishCell) fish).clearCell();
 	}
@@ -92,7 +91,7 @@ public class SharkCell extends EcoCell {
 
 	private void checkandBreed(int type) {
 		if (myTurnsAlive >= myThresholdValue) {
-			EcoCell emptyNeighbor = findNeighborOfType(EMPTY);
+			AnimalCell emptyNeighbor = findNeighborOfType(EMPTY);
 			if (emptyNeighbor != null) {
 				emptyNeighbor.myState = type;
 				emptyNeighbor.myUpdated = true;
@@ -110,7 +109,7 @@ public class SharkCell extends EcoCell {
 	 *            The cell to move to.
 	 */
 
-	private void movetoNeighbor(EcoCell neighbor) {
+	private void movetoNeighbor(AnimalCell neighbor) {
 		neighbor.myState = myState;
 		neighbor.myUpdated = true;
 		((SharkCell) neighbor).myTurnsAlive = myTurnsAlive;

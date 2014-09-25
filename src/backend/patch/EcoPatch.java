@@ -7,16 +7,17 @@ import backend.cells.FishCell;
 import backend.cells.SharkCell;
 
 public class EcoPatch extends Patch {
-	public EcoPatch(int xCoord, int yCoord) {
+	public EcoPatch(int xCoord, int yCoord, double thresholdValue) {
 		myCoordinates[0] = xCoord;
 		myCoordinates[1] = yCoord;
+		myThresholdValue = thresholdValue;
 	}
 
-	public void initializeCell(String state, double thresholdValue) {
+	public void initializeCell(String state) {
 		if (state.equals("FISH"))
-			myCell = new FishCell(this, 1, (int) thresholdValue);
+			myCell = new FishCell(this, 1);
 		if (state.equals("SHARK"))
-			myCell = new SharkCell(this, 2, (int) thresholdValue);
+			myCell = new SharkCell(this, 2);
 	}
 
 	public void setCell(Cell cell) {
@@ -34,6 +35,11 @@ public class EcoPatch extends Patch {
 
 	@Override
 	public void updatePatch() {
+		updateCell();
+	}
+	
+	@Override
+	public void updateCell() {
 		myCell.updateCell();
 	}
 
@@ -44,8 +50,7 @@ public class EcoPatch extends Patch {
 			{
 				return (EcoPatch) neighbor;
 			}
-		}
-		
+		}	
 		return null;
 	}
 }

@@ -43,7 +43,7 @@ public abstract class Simulation {
 				setNeighbors(i, j);
 			}
 		}
-		setInitialState(initialCells, thresholdValue);
+		setInitialState(initialCells);
 		initializeColor();
 		return myPatchGrid;
 	}
@@ -68,7 +68,7 @@ public abstract class Simulation {
 	 *            location of each cell.
 	 * @param thresholdValue 
 	 */
-	protected abstract void setInitialState(ArrayList<InitialCell> initialState, double thresholdValue);
+	protected abstract void setInitialState(ArrayList<InitialCell> initialState);
 
 	/**
 	 * iterates through and sets neighbors for each cell.

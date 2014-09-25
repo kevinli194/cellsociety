@@ -2,7 +2,7 @@ package backend.cells;
 
 import java.util.Collections;
 
-public abstract class EcoCell extends Cell {
+public abstract class AnimalCell extends Cell {
 	protected static final int EMPTY = 0;
 	protected static final int FISH = 1;
 	protected static final int SHARK = 2;
@@ -44,11 +44,11 @@ public abstract class EcoCell extends Cell {
 	 * looking for.
 	 */
 
-	protected EcoCell findNeighborOfType(int stateID) {
+	protected AnimalCell findNeighborOfType(int stateID) {
 		Collections.shuffle(myNeighbors);
 		for (Cell neighbor : myNeighbors) {
 			if (neighbor.myState == stateID) {
-				return (EcoCell) neighbor;
+				return (AnimalCell) neighbor;
 			}
 		}
 		return null;

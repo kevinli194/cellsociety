@@ -13,6 +13,7 @@ public abstract class Patch {
 	protected boolean myUpdated;
 	protected int myState;
 	protected int myPreviousState;
+	protected double myThresholdValue;
 	
 	public void addNeighbor(Patch neighbor) {
 		myNeighbors.add(neighbor);
@@ -45,5 +46,7 @@ public abstract class Patch {
 	}
 
 	public abstract void updatePatch();
+	
+	public abstract void updateCell();
 
 }

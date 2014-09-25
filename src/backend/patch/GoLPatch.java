@@ -19,6 +19,11 @@ public class GoLPatch extends Patch {
 
 	@Override
 	public void updatePatch() {
+		updateCell();
+	}
+	
+	@Override
+	public void updateCell() {
 		myCell.updateCell();
 	}
 

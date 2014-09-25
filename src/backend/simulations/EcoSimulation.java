@@ -9,7 +9,7 @@ import backend.xml.InitialCell;
 public class EcoSimulation extends Simulation {
 	@Override
 	protected void makeNewPatch(int i, int j, double thresholdValue) {
-		myPatchGrid[i][j] = new EcoPatch(i, j/*, true, 0, (int) thresholdValue*/);
+		myPatchGrid[i][j] = new EcoPatch(i, j, (int) thresholdValue /*, true, 0, (int) thresholdValue*/);
 	}
 
 	@Override
@@ -25,9 +25,9 @@ public class EcoSimulation extends Simulation {
 	}
 
 	@Override
-	protected void setInitialState(ArrayList<InitialCell> initialStates, double thresholdValue) {
+	protected void setInitialState(ArrayList<InitialCell> initialStates) {
 		for (InitialCell c : initialStates) {
-			((EcoPatch) myPatchGrid[c.myX][c.myY]).initializeCell(c.myState, thresholdValue);
+			((EcoPatch) myPatchGrid[c.myX][c.myY]).initializeCell(c.myState);
 		}
 	}
 

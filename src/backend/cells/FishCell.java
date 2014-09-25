@@ -2,13 +2,12 @@ package backend.cells;
 
 import backend.patch.EcoPatch;
 
-public class FishCell extends EcoCell {
+public class FishCell extends AnimalCell {
 
-	public FishCell(EcoPatch patch, int state, int breedingTime) {
+	public FishCell(EcoPatch patch, int state) {
 		myPatch = patch;
 		myUpdated = false;
 		myState = state;
-		myThresholdValue = breedingTime;
 		myTurnsAlive = 0;
 	}
 
