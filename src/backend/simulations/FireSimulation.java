@@ -1,6 +1,6 @@
 package backend.simulations;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import javafx.scene.paint.Color;
 import backend.cells.FireCell;
@@ -13,7 +13,7 @@ public class FireSimulation extends Simulation {
 	}
 
 	@Override
-	protected void setInitialState(ArrayList<InitialCell> initialState) {
+	protected void setInitialState(List<InitialCell> initialState) {
 		for (InitialCell c : initialState) {
 			((FireCell) myGrid[c.myX][c.myY]).setState(c.myState);
 		}
@@ -47,11 +47,11 @@ public class FireSimulation extends Simulation {
 	}
 
 	@Override
-	protected void initializeColor() {
-		myColors = new Color[3];
-		myColors[0] = Color.WHITE;
-		myColors[1] = Color.GREEN;
-		myColors[2] = Color.RED;
+	protected void initializeColors() {
+		myCellColors = new Color[3];
+		myCellColors[0] = Color.WHITE;
+		myCellColors[1] = Color.GREEN;
+		myCellColors[2] = Color.RED;
 		
 	}
 }

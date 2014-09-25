@@ -1,6 +1,6 @@
 package backend.simulations;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -14,7 +14,7 @@ public class EcoSimulation extends Simulation {
 	}
 
 	@Override
-	protected void setInitialState(ArrayList<InitialCell> initialState) {
+	protected void setInitialState(List<InitialCell> initialState) {
 		for (InitialCell c : initialState) {
 			((EcoCell) myGrid[c.myX][c.myY]).setState(c.myState);
 		}
@@ -41,10 +41,10 @@ public class EcoSimulation extends Simulation {
 	}
 
 	@Override
-	protected void initializeColor() {
-		myColors = new Color[3];
-		myColors[0] = Color.BLUE;
-		myColors[1] = Color.YELLOW;
-		myColors[2] = Color.GRAY;
+	protected void initializeColors() {
+		myCellColors = new Color[3];
+		myCellColors[0] = Color.BLUE;
+		myCellColors[1] = Color.YELLOW;
+		myCellColors[2] = Color.GRAY;
 	}
 }

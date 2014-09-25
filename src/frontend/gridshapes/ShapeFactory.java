@@ -1,5 +1,9 @@
 package frontend.gridshapes;
 
+/**
+ * This factory class creates cells of the appropriate grid type based on 
+ * the type of grid shape queried by the user.
+ */
 public class ShapeFactory {
 	private static final String HEXAGON = "HEXAGON";
 	private static final String SQUARE = "SQUARE";
@@ -46,10 +50,10 @@ public class ShapeFactory {
 			for (int col = 0; col < colSize; col++) {
 				if (shape.equals(HEXAGON))
 					myCellShapes[row][col] = new HexagonCell(((row%2)*myCenterToVerticesDistance) + (2*col*myCenterToVerticesDistance),
-							(row*((3*mySideLength)/2)), mySideLength);
+							(row*((3*mySideLength)/2)), mySideLength, 0);
 
 				if (shape.equals(SQUARE))
-					myCellShapes[row][col] = new SquareCell(row*mySideLength, col*mySideLength, mySideLength);
+					myCellShapes[row][col] = new SquareCell(row*mySideLength, col*mySideLength, mySideLength, 0);
 
 				if (shape.equals(TRIANGLE))
 					myCellShapes[row][col] = new TriangleCell(((mySideLength*Math.sqrt(3))/2)*col, 
@@ -58,6 +62,10 @@ public class ShapeFactory {
 		}
 	}
 
+	/**
+	 * Returns the array of grid cell shapes that are used to physically control the individual states
+	 * of these shapes.
+	 */
 	public ShapeCell[][] getShapes() {
 		return myCellShapes; 
 	}

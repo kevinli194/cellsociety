@@ -1,8 +1,7 @@
 package backend.simulations;
 
 import java.util.ArrayList;
-
-import javafx.scene.paint.Color;
+import java.util.List;
 import javafx.scene.paint.Paint;
 import backend.cells.Cell;
 import backend.neighborsetters.NeighborSetter;
@@ -11,7 +10,7 @@ import backend.xml.InitialCell;
 
 public abstract class Simulation {
 	protected Cell[][] myGrid;
-	public Paint[] myColors;
+	public Paint[] myCellColors;
 
 	/**
 	 * Initializes the grid based on initial dimensions and threshhold values,
@@ -45,7 +44,7 @@ public abstract class Simulation {
 		NeighborSetter setter = new SegNeighborSetter();
 		setter.setNeighbors(myGrid, "toroidal", "rectangle");
 		setInitialState(initialCells);
-		initializeColor();
+		initializeColors();
 		return myGrid;
 	}
 
@@ -57,7 +56,7 @@ public abstract class Simulation {
 	 * @param j
 	 *            feeds in y location of cell
 	 * @param thresholdValue
-	 *            feeds in thresholdvalue to be used in cell
+	 *            feeds in threshold value to be used in cell
 	 */
 
 	protected abstract void makeNewCell(int i, int j, double thresholdValue);
@@ -70,14 +69,14 @@ public abstract class Simulation {
 	 *            location of each cell.
 	 */
 
-	protected abstract void setInitialState(ArrayList<InitialCell> initialState);
+	protected abstract void setInitialState(List<InitialCell> initialState);
 
 	
 	/**
 	 * Initializes the colors to be used for each state.
 	 */
 
-	protected abstract void initializeColor();
+	protected abstract void initializeColors();
 
 	/**
 	 * iterates through the cell grid calling the update function on each cell

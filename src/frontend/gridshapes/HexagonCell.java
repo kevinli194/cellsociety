@@ -5,10 +5,9 @@ import javafx.scene.shape.Polygon;
 public class HexagonCell extends ShapeCell {
 	
 	
-	public HexagonCell(double xCenter, double yCenter, double sideLength) {
+	public HexagonCell(double xCenter, double yCenter, double sideLength, int invertShape) {
 		mySideLength = sideLength;
-		super.setCenter(xCenter, yCenter);
-		calculateVertices();
+		super.setShapeParams(xCenter, yCenter, sideLength, invertShape);
 	}
 	
 	@Override

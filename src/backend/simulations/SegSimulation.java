@@ -2,9 +2,8 @@ package backend.simulations;
 import backend.cells.Cell;
 import backend.cells.SegCell;
 import backend.xml.InitialCell;
-
 import java.util.ArrayList;
-
+import java.util.List;
 import javafx.scene.paint.Color;
 
 
@@ -16,7 +15,7 @@ public class SegSimulation extends Simulation {
 	}
 
 	@Override
-	protected void setInitialState(ArrayList<InitialCell> initialState) {
+	protected void setInitialState(List<InitialCell> initialState) {
 		for (InitialCell c : initialState) {
 			((SegCell) myGrid[c.myX][c.myY]).setState(c.myState);
 		}
@@ -43,7 +42,7 @@ public class SegSimulation extends Simulation {
 	
 	public Cell selectRandomEmptyCell()
 	{
-		ArrayList<Cell> emptyCells = findEmptyCells();
+		List<Cell> emptyCells = findEmptyCells();
 		
 		if(emptyCells.isEmpty())
 			return null;
@@ -54,9 +53,9 @@ public class SegSimulation extends Simulation {
 		}
 	}
 	
-	private ArrayList<Cell> findEmptyCells()
+	private List<Cell> findEmptyCells()
 	{
-		ArrayList<Cell> emptyCells = new ArrayList<Cell>();
+		List<Cell> emptyCells = new ArrayList<Cell>();
 		for(int i = 0; i < myGrid.length; i++)
 		{
 			for(int j = 0; j < myGrid[i].length; j++)
@@ -72,11 +71,11 @@ public class SegSimulation extends Simulation {
 	}
 	
 	@Override
-	protected void initializeColor() {
-		myColors = new Color[3];
-		myColors[0] = Color.WHITE;
-		myColors[1] = Color.BLACK;
-		myColors[2] = Color.RED;
+	protected void initializeColors() {
+		myCellColors = new Color[3];
+		myCellColors[0] = Color.WHITE;
+		myCellColors[1] = Color.BLACK;
+		myCellColors[2] = Color.RED;
 		
 	}
 }
