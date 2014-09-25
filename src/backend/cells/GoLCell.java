@@ -11,6 +11,8 @@ public class GoLCell extends Cell {
 		myUpdated = update;
 		myPreviousState = state;
 		myState = state;
+		myPossibleStates = 2;
+
 	}
 
 	@Override

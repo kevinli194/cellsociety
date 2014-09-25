@@ -6,6 +6,7 @@ public abstract class ShapeCell {
 	public Polygon myShape;
 	public double myXCenter;
 	public double myYCenter;
+	public double mySideLength;
 	
 	public abstract void calculateVertices();
 

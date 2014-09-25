@@ -10,7 +10,8 @@ public class SquareCell extends ShapeCell {
 		calculateVertices();
 
 	}
-
+	
+	@Override
 	public void calculateVertices() {
 		myShape =  new Polygon(myXCenter-(mySideLength/2), (myYCenter + (mySideLength/2)), 
 				myXCenter-(mySideLength/2), myYCenter - (mySideLength/2), 

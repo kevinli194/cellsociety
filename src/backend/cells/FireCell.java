@@ -14,6 +14,7 @@ public class FireCell extends Cell {
 		myUpdated = update;
 		myState = state;
 		myThresholdValue = thresholdValue;
+		myPossibleStates = 3;
 	}
 
 	@Override

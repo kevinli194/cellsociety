@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<simulation>
+	<simulationMode>Fire</simulationMode>
+	<gridXSize> -5 </gridXSize>
+	<gridYSize> 200 </gridYSize>
+	<thresholdValue> .8 </thresholdValue>
+	<cell>
+		<state> TREE </state>
+		<x> 1 </x>
+		<y> 1 </y>
+	</cell>
+	<cell>
+		<state> BURNING </state>
+		<x> 1 </x>
+		<y> 3 </y>
+	</cell>
+	<cell>
+		<state> TREE </state>
+		<x> 2 </x>
+		<y> 2 </y>
+	</cell>
+	<cell>
+		<state> BURNING </state>
+		<x> 2 </x>
+		<y> 1 </y>
+	</cell>
+	<cell>
+		<state>TREE</state>
+		<x>1</x>
+		<y>2</y>
+		</cell>
+	<cell>
+		<state>BURNING</state>
+		<x>2</x>
+		<y>3</y>
+	</cell>
+	<cell>
+		<state>BURNING</state>
+		<x> 0 </x>
+		<y> 1 </y>
+	</cell>
+	<cell>
+		<state>TREE</state>
+		<x> 0 </x>
+		<y> 0 </y>
+	</cell>
+	<cell>
+		<state>BURNING</state>
+		<x> 0 </x>
+		<y> 3 </y>
+	</cell>
+</simulation>

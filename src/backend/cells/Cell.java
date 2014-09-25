@@ -1,6 +1,7 @@
 package backend.cells;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The cell class is an abstract class that defines the shared characteristics
@@ -11,12 +12,13 @@ import java.util.ArrayList;
  */
 
 public abstract class Cell {
-	protected ArrayList<Cell> myNeighbors = new ArrayList<Cell>();
+	protected List<Cell> myNeighbors = new ArrayList<Cell>();
 	protected int[] myCoordinates = new int[2];
 	protected boolean myUpdated;
 	protected int myState;
 	protected int myPreviousState;
 	protected double myThresholdValue;
+	public int myPossibleStates;
 
 	/**
 	 * Method that adds a cell to the arrayList myNeighbors.
@@ -45,7 +47,7 @@ public abstract class Cell {
 	 * state of the cells.
 	 * 
 	 * @param state
-	 *            the state of the object as defined as a string from the xml
+	 * the state of the object as defined as a string from the xml
 	 */
 	public abstract void setState(String state);
 
@@ -58,6 +60,16 @@ public abstract class Cell {
 			myUpdated = false;
 		}
 	}
+	
+	/**
+	 * Changes the state of the cell to the next state allowing for dynamic
+	 * user interaction
+	 * 
+	 */
+	public int changedState() {
+		return (myState = (myState+1)% myPossibleStates);
+	}		
+	
 
 	/**
 	 * Abstract method that defines how each cell changes their state according

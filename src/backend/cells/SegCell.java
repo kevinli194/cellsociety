@@ -16,6 +16,7 @@ public class SegCell extends Cell {
 		myState = state;
 		mySegCellManager = segCellManager;
 		myThresholdValue = thresholdValue;
+		myPossibleStates = 3;
 	}
 
 	@Override
