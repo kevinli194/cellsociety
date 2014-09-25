@@ -7,6 +7,7 @@ import backend.cells.Cell;
 
 public abstract class Patch {
 	protected Cell myCell;
+	protected boolean containsCell;
 	protected List<Patch> myNeighbors = new ArrayList<Patch>();
 	protected int[] myCoordinates = new int[2];
 	protected boolean myUpdated;

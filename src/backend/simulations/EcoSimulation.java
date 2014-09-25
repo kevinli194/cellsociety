@@ -2,6 +2,7 @@ package backend.simulations;
 
 import java.util.ArrayList;
 
+import backend.cells.SharkCell;
 import backend.patch.EcoPatch;
 import backend.xml.InitialCell;
 
@@ -29,6 +30,7 @@ public class EcoSimulation extends Simulation {
 			((EcoPatch) myPatchGrid[c.myX][c.myY]).initializeCell(c.myState, thresholdValue);
 		}
 	}
+
 
 	@Override
 	public void updateGrid() {

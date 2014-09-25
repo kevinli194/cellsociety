@@ -25,17 +25,21 @@ public class SharkCell extends EcoCell {
 			super.updateNeighbors();
 			myUpdated = true;
 			myTurnsAlive++;
+			
+			
 			EcoCell fishNeighbor = findNeighborOfType(FISH);
 			EcoCell emptyNeighbor = findNeighborOfType(EMPTY);
 			if (fishNeighbor != null) {
 				eatFish(fishNeighbor);
 				checkandBreed(SHARK);
-			} else {
+			}
+			else {
 				boolean sharkDead = checkSharkDeath();
 				if (emptyNeighbor != null && !sharkDead) {
 					movetoNeighbor(emptyNeighbor);
 					((SharkCell) emptyNeighbor).checkandBreed(SHARK);
-				} else {
+				}
+				else {
 					if (!sharkDead) {
 						checkandBreed(SHARK);
 					}
@@ -48,11 +52,12 @@ public class SharkCell extends EcoCell {
 	 * Method for eating a fish. Takes in a cell to clear. Also sets turns
 	 * starved to 0, because the shark is now full.
 	 * 
-	 * @param fish Cell to be eaten.
+	 * @param fish
+	 *            Cell to be eaten.
 	 */
-	private void eatFish(Cell fish) {
+	private void eatFish(EcoCell fish) {
 		myTurnsStarved = 0;
-		((SharkCell) fish).clearCell();
+		((FishCell) fish).clearCell();
 	}
 
 	/**
@@ -62,7 +67,7 @@ public class SharkCell extends EcoCell {
 	 * it is not eaten if it has not starved to death yet and returns false.
 	 * 
 	 * @return Returns whether the shark is dead (true) or alive (false) as a
-	 * boolean.
+	 *         boolean.
 	 */
 
 	protected boolean checkSharkDeath() {
@@ -81,8 +86,8 @@ public class SharkCell extends EcoCell {
 	 * Method for checking whether a fish or shark can breed and then proceeding
 	 * to breed.
 	 * 
-	 * @param type which type of animal you are breeding given as a state
-	 * (int).
+	 * @param type
+	 *            which type of animal you are breeding given as a state (int).
 	 */
 
 	private void checkandBreed(int type) {
@@ -101,7 +106,8 @@ public class SharkCell extends EcoCell {
 	 * moves the contents in the current cell to a neighboring cell and clears
 	 * the contents of the current cell.
 	 * 
-	 * @param neighbor The cell to move to.
+	 * @param neighbor
+	 *            The cell to move to.
 	 */
 
 	private void movetoNeighbor(EcoCell neighbor) {
@@ -109,6 +115,11 @@ public class SharkCell extends EcoCell {
 		neighbor.myUpdated = true;
 		((SharkCell) neighbor).myTurnsAlive = myTurnsAlive;
 		((SharkCell) neighbor).myTurnsStarved = myTurnsStarved;
+		clearCell();
+	}
+	
+	private void moveToNeighbor2(EcoPatch neighbor) {
+		neighbor.setCell(this);
 		clearCell();
 	}
 }
