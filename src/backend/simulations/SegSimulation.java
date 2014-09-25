@@ -94,7 +94,6 @@ public class SegSimulation extends Simulation {
 		myColors = new String[3];
 		myColors[0] = "white";
 		myColors[1] = "black";
-		myColors[2] = "red";
-		
+		myColors[2] = "red";	
 	}
 }

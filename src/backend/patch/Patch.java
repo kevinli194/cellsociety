@@ -19,6 +19,10 @@ public abstract class Patch {
 		myNeighbors.add(neighbor);
 	}
 	
+	public List<Patch> getPatchNeighbors() {
+		return myNeighbors;
+	}
+	
 	public List<Cell> getCellNeighbors() {
 		List<Cell> myCellNeighbors = new ArrayList<Cell>();
 		for(Patch patch : myNeighbors)
