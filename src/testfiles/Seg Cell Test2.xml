@@ -2,7 +2,7 @@
 <simulation>
 	<simulationMode>Seg</simulationMode>
 	<gridXSize>4</gridXSize>
-	<gridYSize>4</gridYSize>
+	<gridYSize>5</gridYSize>
 	<thresholdValue> .5 </thresholdValue>
 	<cell>
 		<state> X </state>
