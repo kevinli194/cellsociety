@@ -2,7 +2,6 @@ package backend.simulations;
 
 import java.util.ArrayList;
 
-import backend.cells.Cell;
 import backend.patch.Patch;
 import backend.xml.InitialCell;
 
@@ -11,7 +10,7 @@ public abstract class Simulation {
 	public String[] myColors;
 
 	/**
-	 * Initializes the grid based on initial dimensions and threshhold values,
+	 * Initializes the grid based on initial dimensions and threshold values,
 	 * and initialCells.
 	 * 
 	 * @param modelType
@@ -36,7 +35,7 @@ public abstract class Simulation {
 		myPatchGrid = new Patch[xDimension][yDimension];
 		for (int i = 0; i < xDimension; i++) {
 			for (int j = 0; j < yDimension; j++) {
-				makeNewCell(i, j, thresholdValue);
+				makeNewPatch(i, j, thresholdValue);
 			}
 		}
 		for (int i = 0; i < xDimension; i++) {
@@ -59,7 +58,7 @@ public abstract class Simulation {
 	 * @param thresholdValue
 	 *            feeds in thresholdvalue to be used in cell
 	 */
-	protected abstract void makeNewCell(int i, int j, double thresholdValue);
+	protected abstract void makeNewPatch(int i, int j, double thresholdValue);
 
 	/**
 	 * sets the inital state in the grid

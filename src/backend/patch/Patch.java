@@ -30,9 +30,7 @@ public abstract class Patch {
 	public abstract void setCellState(String state);
 
 	public void reset() {
-		if (myState != 0) {
-			myUpdated = false;
-		}
+		myCell.reset();
 	}
 
 	public abstract void updatePatch();

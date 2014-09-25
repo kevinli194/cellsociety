@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class SegSimulation extends Simulation {
 
 	@Override
-	protected void makeNewCell(int i, int j, double thresholdValue) {
+	protected void makeNewPatch(int i, int j, double thresholdValue) {
 		myCellGrid[i][j] = new SegCell(i, j, true, 0, this, thresholdValue);
 	}
 

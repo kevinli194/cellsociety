@@ -2,14 +2,15 @@ package backend.cells;
 
 import backend.patch.GoLPatch;
 
-
 public class GoLCell extends Cell {
 	private static final int DEAD = 1;
 	private static final int ALIVE = 2;
 
-	public GoLCell(GoLPatch patch, boolean update) {
+	public GoLCell(GoLPatch patch, boolean update, int state) {
 		myPatch = patch;
 		myUpdated = update;
+		myPreviousState = state;
+		myState = state;
 	}
 
 	@Override
@@ -19,6 +20,7 @@ public class GoLCell extends Cell {
 				myPreviousState = myState;
 				myState = DEAD;
 				myUpdated = true;
+				System.out.println("case 1");
 				return;
 			}
 			if (myState == ALIVE
@@ -31,6 +33,7 @@ public class GoLCell extends Cell {
 				myPreviousState = myState;
 				myState = DEAD;
 				myUpdated = true;
+				System.out.println("case 3");
 				return;
 			}
 			if (myState == DEAD && getAliveCount() == 3) {
@@ -44,15 +47,12 @@ public class GoLCell extends Cell {
 
 	@Override
 	public void setState(String state) {
-		// TODO Auto-generated method stub
 		if (state.equals("DEAD")) {
 			myState = DEAD;
 		}
 		if (state.equals("ALIVE")) {
 			myState = ALIVE;
 		}
-
-
 	}
 	
 	/**
@@ -60,7 +60,6 @@ public class GoLCell extends Cell {
 	 * 
 	 * @return returns the number of ALIVE state neighbors as an integer.
 	 */
-
 	public int getAliveCount() {
 		int count = 0;
 		for (int i = 0; i < myNeighbors.size(); i++) {

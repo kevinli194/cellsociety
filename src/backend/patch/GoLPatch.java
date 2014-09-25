@@ -5,13 +5,11 @@ import backend.cells.GoLCell;
 
 public class GoLPatch extends Patch {
 	
-	public GoLPatch(int xCoord, int yCoord, boolean update, int state) {
+	public GoLPatch(int xCoord, int yCoord, boolean update) {
 		myCoordinates[0] = xCoord;
 		myCoordinates[1] = yCoord;
 		myUpdated = update;
-		myPreviousState = state;
-		myState = state;
-		myCell = new GoLCell(this, update);
+		myCell = new GoLCell(this, update, 1);
 	}
 	
 	@Override

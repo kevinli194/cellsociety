@@ -7,7 +7,7 @@ import backend.xml.InitialCell;
 
 public class FireSimulation extends Simulation {
 	@Override
-	protected void makeNewCell(int i, int j, double thresholdValue) {
+	protected void makeNewPatch(int i, int j, double thresholdValue) {
 		myCellGrid[i][j] = new FireCell(i, j, true, 0, thresholdValue); 
 	}
 

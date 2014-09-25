@@ -9,8 +9,8 @@ import backend.xml.InitialCell;
 public class GoLSimulation extends Simulation {
 
 	@Override
-	protected void makeNewCell(int i, int j, double thresholdValue) {
-		myPatchGrid[i][j] = new GoLPatch(i, j, false, 1);
+	protected void makeNewPatch(int i, int j, double thresholdValue) {
+		myPatchGrid[i][j] = new GoLPatch(i, j, false);
 	}
 
 	@Override
@@ -38,7 +38,6 @@ public class GoLSimulation extends Simulation {
 		for (InitialCell c : initialState) {
 			GoLPatch patch = (GoLPatch) myPatchGrid[c.myX][c.myY];
 			patch.setCellState(c.myState);
-			System.out.println(c.myState);
 		}
 	}
 
@@ -47,7 +46,9 @@ public class GoLSimulation extends Simulation {
 		for (int i = 0; i < myPatchGrid.length; i++) {
 			for (int j = 0; j < myPatchGrid[0].length; j++) {
 				myPatchGrid[i][j].updatePatch();
+				System.out.print(myPatchGrid[i][j].getCellState() + " ");
 			}
+			System.out.println();
 		}
 		for (int i = 0; i < myPatchGrid.length; i++) {
 			for (int j = 0; j < myPatchGrid[0].length; j++) {
