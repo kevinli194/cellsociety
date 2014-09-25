@@ -23,6 +23,8 @@ public class XMLParsing {
 		Document doc = createDocumentFromFile(file);
 		InitialGameParameters igp = new InitialGameParameters();
 		igp.simulationMode = getTagValueFromDoc(doc, "simulationMode");
+		igp.unitShape = getTagValueFromDoc(doc, "unitShape");
+		igp.edgeType = getTagValueFromDoc(doc, "edgeType");
 		igp.gridXSize = Integer.parseInt(getTagValueFromDoc(doc, "gridXSize"));
 		igp.gridYSize = Integer.parseInt(getTagValueFromDoc(doc, "gridYSize"));
 		igp.thresholdValue = Double.parseDouble(getTagValueFromDoc(doc, "thresholdValue"));
