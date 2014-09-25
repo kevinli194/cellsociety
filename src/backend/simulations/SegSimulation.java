@@ -10,47 +10,47 @@ public class SegSimulation extends Simulation {
 
 	@Override
 	protected void makeNewPatch(int i, int j, double thresholdValue) {
-		myCellGrid[i][j] = new SegCell(i, j, true, 0, this, thresholdValue);
+		myPatchGrid[i][j] = new SegPatch(i, j, this, thresholdValue);
 	}
 
 	@Override
 	protected void setNeighbors(int i, int j) {
 		if (i > 0)
-			myCellGrid[i][j].addNeighbor(myCellGrid[i - 1][j]);
+			myPatchGrid[i][j].addNeighbor(myPatchGrid[i - 1][j]);
 		if (j > 0)
-			myCellGrid[i][j].addNeighbor(myCellGrid[i][j - 1]);
-		if (i < myCellGrid.length - 1)
-			myCellGrid[i][j].addNeighbor(myCellGrid[i + 1][j]);
-		if (j < myCellGrid[0].length - 1)
-			myCellGrid[i][j].addNeighbor(myCellGrid[i][j + 1]);
+			myPatchGrid[i][j].addNeighbor(myPatchGrid[i][j - 1]);
+		if (i < myPatchGrid.length - 1)
+			myPatchGrid[i][j].addNeighbor(myPatchGrid[i + 1][j]);
+		if (j < myPatchGrid[0].length - 1)
+			myPatchGrid[i][j].addNeighbor(myPatchGrid[i][j + 1]);
 		if (i > 0 && j > 0)
-			myCellGrid[i][j].addNeighbor(myCellGrid[i - 1][j - 1]);
-		if (i > 0 && j < myCellGrid[0].length - 1)
-			myCellGrid[i][j].addNeighbor(myCellGrid[i - 1][j + 1]);
-		if (i < myCellGrid.length - 1 && j > 0)
-			myCellGrid[i][j].addNeighbor(myCellGrid[i + 1][j - 1]);
-		if (i < myCellGrid.length - 1 && j < myCellGrid[0].length - 1)
-			myCellGrid[i][j].addNeighbor(myCellGrid[i + 1][j + 1]);
+			myPatchGrid[i][j].addNeighbor(myPatchGrid[i - 1][j - 1]);
+		if (i > 0 && j < myPatchGrid[0].length - 1)
+			myPatchGrid[i][j].addNeighbor(myPatchGrid[i - 1][j + 1]);
+		if (i < myPatchGrid.length - 1 && j > 0)
+			myPatchGrid[i][j].addNeighbor(myPatchGrid[i + 1][j - 1]);
+		if (i < myPatchGrid.length - 1 && j < myPatchGrid[0].length - 1)
+			myPatchGrid[i][j].addNeighbor(myPatchGrid[i + 1][j + 1]);
 	}
 
 	@Override
 	protected void setInitialState(ArrayList<InitialCell> initialState) {
 		for (InitialCell c : initialState) {
-			((SegCell) myCellGrid[c.myX][c.myY]).setState(c.myState);
+			((SegPatch) myPatchGrid[c.myX][c.myY]).setCellState(c.myState);
 		}
 	}
 
 	@Override
 	public void updateGrid() {
-		for (int i = 0; i < myCellGrid.length; i++) {
-			for (int j = 0; j < myCellGrid[0].length; j++) {
-				((SegCell) myCellGrid[i][j]).updateCell();
+		for (int i = 0; i < myPatchGrid.length; i++) {
+			for (int j = 0; j < myPatchGrid[0].length; j++) {
+				((SegCell) myPatchGrid[i][j]).updateCell();
 			}
 		}
 
-		for (int i = 0; i < myCellGrid.length; i++) {
-			for (int j = 0; j < myCellGrid[0].length; j++) {
-				myCellGrid[i][j].reset();
+		for (int i = 0; i < myPatchGrid.length; i++) {
+			for (int j = 0; j < myPatchGrid[0].length; j++) {
+				myPatchGrid[i][j].reset();
 			}
 		}
 	}
@@ -75,11 +75,11 @@ public class SegSimulation extends Simulation {
 	private ArrayList<Cell> findEmptyCells()
 	{
 		ArrayList<Cell> emptyCells = new ArrayList<Cell>();
-		for(int i = 0; i < myCellGrid.length; i++)
+		for(int i = 0; i < myPatchGrid.length; i++)
 		{
-			for(int j = 0; j < myCellGrid[i].length; j++)
+			for(int j = 0; j < myPatchGrid[i].length; j++)
 			{
-				Cell currentCell = myCellGrid[i][j];
+				Cell currentCell = myPatchGrid[i][j];
 				if(currentCell.getState() == 0)
 				{
 					emptyCells.add(currentCell);
