@@ -6,16 +6,17 @@ public class GoLCell extends Cell {
 	private static final int DEAD = 1;
 	private static final int ALIVE = 2;
 
-	public GoLCell(GoLPatch patch, boolean update, int state) {
+	public GoLCell(GoLPatch patch, int state) {
 		myPatch = patch;
-		myUpdated = update;
+		myUpdated = false;
 		myPreviousState = state;
 		myState = state;
 	}
 
 	@Override
-	public void update() {
+	public void updateCell() {
 		if (myUpdated == false) {
+			super.updateNeighbors();
 			if (myState == ALIVE && getAliveCount() < 2) {
 				myPreviousState = myState;
 				myState = DEAD;
@@ -72,5 +73,4 @@ public class GoLCell extends Cell {
 		}
 		return count;
 	}
-
 }

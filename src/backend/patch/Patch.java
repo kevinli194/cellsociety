@@ -12,11 +12,21 @@ public abstract class Patch {
 	protected boolean myUpdated;
 	protected int myState;
 	protected int myPreviousState;
-
+	
 	public void addNeighbor(Patch neighbor) {
 		myNeighbors.add(neighbor);
 	}
-
+	
+	public List<Cell> getCellNeighbors() {
+		List<Cell> myCellNeighbors = new ArrayList<Cell>();
+		for(Patch patch : myNeighbors)
+		{
+			myCellNeighbors.add(patch.myCell);
+		}
+		
+		return myCellNeighbors;
+	}
+	
 	public int getState() {
 		return myState;
 	}
@@ -24,7 +34,7 @@ public abstract class Patch {
 	public int getCellState() {
 		return myCell.getState();
 	}
-
+	
 	public abstract void setPatchState(String state);
 	
 	public abstract void setCellState(String state);

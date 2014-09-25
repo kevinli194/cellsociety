@@ -32,6 +32,10 @@ public abstract class Cell {
 	public void addNeighbor(Cell neighbor) {
 		myNeighbors.add(neighbor);
 	}
+	
+	public void updateNeighbors() {
+		myNeighbors = myPatch.getCellNeighbors();
+	}
 
 	/**
 	 * Method that returns the state of an object. Used when getting to state to
@@ -67,6 +71,6 @@ public abstract class Cell {
 	 * Abstract method that defines how each cell changes their state according
 	 * to their neighbor each update cycle (turn/frame).
 	 */
-	public abstract void update();
+	public abstract void updateCell();
 
 }

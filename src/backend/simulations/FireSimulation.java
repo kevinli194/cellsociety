@@ -38,7 +38,7 @@ public class FireSimulation extends Simulation {
 	public void updateGrid() {
 		for (int i = 0; i < myCellGrid.length; i++) {
 			for (int j = 0; j < myCellGrid[0].length; j++) {
-				((FireCell) myCellGrid[i][j]).update();
+				((FireCell) myCellGrid[i][j]).updateCell();
 			}
 		}
 		for (int i = 0; i < myCellGrid.length; i++) {

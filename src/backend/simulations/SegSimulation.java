@@ -44,7 +44,7 @@ public class SegSimulation extends Simulation {
 	public void updateGrid() {
 		for (int i = 0; i < myCellGrid.length; i++) {
 			for (int j = 0; j < myCellGrid[0].length; j++) {
-				((SegCell) myCellGrid[i][j]).update();
+				((SegCell) myCellGrid[i][j]).updateCell();
 			}
 		}
 

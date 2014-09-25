@@ -10,7 +10,7 @@ public class GoLSimulation extends Simulation {
 
 	@Override
 	protected void makeNewPatch(int i, int j, double thresholdValue) {
-		myPatchGrid[i][j] = new GoLPatch(i, j, false);
+		myPatchGrid[i][j] = new GoLPatch(i, j);
 	}
 
 	@Override
@@ -34,7 +34,7 @@ public class GoLSimulation extends Simulation {
 	}
 
 	@Override
-	protected void setInitialState(ArrayList<InitialCell> initialState) {
+	protected void setInitialState(ArrayList<InitialCell> initialState, double thresholdValue) {
 		for (InitialCell c : initialState) {
 			GoLPatch patch = (GoLPatch) myPatchGrid[c.myX][c.myY];
 			patch.setCellState(c.myState);

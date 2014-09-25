@@ -19,7 +19,7 @@ public class SegCell extends Cell {
 	}
 
 	@Override
-	public void update() {
+	public void updateCell() {
 		if (myUpdated == false) {
 			myUpdated = true;
 			int satisfiedNeighbors = 0;

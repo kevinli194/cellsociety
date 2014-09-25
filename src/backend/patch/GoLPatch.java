@@ -1,15 +1,12 @@
 package backend.patch;
 
-import backend.cells.Cell;
 import backend.cells.GoLCell;
 
 public class GoLPatch extends Patch {
-	
-	public GoLPatch(int xCoord, int yCoord, boolean update) {
+	public GoLPatch(int xCoord, int yCoord) {
 		myCoordinates[0] = xCoord;
 		myCoordinates[1] = yCoord;
-		myUpdated = update;
-		myCell = new GoLCell(this, update, 1);
+		myCell = new GoLCell(this, 1);
 	}
 	
 	@Override
@@ -22,7 +19,7 @@ public class GoLPatch extends Patch {
 
 	@Override
 	public void updatePatch() {
-		myCell.update();
+		myCell.updateCell();
 	}
 
 }

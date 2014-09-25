@@ -20,7 +20,7 @@ public class FireCell extends Cell {
 	/**
 	 * Updates the trees. 
 	 */
-	public void update() {
+	public void updateCell() {
 		if (myState == TREE && myUpdated == false) {
 			myUpdated = true;
 			if (anyNeighborIsBurning()) {

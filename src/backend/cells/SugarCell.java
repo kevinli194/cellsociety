@@ -8,7 +8,7 @@ public class SugarCell extends Cell {
 	}
 
 	@Override
-	public void update() {
+	public void updateCell() {
 		
 	}
 
