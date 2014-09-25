@@ -3,6 +3,8 @@ package backend.cells;
 import java.util.ArrayList;
 import java.util.List;
 
+import backend.patch.Patch;
+
 /**
  * The cell class is an abstract class that defines the shared characteristics
  * of a cell. All cells have defined neighbors, coordinates on the grid, a
@@ -12,6 +14,7 @@ import java.util.List;
  */
 
 public abstract class Cell {
+	protected Patch myPatch;
 	protected List<Cell> myNeighbors = new ArrayList<Cell>();
 	protected int[] myCoordinates = new int[2];
 	protected boolean myUpdated;
@@ -29,6 +32,10 @@ public abstract class Cell {
 	 */
 	public void addNeighbor(Cell neighbor) {
 		myNeighbors.add(neighbor);
+	}
+	
+	public void updateNeighbors() {
+		myNeighbors = myPatch.getCellNeighbors();
 	}
 
 	/**
@@ -75,6 +82,6 @@ public abstract class Cell {
 	 * Abstract method that defines how each cell changes their state according
 	 * to their neighbor each update cycle (turn/frame).
 	 */
-	public abstract void update();
+	public abstract void updateCell();
 
 }

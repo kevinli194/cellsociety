@@ -1,11 +1,13 @@
 <?xml version="1.0"?>
 <simulation>
 	<simulationMode>GoL</simulationMode>
+	<unitShape>TRIANGLE</unitShape>
+	<edgeType>FINITE</edgeType>
 	<gridXSize> 5 </gridXSize>
 	<gridYSize> 5 </gridYSize>
 	<thresholdValue> .8 </thresholdValue>
 	<cell>
-		<state> ALIVE </state>
+		<state>ALIVE</state>
 		<x> 2 </x>
 		<y> 1 </y>
 	</cell>

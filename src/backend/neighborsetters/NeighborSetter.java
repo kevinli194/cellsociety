@@ -1,10 +1,10 @@
 package backend.neighborsetters;
 
-import backend.cells.Cell;
+import backend.patch.Patch;
 
 public abstract class NeighborSetter {
 
-	public void setNeighbors(Cell[][] grid, String boundaryType,
+	public void setNeighbors(Patch[][] grid, String boundaryType,
 			String gridShape) {
 		if (boundaryType.equals("FINITE")) {
 			if (gridShape == "SQUARE") {
@@ -57,13 +57,13 @@ public abstract class NeighborSetter {
 
 	}
 
-	public void recToroidal(Cell[][] grid, int i, int j) {
+	public void recToroidal(Patch[][] grid, int i, int j) {
 		recBounded(grid, i, j);
 		addCardinalEdges(grid, i, j);
 
 	}
 
-	public void triToroidal(Cell[][] grid, int i, int j) {
+	public void triToroidal(Patch[][] grid, int i, int j) {
 		triBounded(grid, i, j);
 		addCardinalEdges(grid, i, j);
 		addDiagonalEdges(grid, i, j);
@@ -72,17 +72,17 @@ public abstract class NeighborSetter {
 
 	}
 
-	public void hexToroidal(Cell[][] grid, int i, int j) {
+	public void hexToroidal(Patch[][] grid, int i, int j) {
 		hexBounded(grid, i, j);
 		addHexEdges(grid, i, j);
 
 	}
 
-	public void recBounded(Cell[][] grid, int i, int j) {
+	public void recBounded(Patch[][] grid, int i, int j) {
 		addCardinalNeighbors(grid, i, j);
 	}
 
-	public void triBounded(Cell[][] grid, int i, int j) {
+	public void triBounded(Patch[][] grid, int i, int j) {
 		/*
 		 * the mod 2 determines which direction the triangle is facing. This is
 		 * the code for 3 neighbors. if (i > 0 && (i + j) % 2 == 0)
@@ -95,13 +95,13 @@ public abstract class NeighborSetter {
 		addDiagonalNeighbors(grid, i, j);
 	}
 
-	public void hexBounded(Cell[][] grid, int i, int j) {
+	public void hexBounded(Patch[][] grid, int i, int j) {
 		addCardinalNeighbors(grid, i, j);
 		addHexDiags(grid, i, j);
 
 	}
 
-	protected void addCardinalNeighbors(Cell[][] grid, int i, int j) {
+	protected void addCardinalNeighbors(Patch[][] grid, int i, int j) {
 		if (i > 0)
 			grid[i][j].addNeighbor(grid[i - 1][j]);
 		if (j > 0)
@@ -112,7 +112,7 @@ public abstract class NeighborSetter {
 			grid[i][j].addNeighbor(grid[i][j + 1]);
 	}
 
-	protected void addDiagonalNeighbors(Cell[][] grid, int i, int j) {
+	protected void addDiagonalNeighbors(Patch[][] grid, int i, int j) {
 		if (i > 0 && j > 0)
 			grid[i][j].addNeighbor(grid[i - 1][j - 1]);
 		if (i > 0 && j < grid[0].length - 1)
@@ -123,7 +123,7 @@ public abstract class NeighborSetter {
 			grid[i][j].addNeighbor(grid[i + 1][j + 1]);
 	}
 
-	protected void addCardinalEdges(Cell[][] grid, int i, int j) {
+	protected void addCardinalEdges(Patch[][] grid, int i, int j) {
 		if (i == 0)
 			grid[i][j].addNeighbor(grid[grid.length - 1][j]);
 		if (j == 0)
@@ -134,7 +134,7 @@ public abstract class NeighborSetter {
 			grid[i][j].addNeighbor(grid[i][0]);
 	}
 
-	protected void addDiagonalEdges(Cell[][] grid, int i, int j) {
+	protected void addDiagonalEdges(Patch[][] grid, int i, int j) {
 		if (i == 0) {
 			if (j != 0)
 				grid[i][j].addNeighbor(grid[grid.length - 1][j - 1]);
@@ -162,7 +162,7 @@ public abstract class NeighborSetter {
 
 	}
 
-	protected void addHexDiags(Cell[][] grid, int i, int j) {
+	protected void addHexDiags(Patch[][] grid, int i, int j) {
 		if (i % 2 == 0) {
 			if (i > 0 && j > 0)
 				grid[i][j].addNeighbor(grid[i - 1][j - 1]);
@@ -178,7 +178,7 @@ public abstract class NeighborSetter {
 		}
 	}
 
-	private void addHexEdges(Cell[][] grid, int i, int j) {
+	private void addHexEdges(Patch[][] grid, int i, int j) {
 		if (i == 0) {
 			grid[i][j].addNeighbor(grid[grid.length - 1][j]);
 			if (j != 0)

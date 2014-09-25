@@ -1,4 +1,4 @@
-package backend.cells;
+/*package backend.cells;
 
 import backend.simulations.SegSimulation;
 
@@ -20,7 +20,7 @@ public class SegCell extends Cell {
 	}
 
 	@Override
-	public void update() {
+	public void updateCell() {
 		if (myUpdated == false) {
 			myUpdated = true;
 			int satisfiedNeighbors = 0;
@@ -32,17 +32,17 @@ public class SegCell extends Cell {
 					totalNeighbors++;
 				}
 			}
-			
+
 			double percentageOfNeighborsSatisfied = (totalNeighbors != 0) ? 
-					 satisfiedNeighbors / totalNeighbors : 0;
+					satisfiedNeighbors / totalNeighbors : 0;
 			if (percentageOfNeighborsSatisfied < myThresholdValue)
 				moveToBeSatisfied();
 		}
 	}
-	
-	/**
+
+	*//**
 	 *  Moves a cell to a empty cell if dissatisfied.
-	 */
+	 *//*
 
 	private void moveToBeSatisfied() {
 		Cell emptyCell = mySegCellManager.selectRandomEmptyCell();
@@ -70,3 +70,4 @@ public class SegCell extends Cell {
 	}
 
 }
+*/

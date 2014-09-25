@@ -1,46 +1,44 @@
 package backend.simulations;
 
 import java.util.List;
-
 import javafx.scene.paint.Color;
-import backend.cells.FireCell;
+import backend.patch.TreePatch;
 import backend.xml.InitialCell;
 
 public class FireSimulation extends Simulation {
 	@Override
-	protected void makeNewCell(int i, int j, double thresholdValue) {
-		myGrid[i][j] = new FireCell(i, j, true, 0, thresholdValue); 
+	protected void makeNewPatch(int i, int j, double thresholdValue) {
+		myPatchGrid[i][j] = new TreePatch(i, j, thresholdValue); 
 	}
 
 	@Override
 	protected void setInitialState(List<InitialCell> initialState) {
 		for (InitialCell c : initialState) {
-			((FireCell) myGrid[c.myX][c.myY]).setState(c.myState);
+			TreePatch patch = (TreePatch) myPatchGrid[c.myX][c.myY];
+			if(c.myState == "FIRE")
+				patch.setCellState(c.myState);
+			else
+				patch.setPatchState(c.myState);
 		}
 	}
 
 	@Override
 	public void updateGrid() {
-		for (int i = 0; i < myGrid.length; i++) {
-			for (int j = 0; j < myGrid[0].length; j++) {
-				((FireCell) myGrid[i][j]).update();
+		for (int i = 0; i < myPatchGrid.length; i++) {
+			for (int j = 0; j < myPatchGrid[0].length; j++) {
+				((TreePatch) myPatchGrid[i][j]).updateCell();
 			}
 		}
-		for (int i = 0; i < myGrid.length; i++) {
-			for (int j = 0; j < myGrid[0].length; j++) {
-				((FireCell) myGrid[i][j]).updateFire();
+		
+		for (int i = 0; i < myPatchGrid.length; i++) {
+			for (int j = 0; j < myPatchGrid[0].length; j++) {
+				((TreePatch) myPatchGrid[i][j]).updatePatch();
 			}
 		}
-		for (int i = 0; i < myGrid.length; i++) {
-			for (int j = 0; j < myGrid[0].length; j++) {
-				if (myGrid[i][j].getState() == 2) {
-				}
-			}
-		}
-
-		for (int i = 0; i < myGrid.length; i++) {
-			for (int j = 0; j < myGrid[0].length; j++) {
-				myGrid[i][j].reset();
+		
+		for (int i = 0; i < myPatchGrid.length; i++) {
+			for (int j = 0; j < myPatchGrid[0].length; j++) {
+				myPatchGrid[i][j].reset();
 
 			}
 		}
@@ -48,10 +46,10 @@ public class FireSimulation extends Simulation {
 
 	@Override
 	protected void initializeColors() {
-		myCellColors = new Color[3];
-		myCellColors[0] = Color.WHITE;
-		myCellColors[1] = Color.GREEN;
-		myCellColors[2] = Color.RED;
+		myColors = new Color[3];
+		myColors[0] = Color.WHITE;
+		myColors[1] = Color.GREEN;
+		myColors[2] = Color.RED;
 		
 	}
 }

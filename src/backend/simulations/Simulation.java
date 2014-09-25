@@ -1,19 +1,21 @@
 package backend.simulations;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import backend.cells.Cell;
 import backend.neighborsetters.NeighborSetter;
 import backend.neighborsetters.SegNeighborSetter;
 import backend.xml.InitialCell;
+import backend.patch.Patch;
 
 public abstract class Simulation {
-	protected Cell[][] myGrid;
-	public Paint[] myCellColors;
+	protected Patch[][] myPatchGrid;
+	public Color[] myColors;
 
 	/**
-	 * Initializes the grid based on initial dimensions and threshhold values,
+	 * Initializes the grid based on initial dimensions and threshold values,
 	 * and initialCells.
 	 * 
 	 * @param modelType
@@ -32,24 +34,26 @@ public abstract class Simulation {
 	 * @return returns an array of array of cells in a grid.
 	 */
 
-	public Cell[][] initialize(String modelType, int xDimension,
+	public Patch[][] initialize(String modelType, int xDimension,
 			int yDimension, double thresholdValue,
-			ArrayList<InitialCell> initialCells) {
-		myGrid = new Cell[xDimension][yDimension];
+			List<InitialCell> initialCells) {
+		myPatchGrid = new Patch[xDimension][yDimension];
 		for (int i = 0; i < xDimension; i++) {
 			for (int j = 0; j < yDimension; j++) {
-				makeNewCell(i, j, thresholdValue);
+				makeNewPatch(i, j, thresholdValue);
 			}
 		}
 		NeighborSetter setter = new SegNeighborSetter();
-		setter.setNeighbors(myGrid, "toroidal", "rectangle");
+		setter.setNeighbors(myPatchGrid, "toroidal", "rectangle");
 		setInitialState(initialCells);
+
 		initializeColors();
-		return myGrid;
+		return myPatchGrid;
+
 	}
 
 	/**
-	 * makes new empty cells based on parameters
+	 * Makes new empty cells based on parameters
 	 * 
 	 * @param i
 	 *            feeds in the x location of cell
@@ -58,15 +62,15 @@ public abstract class Simulation {
 	 * @param thresholdValue
 	 *            feeds in threshold value to be used in cell
 	 */
-
-	protected abstract void makeNewCell(int i, int j, double thresholdValue);
+	protected abstract void makeNewPatch(int i, int j, double thresholdValue);
 
 	/**
-	 * sets the inital state in the grid
+	 * Sets the initial state in the grid
 	 * 
 	 * @param initialState
 	 *            an array of cell like structures that contain the state and
 	 *            location of each cell.
+	 * @param thresholdValue 
 	 */
 
 	protected abstract void setInitialState(List<InitialCell> initialState);
@@ -79,8 +83,8 @@ public abstract class Simulation {
 	protected abstract void initializeColors();
 
 	/**
-	 * iterates through the cell grid calling the update function on each cell
-	 * appropriately. resets myUpdate in each cell after each cycle. This is
+	 * Iterates through the cell grid calling the update function on each cell
+	 * appropriately. Resets myUpdate in each cell after each cycle. This is
 	 * called every frame.
 	 */
 	public abstract void updateGrid();

@@ -4,15 +4,17 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+
 import javax.xml.parsers.ParserConfigurationException;
+
 import org.xml.sax.SAXException;
+
 import frontend.gridshapes.ShapeCell;
 import frontend.gridshapes.ShapeFactory;
-import backend.cells.Cell;
+import backend.patch.Patch;
 import backend.simulations.EcoSimulation;
 import backend.simulations.FireSimulation;
 import backend.simulations.GoLSimulation;
-import backend.simulations.SegSimulation;
 import backend.simulations.Simulation;
 import backend.xml.InitialGameParameters;
 import backend.xml.XMLParsing;
@@ -49,7 +51,7 @@ public class CellViewer {
 	private InitialGameParameters myGameParams;
 	private XMLParsing myXMLParser;
 	private CellWorld myCellWorld;
-	private boolean myCellsGridSet = false;
+	private boolean myGridSet = false;
 	private boolean myStepClicked = false;
 
 	/**
@@ -67,10 +69,10 @@ public class CellViewer {
 	private ShapeCell[][] myViewingGrid;
 
 	/**
-	 *  Array of cell objects mapped 1:1 to a viewing cell 
+	 *  Array of patch objects mapped 1:1 to a viewing patch 
 	 *  
 	 */
-	private Cell[][] myCellsGrid;
+	private Patch[][] myGrid;
 
 	/**
 	 * Currently loaded file used in XML parsing
@@ -119,7 +121,7 @@ public class CellViewer {
 	 * 
 	 */
 	private Simulation [] mySimulations = { new EcoSimulation(), new FireSimulation(),
-			new GoLSimulation(),new SegSimulation()};
+			new GoLSimulation()};//new SegSimulation()};
 
 	private Timeline myAnimation = new Timeline();
 	private Paint[] myCellColors;
@@ -202,7 +204,7 @@ public class CellViewer {
 	private void addCellsToDisplay() {
 		disableButtons(false);
 		myCellsGridPane = new Group();
-		myCellColors = myCellSimulation.myCellColors;
+		myCellColors = myCellSimulation.myColors;
 		myBorderPane.setCenter(myCellsGridPane);
 		double sideLength = Math.min((myHeight/(myGameParams.gridXSize*2.2)), (myWidth/(myGameParams.gridYSize*1.5)));
 		double centerToVertices = (Math.sqrt(3)*(sideLength/2));
@@ -211,10 +213,10 @@ public class CellViewer {
 		myViewingGrid = myShapeFactory.getShapes();
 		for (int row = 0; row < myGameParams.gridXSize; row++) {
 			for (int col = 0; col < myGameParams.gridYSize; col++) {
-				Cell cell = myCellsGrid[row][col];
+				Patch patch = myGrid[row][col];
 				myCellsGridPane.getChildren().add(myViewingGrid[row][col].getShape());
-				setCellOnMouseListen(myViewingGrid[row][col], cell);
-				myViewingGrid[row][col].getShape().setFill(myCellColors[cell.getState()]);
+				setCellOnMouseListen(myViewingGrid[row][col], patch);
+				myViewingGrid[row][col].getShape().setFill(myCellColors[patch.getCellState()]);
 				myViewingGrid[row][col].getShape().setStroke(Color.WHITE);
 
 			}
@@ -226,11 +228,11 @@ public class CellViewer {
 	 * backend Cell object and frontend Cell viewer.
 	 * 
 	 */
-	private void setCellOnMouseListen(ShapeCell viewCell, Cell cell) {
+	private void setCellOnMouseListen(ShapeCell viewCell, Patch patch) {
 		viewCell.myShape.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent ke) {
-				viewCell.myShape.setFill(myCellColors[cell.changedState()]);
+				viewCell.myShape.setFill(myCellColors[patch.changeCellState()]);
 			}
 		});
 	}
@@ -388,8 +390,8 @@ public class CellViewer {
 	/**
 	 * Sets the original grid of Cell objects
 	 */
-	private void setCellsGrid() {
-		myCellsGrid = myCellSimulation.initialize(
+	private void setGrid() {
+		myGrid = myCellSimulation.initialize(
 				myGameParams.simulationMode,
 				myGameParams.gridXSize, myGameParams.gridYSize,
 				myGameParams.thresholdValue,
@@ -403,7 +405,7 @@ public class CellViewer {
 	private void resetGrid() {
 		myAnimation.stop();
 		generateSimulation();
-		setCellsGrid();
+		setGrid();
 		addCellsToDisplay();
 		//addGridConstraints(myCellsGridPane, myGameParams.gridXSize, myGameParams.gridYSize);
 		myCellWorld.startAnimation();
@@ -444,7 +446,7 @@ public class CellViewer {
 	private void checkFileSelectedAndSetFlags() {
 
 		if ((myFile != null) && (myFileSelected)) {
-			myCellsGridSet = true;
+			myGridSet = true;
 			myFileSelected = false;
 		}
 	}
@@ -453,19 +455,19 @@ public class CellViewer {
 	 * Update states of simulation cells 
 	 */
 	private void updateGrid() {
-		if (myCellsGridSet)
+		if (myGridSet)
 			myCellSimulation.updateGrid();
 	}
 
 	/**
-	 * Display updated states of simulation cells
+	 * Display updated states of simulation patches
 	 */
 	private void updateDisplay() {
-		if (myCellsGridSet) {
-			for (int i = 0; i < myCellsGrid.length; i++) {
-				for (int j = 0; j < myCellsGrid[0].length; j++) {
-					Cell cell = myCellsGrid[i][j];
-					myViewingGrid[i][j].myShape.setFill(myCellColors[cell.getState()]);
+		if (myGridSet) {
+			for (int i = 0; i < myGrid.length; i++) {
+				for (int j = 0; j < myGrid[0].length; j++) {
+					Patch patch = myGrid[i][j];
+					myViewingGrid[i][j].myShape.setFill(myCellColors[patch.getCellState()]);
 				}
 			}
 		}
