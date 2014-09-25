@@ -13,25 +13,6 @@ public class GoLSimulation extends Simulation {
 		myGrid[i][j] = new GoLCell(i, j, false, 1);
 	}
 
-	@Override
-	protected void setNeighbors(int i, int j) {
-		if (i > 0)
-			myGrid[i][j].addNeighbor(myGrid[i - 1][j]);
-		if (j > 0)
-			myGrid[i][j].addNeighbor(myGrid[i][j - 1]);
-		if (i < myGrid.length - 1)
-			myGrid[i][j].addNeighbor(myGrid[i + 1][j]);
-		if (j < myGrid[0].length - 1)
-			myGrid[i][j].addNeighbor(myGrid[i][j + 1]);
-		if (i > 0 && j > 0)
-			myGrid[i][j].addNeighbor(myGrid[i - 1][j - 1]);
-		if (i > 0 && j < myGrid[0].length - 1)
-			myGrid[i][j].addNeighbor(myGrid[i - 1][j + 1]);
-		if (i < myGrid.length - 1 && j > 0)
-			myGrid[i][j].addNeighbor(myGrid[i + 1][j - 1]);
-		if (i < myGrid.length - 1 && j < myGrid[0].length - 1)
-			myGrid[i][j].addNeighbor(myGrid[i + 1][j + 1]);
-	}
 
 	@Override
 	protected void setInitialState(ArrayList<InitialCell> initialState) {

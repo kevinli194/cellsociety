@@ -72,16 +72,7 @@ public abstract class Simulation {
 
 	protected abstract void setInitialState(ArrayList<InitialCell> initialState);
 
-	/**
-	 * iterates through and sets neighbors for each cell.
-	 * 
-	 * @param i
-	 *            location of the cell in grid (x coord)
-	 * @param j
-	 *            location of the cell in grid (y coord)
-	 */
-	protected abstract void setNeighbors(int i, int j);
-
+	
 	/**
 	 * Initializes the colors to be used for each state.
 	 */
