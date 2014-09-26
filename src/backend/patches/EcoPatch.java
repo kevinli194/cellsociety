@@ -8,20 +8,36 @@ import backend.cells.FishCell;
 import backend.cells.SharkCell;
 import javafx.scene.paint.Color;
 
+/**
+ * 
+ * @author CS308 Team16
+ * EcoPatch is the Patch for the Wa-Tor World Simulation.
+ * EcoPatch stores EmptyCell, SharkCell, or FishCell, and its primarily role
+ * is to switch between the different cell states and instantiate new cells where appropriate.
+ */
+
 public class EcoPatch extends Patch {
 	private static final int EMPTY = 0;
 	private static final int FISH = 1;
 	private static final int SHARK = 2;
 
+	/**
+	 * Constructor for EcoPatch
+	 * @param xCoord
+	 * @param yCoord
+	 * @param thresholdValue
+	 * 		Breeding time that will be assigned to the Cells that occupy this Patch.
+	 */
 	public EcoPatch(int xCoord, int yCoord, double thresholdValue) {
-		myCoordinates[0] = xCoord;
-		myCoordinates[1] = yCoord;
+		super(xCoord, yCoord, thresholdValue);
 		myUpdated = false;
 		myCell = new EmptyCell(this);
-		myThresholdValue = thresholdValue;
 		myPossibleStates = 3;
 	}
 
+	/**
+	 * Returns the color for the cell's state.
+	 */
 	@Override
 	public Color getColor() {
 		if (myCell.getState() == FISH)
@@ -34,9 +50,11 @@ public class EcoPatch extends Patch {
 
 	}
 
+	/**
+	 * Sets the initial state of the cell stored at this patch.
+	 */
 	@Override
 	public void setInitialState(String state) {
-		// TODO Auto-generated method stub
 		if (state.equals("EMPTY")) {
 			myCell = new EmptyCell(this);
 		}
@@ -50,8 +68,10 @@ public class EcoPatch extends Patch {
 
 	}
 
+	/**
+	 * Allows for easily switching the cell stored at this patch.
+	 */
 	public void setState(int type) {
-		// TODO Auto-generated method stub
 		if (type == EMPTY) {
 			myCell = new EmptyCell(this);
 		}
@@ -66,20 +86,30 @@ public class EcoPatch extends Patch {
 	}
 
 	@Override
-	public void update() {
-		// TODO Auto-generated method stub
-
-	}
+	public void update() {	}
+	
+	/**
+	 * Updating for sharks is called first.
+	 */
 	public void updateShark(){
 		if (myCell.getState() ==SHARK)
 		myCell.update();
 	}
+	
+	/**
+	 * Updating for fish is called second.
+	 */
 	public void updateFish(){
 		if (myCell.getState() == FISH)
-			myCell.update();
-		
+			myCell.update();		
 	}
 
+	/**
+	 * Searches through the neighbors for a patch holding a particular cell.
+	 * @param stateID
+	 * @return
+	 * 		Patch neighbor containing the cell of input state.
+	 */
 	public Patch findNeighborOfType(int stateID) {
 		Collections.shuffle(myNeighbors);
 		for (Patch neighbor : myNeighbors) {
@@ -87,7 +117,6 @@ public class EcoPatch extends Patch {
 				return neighbor;
 			}
 		}
-
 		return null;
 	}
 
@@ -96,9 +125,11 @@ public class EcoPatch extends Patch {
 		patch.myCell = myCell;
 		myCell.setPatch(patch);
 		myCell = tempCell;
-
 	}
 
+	/**
+	 * Set the patch's cell to an EmptyCell.
+	 */
 	public void clearCell() {
 		myCell = new EmptyCell(this);
 		myUpdated = true;

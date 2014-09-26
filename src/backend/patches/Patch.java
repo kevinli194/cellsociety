@@ -24,7 +24,14 @@ public abstract class Patch {
 	protected int myPossibleStates;
 	protected Cell myCell;
 	protected boolean isEmpty;
-
+	
+	public Patch(int xCoord, int yCoord, double thresholdValue)
+	{
+		myCoordinates[0] = xCoord;
+		myCoordinates[1] = yCoord;
+		myThresholdValue = thresholdValue;
+	}
+	
 	/**
 	 * Method that adds a cell to the arrayList myNeighbors.
 	 * 
