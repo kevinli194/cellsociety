@@ -1,7 +1,7 @@
 package frontend.gridshapes;
 
 /**
- * This factory class creates cells of the appropriate grid type based on 
+ * This factory class creates cells and patches of the appropriate grid type based on 
  * the type of grid shape queried by the user.
  */
 public class ShapeFactory {

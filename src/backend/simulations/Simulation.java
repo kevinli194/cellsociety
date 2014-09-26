@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.scene.paint.Paint;
-import backend.neighborsetters.NeighborSetter;
-import backend.neighborsetters.SugarNeighborSetter;
 import backend.patches.Patch;
 import backend.xml.InitialCell;
 
@@ -17,6 +15,7 @@ import backend.xml.InitialCell;
 public abstract class Simulation {
 	protected Patch[][] myGrid;
 	public Paint[] myCellColors;
+	double myThreshold;
 
 	/**
 	 * Initializes the grid based on initial dimensions and threshhold values,
@@ -38,18 +37,17 @@ public abstract class Simulation {
 	 * @return returns an array of array of cells in a grid.
 	 */
 
-	public Patch[][] initialize(String modelType, String unitShape, String edgeType,
-			int xDimension, int yDimension, double thresholdValue,
-			ArrayList<InitialCell> initialCells) {
+	public Patch[][] initialize(String modelType, String unitShape,
+			String edgeType, int xDimension, int yDimension,
+			double thresholdValue, ArrayList<InitialCell> initialCells) {
 		myGrid = new Patch[xDimension][yDimension];
 		for (int i = 0; i < xDimension; i++) {
 			for (int j = 0; j < yDimension; j++) {
 				makeNewCell(i, j, thresholdValue);
 			}
 		}
-
-		NeighborSetter setter = new SugarNeighborSetter((int) thresholdValue);
-		setter.setNeighbors(myGrid, "TOROIDAL", "HEXAGON");
+		myThreshold = thresholdValue;
+		setNeighbors(myGrid, edgeType, unitShape);
 		setInitialState(initialCells);
 		initializeColors();
 		return myGrid;
@@ -78,9 +76,9 @@ public abstract class Simulation {
 
 	protected abstract void setInitialState(List<InitialCell> initialState);
 
-	
 	/**
-	 * Initializes the colors to be used for each state.
+	 * Initializes the colors to be used for each state. Used when dynamically
+	 * editing each shape.
 	 */
 
 	protected abstract void initializeColors();
@@ -92,4 +90,6 @@ public abstract class Simulation {
 	 */
 	public abstract void updateGrid();
 
+	protected abstract void setNeighbors(Patch[][] grid, String edgeType,
+			String gridShape);
 }

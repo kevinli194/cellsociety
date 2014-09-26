@@ -3,7 +3,11 @@ package backend.simulations;
 import java.util.List;
 
 import javafx.scene.paint.Color;
+
+import backend.neighborsetters.EcoNeighborSetter;
+import backend.neighborsetters.NeighborSetter;
 import backend.patches.EcoPatch;
+import backend.patches.Patch;
 import backend.xml.InitialCell;
 
 public class EcoSimulation extends Simulation {
@@ -45,5 +49,13 @@ public class EcoSimulation extends Simulation {
 		myCellColors[0] = Color.BLUE;
 		myCellColors[1] = Color.YELLOW;
 		myCellColors[2] = Color.GRAY;
+	}
+
+	@Override
+	protected void setNeighbors(Patch[][] grid, String boundaryType,
+			String gridShape) {
+		NeighborSetter setter = new EcoNeighborSetter();
+		setter.setNeighbors(grid, boundaryType, gridShape);
+
 	}
 }
