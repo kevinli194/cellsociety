@@ -22,7 +22,7 @@ public class SugarPatch extends Patch {
 		mySugarGrowBackInterval = 3;
 		mySugarGrowBackRate = 1;
 		mySugarTicks = 0;
-		myPossibleStates = (int) myMaximumCapacity;
+		myPossibleStates = 2;
 		myCell = new SugarAgentCell(this);
 	}
 

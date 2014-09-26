@@ -2,6 +2,7 @@ package backend.simulations;
 
 import java.util.List;
 
+import javafx.scene.paint.Color;
 import backend.patches.SugarPatch;
 import backend.xml.InitialCell;
 
@@ -45,7 +46,9 @@ public class SugarSimulation extends Simulation {
 
 	@Override
 	protected void initializeColors() {
-		
+		myCellColors = new Color[2];
+		myCellColors[0] = Color.WHITE;
+		myCellColors[1] = Color.RED;
 	}
 
 }
