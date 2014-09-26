@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import backend.cells.Cell;
+import backend.neighborsetters.NeighborSetter;
 import backend.xml.InitialCell;
 
 public abstract class Simulation {
@@ -40,11 +41,7 @@ public abstract class Simulation {
 				makeNewCell(i, j, thresholdValue);
 			}
 		}
-		for (int i = 0; i < xDimension; i++) {
-			for (int j = 0; j < yDimension; j++) {
-				setNeighbors(i, j);
-			}
-		}
+		
 		setInitialState(initialCells);
 		initializeColor();
 		return myGrid;
@@ -81,7 +78,7 @@ public abstract class Simulation {
 	 * @param j
 	 *            location of the cell in grid (y coord)
 	 */
-	protected abstract void setNeighbors(int i, int j);
+	protected abstract void setNeighbors();
 
 	/**
 	 * Initializes the colors to be used for each state.

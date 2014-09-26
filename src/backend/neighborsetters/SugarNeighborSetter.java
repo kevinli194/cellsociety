@@ -1,4 +1,4 @@
-package backend.neighborsetters;
+/*package backend.neighborsetters;
 
 import java.util.Random;
 
@@ -49,4 +49,4 @@ public class SugarNeighborSetter extends NeighborSetter {
 
 	}
 
-}
+}*/

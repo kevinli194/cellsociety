@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 import javafx.scene.paint.Color;
 import backend.cells.GoLCell;
+import backend.neighborsetters.GoLNeighborSetter;
+import backend.neighborsetters.NeighborSetter;
+import backend.neighborsetters.SegNeighborSetter;
 import backend.xml.InitialCell;
 
 public class GoLSimulation extends Simulation {
@@ -14,23 +17,10 @@ public class GoLSimulation extends Simulation {
 	}
 
 	@Override
-	protected void setNeighbors(int i, int j) {
-		if (i > 0)
-			myGrid[i][j].addNeighbor(myGrid[i - 1][j]);
-		if (j > 0)
-			myGrid[i][j].addNeighbor(myGrid[i][j - 1]);
-		if (i < myGrid.length - 1)
-			myGrid[i][j].addNeighbor(myGrid[i + 1][j]);
-		if (j < myGrid[0].length - 1)
-			myGrid[i][j].addNeighbor(myGrid[i][j + 1]);
-		if (i > 0 && j > 0)
-			myGrid[i][j].addNeighbor(myGrid[i - 1][j - 1]);
-		if (i > 0 && j < myGrid[0].length - 1)
-			myGrid[i][j].addNeighbor(myGrid[i - 1][j + 1]);
-		if (i < myGrid.length - 1 && j > 0)
-			myGrid[i][j].addNeighbor(myGrid[i + 1][j - 1]);
-		if (i < myGrid.length - 1 && j < myGrid[0].length - 1)
-			myGrid[i][j].addNeighbor(myGrid[i + 1][j + 1]);
+	protected void setNeighbors() {
+			NeighborSetter setter = new GoLNeighborSetter();
+			setter.setNeighbors(myGrid, "FINITE", "SQUARE");	
+			
 	}
 
 	@Override

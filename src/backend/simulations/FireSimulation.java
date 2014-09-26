@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 import javafx.scene.paint.Color;
 import backend.cells.FireCell;
+import backend.neighborsetters.FireNeighborSetter;
+import backend.neighborsetters.NeighborSetter;
+import backend.neighborsetters.SegNeighborSetter;
 import backend.xml.InitialCell;
 
 public class FireSimulation extends Simulation {
@@ -13,21 +16,12 @@ public class FireSimulation extends Simulation {
 	}
 
 	@Override
-	protected void setNeighbors(int i, int j) {
-		if (i > 0) {
-			myGrid[i][j].addNeighbor(myGrid[i - 1][j]);
-		}
-		if (j > 0) {
-			myGrid[i][j].addNeighbor(myGrid[i][j - 1]);
-		}
-		if (i < myGrid.length - 1) {
-			myGrid[i][j].addNeighbor(myGrid[i + 1][j]);
-		}
-		if (j < myGrid[0].length - 1) {
-			myGrid[i][j].addNeighbor(myGrid[i][j + 1]);
-		}
+	protected void setNeighbors() {
+		NeighborSetter setter = new FireNeighborSetter();
+		setter.setNeighbors(myGrid, "TOROIDAL", "SQUARE");	
 	}
 
+	
 	@Override
 	protected void setInitialState(ArrayList<InitialCell> initialState) {
 		for (InitialCell c : initialState) {
