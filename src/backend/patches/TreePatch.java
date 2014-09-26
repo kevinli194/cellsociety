@@ -65,7 +65,6 @@ public class TreePatch extends Patch {
 		}
 	}
 
-
 	@Override
 	public Color getColor() {
 		if (myCell.myState == BURNING) {

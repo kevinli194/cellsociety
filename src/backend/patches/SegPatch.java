@@ -30,11 +30,6 @@ public class SegPatch extends Patch {
 	}
 
 	@Override
-	public void updateCell() {
-		myCell.update();
-	}
-
-	@Override
 	public void setState(String state) {
 		if(state.equals("X"))
 			myCell.myState = X;
