@@ -42,7 +42,7 @@ public abstract class Simulation {
 			}
 		}
 		NeighborSetter setter = new SegNeighborSetter();
-		setter.setNeighbors(myGrid, "toroidal", "rectangle");
+		setter.setNeighbors(myGrid, "TOROIDAL", "SQUARE");
 		setInitialState(initialCells);
 		initializeColors();
 		return myGrid;
