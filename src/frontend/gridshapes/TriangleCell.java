@@ -1,7 +1,10 @@
 package frontend.gridshapes;
 import javafx.scene.shape.Polygon;
 
-
+/**
+ * Class that creates triangle grid cells/patches based on certain parameters.
+ *
+ */
 public class TriangleCell extends ShapeCell {
 
 	public TriangleCell(double xCenter, double yCenter, double radius, int invertShape) {		
@@ -20,14 +23,5 @@ public class TriangleCell extends ShapeCell {
 					(myYCenter + (mySideLength/2)), (myXCenter - (Math.sqrt(3)*mySideLength)/2),
 					(myYCenter + (mySideLength/2)));
 		}
-
-		/*myShape =  new Polygon(myXCenter, myYCenter - mySideLength, 
-				myXCenter + centerToVertices, myYCenter - (mySideLength/2), 
-				myXCenter + centerToVertices, myYCenter + (mySideLength/2), 
-				myXCenter, myYCenter + mySideLength,
-
-				myXCenter - centerToVertices, myYCenter + (mySideLength/2), 
-				myXCenter - centerToVertices, myYCenter - (mySideLength/2));	
-		 */
 	}
 }
