@@ -59,7 +59,7 @@ public abstract class NeighborSetter {
 
 	public void recAndTriToroidal(Patch[][] grid, int i, int j) {
 		recAndTriBounded(grid, i, j);
-		addCardinalEdges(grid, i, j,1);
+		addCardinalEdges(grid, i, j, 1);
 
 	}
 
@@ -70,7 +70,7 @@ public abstract class NeighborSetter {
 	}
 
 	public void recAndTriBounded(Patch[][] grid, int i, int j) {
-		addCardinalNeighbors(grid, i, j,1);
+		addCardinalNeighbors(grid, i, j, 1);
 	}
 
 	public void hexBounded(Patch[][] grid, int i, int j) {
@@ -81,21 +81,19 @@ public abstract class NeighborSetter {
 
 	protected void addCardinalNeighbors(Patch[][] grid, int i, int j, int num) {
 		int count = 1;
-		while (num > 0) {
-			if (i > num - 1)
+		while (count <= num) {
+			if (i > count - 1)
 				grid[i][j].addNeighbor(grid[i - count][j]);
-			if (j > num - 1)
+			if (j > count - 1)
 				grid[i][j].addNeighbor(grid[i][j - count]);
-			if (i < grid.length - num)
+			if (i < grid.length - count)
 				grid[i][j].addNeighbor(grid[i + count][j]);
-			if (j < grid[0].length - num)
+			if (j < grid[0].length - count)
 				grid[i][j].addNeighbor(grid[i][j + count]);
-			num--;
 			count++;
 		}
 
 	}
-
 
 	protected void addDiagonalNeighbors(Patch[][] grid, int i, int j) {
 		if (i > 0 && j > 0)
@@ -176,7 +174,7 @@ public abstract class NeighborSetter {
 		}
 		if (i == grid.length - 1) {
 			grid[i][j].addNeighbor(grid[0][j]);
-			if (j != grid[0].length-1)
+			if (j != grid[0].length - 1)
 				grid[i][j].addNeighbor(grid[0][j + 1]);
 		}
 		if (j == 0)

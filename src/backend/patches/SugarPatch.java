@@ -9,34 +9,37 @@ public class SugarPatch extends Patch {
 	private final static int DEAD = 0;
 	private final static int ALIVE = 1;
 
-	private int myMaximumCapacity;
+	private double myMaximumCapacity;
 	private int mySugarGrowBackInterval;
 	private int mySugarGrowBackRate;
 	private int mySugarTicks;
-	private int mySugarAmount;
 
 	public SugarPatch(int xCoord, int yCoord) {
 		myCoordinates[0] = xCoord;
 		myCoordinates[1] = yCoord;
 		myMaximumCapacity = 4;
-		mySugarAmount = myMaximumCapacity;
+		myState = (int) myMaximumCapacity;
 		mySugarGrowBackInterval = 3;
 		mySugarGrowBackRate = 1;
 		mySugarTicks = 0;
-
+		myPossibleStates = 2;
 		myCell = new SugarAgentCell(this);
 	}
 
 	@Override
 	public Color getColor() {
-		if (myCell.myState == ALIVE)
+		if (myCell.myState == DEAD) {
+			return Color.web("0x0000FF", ((double) myState) / myMaximumCapacity);
+		} else
 			return Color.RED;
-		else
-			return Color.WHITE;
 	}
 
 	@Override
 	public void setState(String state) {
+		if (state.equals("ALIVE"))
+			myCell.setState(ALIVE);
+		else
+			myCell.setState(DEAD);
 	};
 
 	@Override
@@ -44,13 +47,18 @@ public class SugarPatch extends Patch {
 		if (myUpdated == false) {
 			myUpdated = true;
 			mySugarTicks++;
-			if (mySugarTicks > mySugarGrowBackInterval) {
-				mySugarAmount += mySugarGrowBackRate;
-				if (mySugarAmount > myMaximumCapacity) {
-					mySugarAmount = myMaximumCapacity;
+			if (mySugarTicks >= mySugarGrowBackInterval) {
+				mySugarTicks = 0;
+				myState += mySugarGrowBackRate;
+				if (myState > myMaximumCapacity) {
+					myState = (int) myMaximumCapacity;
 				}
 			}
 		}
+	}
+	
+	public void resetCell() {
+		((SugarAgentCell) myCell).reset();
 	}
 
 	public void swapCells(Patch patch) {

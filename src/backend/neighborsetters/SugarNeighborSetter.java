@@ -1,32 +1,36 @@
 package backend.neighborsetters;
 
-import java.util.Random;
-
 import backend.patches.Patch;
 
 public class SugarNeighborSetter extends NeighborSetter {
-	private int num;
-
-	public SugarNeighborSetter() {
-		Random rn = new Random();
-		num = rn.nextInt(5) + 0;
+	private int myVision;
+	
+	public SugarNeighborSetter(int vision) {
+		myVision = vision;
 	}
 
 	@Override
 	public void recAndTriToroidal(Patch[][] grid, int i, int j) {
 		hexBounded(grid, i, j);
-		addCardinalEdges(grid, i, j, num);
+		addCardinalEdges(grid, i, j, myVision);
 
 	}
 
 	@Override
 	public void recAndTriBounded(Patch[][] grid, int i, int j) {
-		addCardinalNeighbors(grid, i, j, num);
+		addCardinalNeighbors(grid, i, j, myVision);
 	}
 
 	@Override
+	public void hexToroidal(Patch[][] grid, int i, int j) {
+		hexBounded (grid, i, j);
+		addCardinalEdges(grid, i, j, myVision);
+	}
+	
+	
+	@Override
 	public void hexBounded(Patch[][] grid, int i, int j) {
-		addCardinalNeighbors(grid, i, j, num);
+		addCardinalNeighbors(grid, i, j, myVision);
 
 	}
 
