@@ -5,11 +5,10 @@ import backend.patches.Patch;
 public class FireCell extends Cell {
 	public static int NOT_BURNING = 0;
 	public static int BURNING = 1;
-	public double myThresholdValue;
 
-	public FireCell(int state, Patch patch, double thresholdValue) {
+
+	public FireCell(int state, Patch patch) {
 		myState = state;
-		myThresholdValue = thresholdValue;
 		myPatch = patch;
 	}
 

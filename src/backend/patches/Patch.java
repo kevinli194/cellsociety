@@ -58,7 +58,9 @@ public abstract class Patch {
 
 	public abstract Color getColor();
 
-	public abstract void updateCell();
+	public void updateCell() {
+		myCell.update();
+	}
 
 	/**
 	 * Method that sets the state of an object. Used when setting the initial
@@ -67,7 +69,7 @@ public abstract class Patch {
 	 * @param state
 	 *            the state of the object as defined as a string from the xml
 	 */
-	public abstract void setState(String state);
+	
 
 	/**
 	 * Resets the myUpdate of the cell for use in next frame. All empty cells
@@ -77,11 +79,12 @@ public abstract class Patch {
 		myUpdated = false;
 	}
 
-
-
-	public boolean isEmpty(){
+	public boolean isEmpty() {
 		return myCell == null;
 	}
+	
+	public abstract void setState(String state);
+
 
 	/**
 	 * Changes the state of the cell to the next state allowing for dynamic user

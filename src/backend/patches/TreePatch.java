@@ -15,7 +15,7 @@ public class TreePatch extends Patch {
 		myUpdated = false;
 		myState = 0;
 		myThresholdValue = thresholdValue;
-		myCell = new FireCell(NOT_BURNING, this, thresholdValue);
+		myCell = new FireCell(NOT_BURNING, this);
 		myPossibleStates = 2;
 	}
 
@@ -65,11 +65,6 @@ public class TreePatch extends Patch {
 		}
 	}
 
-	@Override
-	public void updateCell() {
-		myCell.update();
-
-	}
 
 	@Override
 	public Color getColor() {

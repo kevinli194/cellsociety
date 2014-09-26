@@ -1,4 +1,4 @@
-/*package backend.simulations;
+package backend.simulations;
 
 import java.util.List;
 
@@ -10,9 +10,8 @@ public class GoLSimulation extends Simulation {
 
 	@Override
 	protected void makeNewCell(int i, int j, double thresholdValue) {
-		myGrid[i][j] = new GoLPatch(i, j, false, 1);
+		myGrid[i][j] = new GoLPatch(i, j);
 	}
-
 
 	@Override
 	protected void setInitialState(List<InitialCell> initialState) {
@@ -25,7 +24,7 @@ public class GoLSimulation extends Simulation {
 	public void updateGrid() {
 		for (int i = 0; i < myGrid.length; i++) {
 			for (int j = 0; j < myGrid[0].length; j++) {
-				myGrid[i][j].update();
+				myGrid[i][j].updateCell();
 			}
 		}
 		for (int i = 0; i < myGrid.length; i++) {
@@ -34,13 +33,12 @@ public class GoLSimulation extends Simulation {
 			}
 		}
 	}
-	
+
 	@Override
 	protected void initializeColors() {
 		myCellColors = new Color[3];
 		myCellColors[0] = Color.BLUE;
 		myCellColors[1] = Color.WHITE;
-		myCellColors[2] = Color.BLACK;	
+		myCellColors[2] = Color.BLACK;
 	}
 }
-*/
