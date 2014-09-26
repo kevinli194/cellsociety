@@ -53,7 +53,7 @@ public class ShapeFactory {
 							(row*((3*mySideLength)/2)), mySideLength, 0);
 
 				if (shape.equals(SQUARE))
-					myCellShapes[row][col] = new SquareCell(row*mySideLength, col*mySideLength, mySideLength, 0);
+					myCellShapes[row][col] = new SquareCell(col*mySideLength, row*mySideLength, mySideLength, 0);
 
 				if (shape.equals(TRIANGLE))
 					myCellShapes[row][col] = new TriangleCell(((mySideLength*Math.sqrt(3))/2)*col, 

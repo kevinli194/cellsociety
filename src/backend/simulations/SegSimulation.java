@@ -1,4 +1,7 @@
-/*package backend.simulations;
+package backend.simulations;
+
+import backend.cells.Cell;
+import backend.cells.SegCell;
 import backend.patches.Patch;
 import backend.patches.SegPatch;
 import backend.xml.InitialCell;
@@ -8,12 +11,11 @@ import java.util.List;
 
 import javafx.scene.paint.Color;
 
-
 public class SegSimulation extends Simulation {
 
 	@Override
 	protected void makeNewCell(int i, int j, double thresholdValue) {
-		myGrid[i][j] = new SegPatch(i, j, true, 0, this, thresholdValue);
+		myGrid[i][j] = new SegPatch(i, j, thresholdValue);
 	}
 
 	@Override
@@ -27,6 +29,8 @@ public class SegSimulation extends Simulation {
 	public void updateGrid() {
 		for (int i = 0; i < myGrid.length; i++) {
 			for (int j = 0; j < myGrid[0].length; j++) {
+				SegPatch emptyPatch = (SegPatch) selectRandomEmptyPatch();
+				((SegPatch) myGrid[i][j]).setEmptyPatch(emptyPatch);
 				((SegPatch) myGrid[i][j]).update();
 			}
 		}
@@ -37,48 +41,44 @@ public class SegSimulation extends Simulation {
 			}
 		}
 	}
-	*//**
-	 *  finds a random empty cell to move the contents of the cell to.
-	 * @return returns a random empty cell
-	 *//*
-	
-	public Patch selectRandomEmptyCell()
-	{
-		List<Patch> emptyCells = findEmptyCells();
-		
-		if(emptyCells.isEmpty())
+
+	/**
+	 * finds a random empty patch to move the contents of the cell to.
+	 * 
+	 * @return returns a random empty patch
+	 */
+
+	public Patch selectRandomEmptyPatch() {
+		List<Patch> emptyPatches = findEmptyPatch();
+
+		if (emptyPatches.isEmpty())
 			return null;
-		else
-		{
-			int randomIndex = (int) Math.floor(Math.random() * emptyCells.size());
-			return emptyCells.get(randomIndex);
+		else {
+			int randomIndex = (int) Math.floor(Math.random()
+					* emptyPatches.size());
+			return emptyPatches.get(randomIndex);
 		}
 	}
-	
-	private List<Patch> findEmptyCells()
-	{
-		List<Patch> emptyCells = new ArrayList<Patch>();
-		for(int i = 0; i < myGrid.length; i++)
-		{
-			for(int j = 0; j < myGrid[i].length; j++)
-			{
-				Patch currentCell = myGrid[i][j];
-				if(currentCell.getState() == 0)
-				{
-					emptyCells.add(currentCell);
+
+	private List<Patch> findEmptyPatch() {
+		List<Patch> emptyPatches = new ArrayList<Patch>();
+		for (int i = 0; i < myGrid.length; i++) {
+			for (int j = 0; j < myGrid[i].length; j++) {
+				Patch patch = myGrid[i][j];
+				if (patch.myCell.myState == 0) {
+					emptyPatches.add(patch);
 				}
 			}
 		}
-		return emptyCells;
+		return emptyPatches;
 	}
-	
+
 	@Override
 	protected void initializeColors() {
 		myCellColors = new Color[3];
 		myCellColors[0] = Color.WHITE;
 		myCellColors[1] = Color.BLACK;
 		myCellColors[2] = Color.RED;
-		
+
 	}
 }
-*/

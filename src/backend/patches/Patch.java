@@ -36,6 +36,15 @@ public abstract class Patch {
 		myNeighbors.add(neighbor);
 	}
 
+	public List<Cell> getCellNeighbors() {
+		List<Cell> cellNeighborsList =  new ArrayList<Cell>();
+		for (Patch p: myNeighbors) {
+			cellNeighborsList.add(p.myCell);
+		}
+		return cellNeighborsList;
+
+	}
+
 	public void addCell(Cell cell) {
 		myCell = cell;
 	}
@@ -76,13 +85,14 @@ public abstract class Patch {
 	
 	public abstract void setState(String state);
 
+
 	/**
 	 * Changes the state of the cell to the next state allowing for dynamic user
 	 * interaction
 	 * 
 	 */
 	public int changedState() {
-		return (myState = (myState + 1) % myPossibleStates);
+		return (myCell.myState = (myCell.myState + 1) % myPossibleStates);
 	}
 
 	/**

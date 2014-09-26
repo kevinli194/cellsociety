@@ -1,73 +1,62 @@
-/*package backend.patches;
+package backend.patches;
 
-import backend.simulations.SegSimulation;
+import javafx.scene.paint.Color;
+import backend.cells.SegCell;
 
 public class SegPatch extends Patch {
 	private static final int EMPTY = 0;
 	private static final int X = 1;
 	private static final int O = 2;
-	private SegSimulation mySegCellManager;
+	private SegPatch myEmptyPatch;
+	
 
-	public SegPatch(int xCoord, int yCoord, boolean update, int state,
-			SegSimulation segCellManager, double thresholdValue) {
+	public SegPatch(int xCoord, int yCoord, double thresholdValue) { 
 		myCoordinates[0] = xCoord;
 		myCoordinates[1] = yCoord;
-		myUpdated = update;
-		myState = state;
-		mySegCellManager = segCellManager;
-		myThresholdValue = thresholdValue;
+		myUpdated = false;
+		myCell = new SegCell(EMPTY, this, thresholdValue);
 		myPossibleStates = 3;
 	}
 
 	@Override
-	public void update() {
-		if (myUpdated == false) {
-			myUpdated = true;
-			int satisfiedNeighbors = 0;
-			int totalNeighbors = 0;
-			for (Patch neighbor : myNeighbors) {
-				if (neighbor.myState != EMPTY) {
-					if (neighbor.myState == myState)
-						satisfiedNeighbors++;
-					totalNeighbors++;
-				}
-			}
+	public Color getColor() {
+		if (myCell.myState == X)
+			return Color.BLACK;
+		else if (myCell.myState == O)
+			return Color.RED;
+		else 
+			return Color.WHITE;
 			
-			double percentageOfNeighborsSatisfied = (totalNeighbors != 0) ? 
-					 satisfiedNeighbors / totalNeighbors : 0;
-			if (percentageOfNeighborsSatisfied < myThresholdValue)
-				moveToBeSatisfied();
-		}
+	}
+
+	@Override
+	public void updateCell() {
+		myCell.update();
+	}
+
+	@Override
+	public void setState(String state) {
+		if(state.equals("X"))
+			myCell.myState = X;
+		
+		if (state.equals("O"))
+			myCell.myState = O;
+		
+	}
+
+	public void setEmptyPatch(SegPatch segPatch) {
+		myEmptyPatch = segPatch;
+		
 	}
 	
-	*//**
-	 *  Moves a cell to a empty cell if dissatisfied.
-	 *//*
-
-	private void moveToBeSatisfied() {
-		Patch emptyCell = mySegCellManager.selectRandomEmptyCell();
-		if (emptyCell != null) {
-			emptyCell.myPreviousState = emptyCell.myState;
-			emptyCell.myState = myState;
-			emptyCell.myUpdated = true;
-			myPreviousState = myState;
-			myState = EMPTY;
-		}
+	public SegPatch getEmptyPatch() {
+		return myEmptyPatch;
 	}
-
-	public void setState(String state) {
-		if (state.equals("EMPTY")) {
-			myState = EMPTY;
-		}
-		if (state.equals("X")) {
-			myState = X;
-			myUpdated = false;
-		}
-		if (state.equals("O")) {
-			myState = O;
-			myUpdated = false;
-		}
+	
+	@Override
+	public void update() {
+		updateCell();
+		
+		
 	}
-
 }
-*/
