@@ -21,8 +21,7 @@ public class GoLPatch extends Patch {
 	 * @param yCoord
 	 */
 	public GoLPatch(int xCoord, int yCoord) {
-		myCoordinates[0] = xCoord;
-		myCoordinates[1] = yCoord;
+		super(xCoord, yCoord, 0);
 		myUpdated = false;
 		myCell = new GoLCell(DEAD, this);
 		myPossibleStates = 2;

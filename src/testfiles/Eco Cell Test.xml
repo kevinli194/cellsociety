@@ -2,9 +2,10 @@
 <simulation>
 
 	<simulationMode>Eco</simulationMode>
-	<unitShape>Triangle</unitShape>
-	<gridXSize> 50 </gridXSize>
-	<gridYSize> 50 </gridYSize>
+	<unitShape>TRIANGLE</unitShape>
+	<edgeType>TOROIDAL</edgeType>
+	<gridXSize>25</gridXSize>
+	<gridYSize>25</gridYSize>
 	<thresholdValue> 3 </thresholdValue>
 	<cell>
 		<state> FISH </state>
