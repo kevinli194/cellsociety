@@ -89,7 +89,14 @@ public abstract class Simulation {
 	 * called every frame.
 	 */
 	public abstract void updateGrid();
+	
+	/**
+	 * Calls the appropriate neighborsetter to set the neighbors for a given grid
+	 * @param grid the grid you want to define neighborhoods for
+	 * @param boundaryType the type of boundary
+	 * @param gridShape the type of shape making up the grid.
+	 */
 
-	protected abstract void setNeighbors(Patch[][] grid, String edgeType,
+	protected abstract void setNeighbors(Patch[][] grid, String boundaryType,
 			String gridShape);
 }
