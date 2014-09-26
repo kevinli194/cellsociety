@@ -99,7 +99,10 @@ public class XMLParsing {
 	 */
 	private String getTagValueFromDoc(Document doc, String tagName)
 	{
-		return doc.getElementsByTagName(tagName).item(0).getChildNodes().item(0).getNodeValue().replaceAll("\\s", "");
+		Node node = doc.getElementsByTagName(tagName).item(0);
+		if(node == null)
+			return null;
+		return node.getChildNodes().item(0).getNodeValue().replaceAll("\\s", "");
 	}
 	
 	/**

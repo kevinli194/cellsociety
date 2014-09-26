@@ -287,6 +287,10 @@ public class CellViewer {
 	private void checkFileValid(Stage stage) {
 		if (myGameParams.simulationMode == null)
 			popUpNotification(stage, "Simulation mode not specified!");
+		if (myGameParams.unitShape == null)
+			myGameParams.unitShape = "SQUARE";
+		if (myGameParams.edgeType == null)
+			myGameParams.edgeType = "FINITE";
 		if (myGameParams.gridXSize < 1 || myGameParams.gridYSize < 1)
 			popUpNotification(stage, "Grid size needs to be positive!");
 		if (myGameParams.thresholdValue < 0)
