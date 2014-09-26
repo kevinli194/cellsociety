@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -18,6 +19,7 @@ import backend.simulations.GoLSimulation;
 import backend.simulations.SegSimulation;
 import backend.simulations.Simulation;
 import backend.simulations.SugarSimulation;
+import backend.xml.InitialCell;
 import backend.xml.InitialGameParameters;
 import backend.xml.XMLParsing;
 import javafx.animation.KeyFrame;
@@ -61,6 +63,7 @@ public class CellViewer {
 	 * created
 	 */
 	private boolean myFileSelected = false;
+	private boolean myFileValid = true;
 	/**
 	 * Button last clicked to handle processing "stepping into" simulation
 	 * frames
@@ -270,7 +273,9 @@ public class CellViewer {
 				myFile = fileChooser.showOpenDialog(stage);
 				if (myFile != null) {
 					parseXML();
-					resetGrid();
+					checkFileValid(stage);
+					if(myFileValid)
+						resetGrid();
 				} else {
 					fileNotSelected(stage);
 				}
@@ -281,6 +286,44 @@ public class CellViewer {
 
 	}
 
+	private void checkFileValid(Stage stage) {
+		if (myGameParams.simulationMode == null)
+			popUpNotification(stage, "Simulation mode not specified!");
+		if (myGameParams.gridXSize < 1 || myGameParams.gridYSize < 1)
+			popUpNotification(stage, "Grid size needs to be positive!");
+		if (myGameParams.thresholdValue < 0)
+			popUpNotification(stage, "Threshold parameter invalid!");
+		if (cellOutOfBounds(myGameParams.initialCells))
+			popUpNotification(stage, "Cell out of bounds!");
+	}
+
+	private boolean cellOutOfBounds(List<InitialCell> initialCells) {
+		for (InitialCell ic : initialCells) {
+			if (ic.myX < 0 || ic.myX > myGameParams.gridXSize || ic.myY < 0
+					|| ic.myY > myGameParams.gridYSize)
+				return true;
+		}
+		return false;
+	}
+
+	private void popUpNotification(Stage stage, String message) {
+		/**
+		 * Setting separate stage to show pop-up window (missing XML file) when
+		 * there is no previously loaded file.
+		 * 
+		 */
+		Stage dialog = new Stage();
+		dialog.initModality(Modality.APPLICATION_MODAL);
+		dialog.initOwner(stage);
+		VBox textBox = new VBox();
+		textBox.getChildren().add(new Text(message));
+		Scene dialogScene = new Scene(textBox, 500, 100);
+		dialog.setScene(dialogScene);
+		dialog.show();
+		myFileValid = false;
+	}
+
+	
 	/**
 	 * Handles user notification (pop-up window) when XML file not selected
 	 */
@@ -314,6 +357,7 @@ public class CellViewer {
 		try {
 			myGameParams = myXMLParser.parseInitialCellsFromFile(myFile);
 			myFileSelected = true;
+			myFileValid = true;
 			myPreviousFile = myFile;
 
 		} catch (ParserConfigurationException | SAXException | IOException e1) {

@@ -44,6 +44,7 @@ public abstract class Simulation {
 				makeNewCell(i, j, thresholdValue);
 			}
 		}
+
 		NeighborSetter setter = new SugarNeighborSetter((int) thresholdValue);
 		setter.setNeighbors(myGrid, "TOROIDAL", "HEXAGON");
 		setInitialState(initialCells);
