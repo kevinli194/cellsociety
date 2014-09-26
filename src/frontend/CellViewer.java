@@ -7,9 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
-
 import org.xml.sax.SAXException;
-
 import frontend.gridshapes.ShapeCell;
 import frontend.gridshapes.ShapeFactory;
 import backend.patches.Patch;
