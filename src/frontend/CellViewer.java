@@ -4,17 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
-
 import javax.xml.parsers.ParserConfigurationException;
-
 import org.xml.sax.SAXException;
-
-import frontend.gridshapes.HexagonCell;
 import frontend.gridshapes.ShapeCell;
 import frontend.gridshapes.ShapeFactory;
-import frontend.gridshapes.SquareCell;
-import frontend.gridshapes.TriangleCell;
 import backend.cells.Cell;
 import backend.simulations.EcoSimulation;
 import backend.simulations.FireSimulation;
@@ -84,9 +77,6 @@ public class CellViewer {
 	 */
 	private File myFile;
 
-
-	private boolean myFileValid;
-
 	/**
 	 * Stores the individual grid panes (cells) as children
 	 */
@@ -132,13 +122,13 @@ public class CellViewer {
 			new GoLSimulation(),new SegSimulation()};
 
 	private Timeline myAnimation = new Timeline();
-	private Paint[] myColors;
+	private Paint[] myCellColors;
 	private final FileChooser fileChooser = new FileChooser();
 	private final Button openButton = new Button("...");
 	private final ComboBox<String> speedSelected = new ComboBox<String>();
 	private int myHeight;
 	private int myWidth;
-	
+
 	private ShapeFactory myShapeFactory;
 
 	/**
@@ -185,7 +175,6 @@ public class CellViewer {
 
 	/**
 	 * Generates simulation with reflection by matching simulation name and corresponding class
-	 * 
 	 */
 	private void generateSimulation() {
 		for (int i = 0; i < mySimulations.length; i++) {
@@ -199,9 +188,7 @@ public class CellViewer {
 	/**
 	 * Enables/disables buttons based on boolean passed in. Ensures buttons are not active
 	 * until necessary
-	 * 
 	 */
-
 	private void disableButtons(boolean disable) {
 		myReset.setDisable(disable);
 		myStart.setDisable(disable);
@@ -215,16 +202,8 @@ public class CellViewer {
 	private void addCellsToDisplay() {
 		disableButtons(false);
 		myCellsGridPane = new Group();
-		myColors = myCellSimulation.myColors;
+		myCellColors = myCellSimulation.myColors;
 		myBorderPane.setCenter(myCellsGridPane);
-
-		// ShapeCell[][] grid = new HexagonCell[myGameParams.gridXSize][myGameParams.gridYSize];
-//		ShapeCell[][] grid = new SquareCell[myGameParams.gridXSize][myGameParams.gridYSize];
-		//ShapeCell[][] grid = new TriangleCell[myGameParams.gridXSize][myGameParams.gridYSize];
-
-		// Length of hexagonal grid 
-		// double s = (myHeight/(myGameParams.gridXSize*2.2));
-		// Length of square grid 
 		double sideLength = Math.min((myHeight/(myGameParams.gridXSize*2.2)), (myWidth/(myGameParams.gridYSize*1.5)));
 		double centerToVertices = (Math.sqrt(3)*(sideLength/2));
 		myShapeFactory = new ShapeFactory("SQUARE", myGameParams.gridXSize, myGameParams.gridYSize, 
@@ -235,27 +214,29 @@ public class CellViewer {
 				Cell cell = myCellsGrid[row][col];
 				myCellsGridPane.getChildren().add(myViewingGrid[row][col].getShape());
 				setCellOnMouseListen(myViewingGrid[row][col], cell);
-				myViewingGrid[row][col].getShape().setFill(myColors[cell.getState()]);
+				myViewingGrid[row][col].getShape().setFill(myCellColors[cell.getState()]);
 				myViewingGrid[row][col].getShape().setStroke(Color.WHITE);
 
 			}
 		}
 	}
 
-
-
+	/**
+	 * Sets the viewing cell on a mouse listener with a 1:1 mapping between the 
+	 * backend Cell object and frontend Cell viewer.
+	 * 
+	 */
 	private void setCellOnMouseListen(ShapeCell viewCell, Cell cell) {
 		viewCell.myShape.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent ke) {
-				viewCell.myShape.setFill(myColors[cell.changedState()]);
+				viewCell.myShape.setFill(myCellColors[cell.changedState()]);
 			}
 		});
 	}
 
 	/**
 	 * Adds file selector button to choose XML file with simulation parameters
-	 * 
 	 */
 	private void addFileSelector(Stage stage) {
 		HBox hbox = new HBox();
@@ -285,7 +266,6 @@ public class CellViewer {
 
 	/**
 	 * Handles user notification (pop-up window) when XML file not selected
-	 * 
 	 */
 	private void fileNotSelected(Stage stage) {
 
@@ -328,7 +308,6 @@ public class CellViewer {
 
 	/**
 	 * Returns layout with vertically aligned buttons
-	 * 
 	 */
 	private VBox createButtonsVBox() {
 		VBox vbox = new VBox();
@@ -365,7 +344,6 @@ public class CellViewer {
 
 	/**
 	 * Sets event handlers for all buttons and action on clicked
-	 * 
 	 */
 	private void setButtonsOnAction() {
 		myStart.setOnAction(new EventHandler<ActionEvent>() {
@@ -458,7 +436,6 @@ public class CellViewer {
 
 	/**
 	 * Creates animation frame for simulation
-	 * 
 	 */
 	public KeyFrame start() {
 		return new KeyFrame(Duration.millis(1000), myOneFrame);
@@ -481,19 +458,14 @@ public class CellViewer {
 	}
 
 	/**
-	 *
 	 * Display updated states of simulation cells
-	 * 
 	 */
-
-
 	private void updateDisplay() {
 		if (myCellsGridSet) {
-
 			for (int i = 0; i < myCellsGrid.length; i++) {
 				for (int j = 0; j < myCellsGrid[0].length; j++) {
 					Cell cell = myCellsGrid[i][j];
-					myViewingGrid[i][j].myShape.setFill(myColors[cell.getState()]);//Color.AQUA);/*.setStyle("-fx-background-color: "
+					myViewingGrid[i][j].myShape.setFill(myCellColors[cell.getState()]);
 				}
 			}
 		}
@@ -505,9 +477,9 @@ public class CellViewer {
 	private void checkSpeedSelection() {
 		ArrayList<String> possibleSpeeds = new ArrayList<String>();
 		Collections.addAll(possibleSpeeds, VERY_SLOW, SLOW, NORMAL, FAST, VERY_FAST);
-		for (int i = 0; i < possibleSpeeds.size(); i++) {
+		for (int i = 0; i < possibleSpeeds.size()-1; i++) {
 			if (speedSelected.getValue().equals(possibleSpeeds.get(i))){
-				myAnimation.setRate(0.25*(i+1));
+				myAnimation.setRate(0.5*(i+1));
 				return;
 			}
 		}
