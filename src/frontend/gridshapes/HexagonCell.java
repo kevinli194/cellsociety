@@ -2,11 +2,12 @@ package frontend.gridshapes;
 
 import javafx.scene.shape.Polygon;
 
+/**
+ * Class that creates a hexagonal class/patch based on calculated vertex coordinates.
+ */
 public class HexagonCell extends ShapeCell {
-	
-	
+		
 	public HexagonCell(double xCenter, double yCenter, double sideLength, int invertShape) {
-		mySideLength = sideLength;
 		super.setShapeParams(xCenter, yCenter, sideLength, invertShape);
 	}
 	
