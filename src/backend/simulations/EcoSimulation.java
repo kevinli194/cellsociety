@@ -1,4 +1,4 @@
-/*package backend.simulations;
+package backend.simulations;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import backend.xml.InitialCell;
 public class EcoSimulation extends Simulation {
 	@Override
 	protected void makeNewCell(int i, int j, double thresholdValue) {
-		myGrid[i][j] = new EcoPatch(i, j, true, 0, (int) thresholdValue);
+		myGrid[i][j] = new EcoPatch(i, j, thresholdValue);
 	}
 
 	@Override
@@ -24,7 +24,7 @@ public class EcoSimulation extends Simulation {
 	public void updateGrid() {
 		for (int i = 0; i < myGrid.length; i++) {
 			for (int j = 0; j < myGrid[0].length; j++) {
-				((EcoPatch) myGrid[i][j]).update();
+				((EcoPatch) myGrid[i][j]).updateShark();
 			}
 		}
 		for (int i = 0; i < myGrid.length; i++) {
@@ -48,4 +48,3 @@ public class EcoSimulation extends Simulation {
 		myCellColors[2] = Color.GRAY;
 	}
 }
-*/
