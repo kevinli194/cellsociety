@@ -38,7 +38,7 @@ public abstract class Simulation {
 	 */
 
 	public Patch[][] initialize(String modelType, String unitShape,
-			String edgeType, int xDimension, int yDimension,
+			String boundaryType, int xDimension, int yDimension,
 			double thresholdValue, ArrayList<InitialCell> initialCells) {
 		myGrid = new Patch[xDimension][yDimension];
 		for (int i = 0; i < xDimension; i++) {
@@ -47,7 +47,8 @@ public abstract class Simulation {
 			}
 		}
 		myThreshold = thresholdValue;
-		setNeighbors(myGrid, edgeType, unitShape);
+		setNeighbors(myGrid, boundaryType.toUpperCase(),
+				unitShape.toUpperCase());
 		setInitialState(initialCells);
 		initializeColors();
 		return myGrid;
@@ -90,6 +91,18 @@ public abstract class Simulation {
 	 */
 	public abstract void updateGrid();
 
-	protected abstract void setNeighbors(Patch[][] grid, String edgeType,
+	/**
+	 * Calls the appropriate neighborsetter to set the neighbors for a given
+	 * grid
+	 * 
+	 * @param grid
+	 *            the grid you want to define neighborhoods for
+	 * @param boundaryType
+	 *            the type of boundary
+	 * @param gridShape
+	 *            the type of shape making up the grid.
+	 */
+
+	protected abstract void setNeighbors(Patch[][] grid, String boundaryType,
 			String gridShape);
 }

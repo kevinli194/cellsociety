@@ -51,11 +51,12 @@ public class FireSimulation extends Simulation {
 		myCellColors[2] = Color.RED;
 
 	}
+
 	@Override
 	protected void setNeighbors(Patch[][] grid, String boundaryType,
 			String gridShape) {
 		NeighborSetter setter = new FireNeighborSetter();
 		setter.setNeighbors(grid, boundaryType, gridShape);
-		
+
 	}
 }

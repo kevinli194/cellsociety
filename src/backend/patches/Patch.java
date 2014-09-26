@@ -56,10 +56,6 @@ public abstract class Patch {
 		return myNeighbors;
 	}
 
-	public void addCell(Cell cell) {
-		myCell = cell;
-	}
-
 	/**
 	 * Method that returns the state of an object. Used when getting to state to
 	 * display in CellViewer.
