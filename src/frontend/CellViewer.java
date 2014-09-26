@@ -14,7 +14,7 @@ import frontend.gridshapes.ShapeFactory;
 import backend.patches.Patch;
 //import backend.simulations.EcoSimulation;
 import backend.simulations.FireSimulation;
-//import backend.simulations.GoLSimulation;
+import backend.simulations.GoLSimulation;
 //import backend.simulations.SegSimulation;
 import backend.simulations.Simulation;
 import backend.xml.InitialGameParameters;
@@ -123,7 +123,7 @@ public class CellViewer {
 	 */
 	/*private Simulation [] mySimulations = { new EcoSimulation(), new FireSimulation(),
 			new GoLSimulation(),new SegSimulation()};*/
-	private Simulation myCellSimulation = new FireSimulation();
+	private Simulation myCellSimulation = new GoLSimulation();
 	
 
 	private Timeline myAnimation = new Timeline();
