@@ -19,16 +19,16 @@ public class GoLPatch extends Patch {
 
 	@Override
 	public Color getColor() {
-		if (myCell.myState == ALIVE) {
+		if (myCell.getState() == ALIVE) {
 			return Color.BLACK;
 		} else
 			return Color.WHITE;
 	}
 
 	@Override
-	public void setState(String state) {
+	public void setInitialState(String state) {
 		if (state.equals("ALIVE"))
-			myCell.myState = ALIVE;
+			myCell.setState(ALIVE);
 	}
 
 	@Override
@@ -38,10 +38,10 @@ public class GoLPatch extends Patch {
 	public int getAliveCount() {
 		int count = 0;
 		for (int i = 0; i < myNeighbors.size(); i++) {
-			if (myNeighbors.get(i).myCell.myState == ALIVE
+			if (myNeighbors.get(i).myCell.getState() == ALIVE
 					&& myNeighbors.get(i).myUpdated == false)
 				count++;
-			if (myNeighbors.get(i).myCell.myPreviousState == ALIVE
+			if (myNeighbors.get(i).myCell.getPrevState() == ALIVE
 					&& myNeighbors.get(i).myUpdated == true)
 				count++;
 		}

@@ -18,7 +18,7 @@ public class FireSimulation extends Simulation {
 	@Override
 	protected void setInitialState(List<InitialCell> initialState) {
 		for (InitialCell c : initialState) {
-			((TreePatch) myGrid[c.myX][c.myY]).setState(c.myState);
+			((TreePatch) myGrid[c.myX][c.myY]).setInitialState(c.myState);
 		}
 	}
 

@@ -8,8 +8,7 @@ public class EmptyCell extends Cell{
 		myPatch = patch;
 		myState = EMPTY;
 	}
-	public void update() {
-		
+	public void update() {	
 	}
 
 }

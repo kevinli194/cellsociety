@@ -20,9 +20,9 @@ public class SegPatch extends Patch {
 
 	@Override
 	public Color getColor() {
-		if (myCell.myState == X)
+		if (myCell.getState() == X)
 			return Color.BLACK;
-		else if (myCell.myState == O)
+		else if (myCell.getState() == O)
 			return Color.RED;
 		else 
 			return Color.WHITE;
@@ -30,12 +30,12 @@ public class SegPatch extends Patch {
 	}
 
 	@Override
-	public void setState(String state) {
+	public void setInitialState(String state) {
 		if(state.equals("X"))
-			myCell.myState = X;
+			myCell.setState(X);
 		
 		if (state.equals("O"))
-			myCell.myState = O;
+			myCell.setState(O);
 		
 	}
 

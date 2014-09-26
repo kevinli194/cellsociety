@@ -17,8 +17,8 @@ public class SegCell extends Cell {
 
 	@Override
 	public void update() {
-		if (myPatch.myUpdated == false && myState != EMPTY) {
-			myPatch.myUpdated = true;
+		if (myPatch.getUpdated() == false && myState != EMPTY) {
+			myPatch.setUpdated(true);
 			int satisfiedNeighbors = 0;
 			int totalNeighbors = 0;
 			List<Cell> neighborsList = myPatch.getCellNeighbors();
@@ -48,8 +48,8 @@ public class SegCell extends Cell {
 	}
 
 	private void swapCellsInPatches(SegPatch targetPatch) {
-		targetPatch.myCell = this;
-		myPatch.myCell = new SegCell(EMPTY, (SegPatch) myPatch, myThresholdValue);
+		targetPatch.setCell(this);
+		myPatch.setCell(new SegCell(EMPTY, (SegPatch) myPatch, myThresholdValue));
 		myPatch = targetPatch;
 	}
 

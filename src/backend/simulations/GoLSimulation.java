@@ -19,7 +19,7 @@ public class GoLSimulation extends Simulation {
 	@Override
 	protected void setInitialState(List<InitialCell> initialState) {
 		for (InitialCell c : initialState) {
-			((GoLPatch) myGrid[c.myX][c.myY]).setState(c.myState);
+			((GoLPatch) myGrid[c.myX][c.myY]).setInitialState(c.myState);
 		}
 	}
 

@@ -19,7 +19,7 @@ public class EcoSimulation extends Simulation {
 	@Override
 	protected void setInitialState(List<InitialCell> initialState) {
 		for (InitialCell c : initialState) {
-			((EcoPatch) myGrid[c.myX][c.myY]).setState(c.myState);
+			((EcoPatch) myGrid[c.myX][c.myY]).setInitialState(c.myState);
 		}
 	}
 

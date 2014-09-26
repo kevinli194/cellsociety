@@ -20,8 +20,8 @@ public class SharkCell extends EcoCell {
 
 	@Override
 	public void update() {
-		if (myPatch.myUpdated == false) {
-			myPatch.myUpdated = true;
+		if (myPatch.getUpdated() == false) {
+			myPatch.setUpdated(true);
 			myTurnsAlive++;
 			Patch fishNeighbor = ((EcoPatch) myPatch).findNeighborOfType(FISH);
 			Patch emptyNeighbor = ((EcoPatch) myPatch).findNeighborOfType(EMPTY);
