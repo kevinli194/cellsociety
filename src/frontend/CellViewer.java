@@ -286,6 +286,10 @@ public class CellViewer {
 
 	}
 
+	/**
+	 * Error-checking code that sees if a file is valid, and appropriately 
+	 * display pop-up message
+	 */
 	private void checkFileValid(Stage stage) {
 		if (myGameParams.simulationMode == null)
 			popUpNotification(stage, "Simulation mode not specified!");
@@ -297,6 +301,9 @@ public class CellViewer {
 			popUpNotification(stage, "Cell out of bounds!");
 	}
 
+	/**
+	 * Determines whether cell/patch is out of bounds of specified indices
+	 */
 	private boolean cellOutOfBounds(List<InitialCell> initialCells) {
 		for (InitialCell ic : initialCells) {
 			if (ic.myX < 0 || ic.myX > myGameParams.gridXSize || ic.myY < 0
