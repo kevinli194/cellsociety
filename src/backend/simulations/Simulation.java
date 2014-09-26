@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.scene.paint.Paint;
-import backend.neighborsetters.EcoNeighborSetter;
 import backend.neighborsetters.NeighborSetter;
-import backend.neighborsetters.SegNeighborSetter;
 import backend.neighborsetters.SugarNeighborSetter;
 import backend.patches.Patch;
 import backend.xml.InitialCell;
@@ -35,8 +33,8 @@ public abstract class Simulation {
 	 * @return returns an array of array of cells in a grid.
 	 */
 
-	public Patch[][] initialize(String modelType, int xDimension,
-			int yDimension, double thresholdValue,
+	public Patch[][] initialize(String modelType, String unitShape, String edgeType,
+			int xDimension, int yDimension, double thresholdValue,
 			ArrayList<InitialCell> initialCells) {
 		myGrid = new Patch[xDimension][yDimension];
 		for (int i = 0; i < xDimension; i++) {

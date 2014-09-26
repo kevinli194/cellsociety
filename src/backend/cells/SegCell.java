@@ -1,7 +1,6 @@
 package backend.cells;
 
 import java.util.List;
-import backend.patches.Patch;
 import backend.patches.SegPatch;
 
 public class SegCell extends Cell {

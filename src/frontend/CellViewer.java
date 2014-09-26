@@ -223,7 +223,7 @@ public class CellViewer {
 				(myHeight / (myGameParams.gridXSize * 2.2)),
 				(myWidth / (myGameParams.gridYSize * 1.5)));
 		double centerToVertices = (Math.sqrt(3) * (sideLength / 2));
-		myShapeFactory = new ShapeFactory("HEXAGON", myGameParams.gridXSize,
+		myShapeFactory = new ShapeFactory(myGameParams.unitShape.toUpperCase(), myGameParams.gridXSize,
 				myGameParams.gridYSize, sideLength, centerToVertices);
 		myViewingGrid = myShapeFactory.getShapes();
 		for (int row = 0; row < myGameParams.gridXSize; row++) {
@@ -454,6 +454,7 @@ public class CellViewer {
 	 */
 	private void setGrid() {
 		myGrid = myCellSimulation.initialize(myGameParams.simulationMode,
+				myGameParams.unitShape, myGameParams.edgeType,
 				myGameParams.gridXSize, myGameParams.gridYSize,
 				myGameParams.thresholdValue, myGameParams.initialCells);
 	}
