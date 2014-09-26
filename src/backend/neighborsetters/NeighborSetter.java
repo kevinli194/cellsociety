@@ -59,7 +59,7 @@ public abstract class NeighborSetter {
 
 	public void recAndTriToroidal(Patch[][] grid, int i, int j) {
 		recAndTriBounded(grid, i, j);
-		addCardinalEdges(grid, i, j);
+		addCardinalEdges(grid, i, j,1);
 
 	}
 
@@ -70,25 +70,32 @@ public abstract class NeighborSetter {
 	}
 
 	public void recAndTriBounded(Patch[][] grid, int i, int j) {
-		addCardinalNeighbors(grid, i, j);
+		addCardinalNeighbors(grid, i, j,1);
 	}
 
 	public void hexBounded(Patch[][] grid, int i, int j) {
-		addCardinalNeighbors(grid, i, j);
+		addCardinalNeighbors(grid, i, j, 1);
 		addHexDiags(grid, i, j);
 
 	}
 
-	protected void addCardinalNeighbors(Patch[][] grid, int i, int j) {
-		if (i > 0)
-			grid[i][j].addNeighbor(grid[i - 1][j]);
-		if (j > 0)
-			grid[i][j].addNeighbor(grid[i][j - 1]);
-		if (i < grid.length - 1)
-			grid[i][j].addNeighbor(grid[i + 1][j]);
-		if (j < grid[0].length - 1)
-			grid[i][j].addNeighbor(grid[i][j + 1]);
+	protected void addCardinalNeighbors(Patch[][] grid, int i, int j, int num) {
+		int count = 1;
+		while (num > 0) {
+			if (i > num - 1)
+				grid[i][j].addNeighbor(grid[i - count][j]);
+			if (j > num - 1)
+				grid[i][j].addNeighbor(grid[i][j - count]);
+			if (i < grid.length - num)
+				grid[i][j].addNeighbor(grid[i + count][j]);
+			if (j < grid[0].length - num)
+				grid[i][j].addNeighbor(grid[i][j + count]);
+			num--;
+			count++;
+		}
+
 	}
+
 
 	protected void addDiagonalNeighbors(Patch[][] grid, int i, int j) {
 		if (i > 0 && j > 0)
@@ -101,15 +108,20 @@ public abstract class NeighborSetter {
 			grid[i][j].addNeighbor(grid[i + 1][j + 1]);
 	}
 
-	protected void addCardinalEdges(Patch[][] grid, int i, int j) {
-		if (i == 0)
-			grid[i][j].addNeighbor(grid[grid.length - 1][j]);
-		if (j == 0)
-			grid[i][j].addNeighbor(grid[i][grid.length - 1]);
-		if (i == grid.length - 1)
-			grid[i][j].addNeighbor(grid[0][j]);
-		if (j == grid[0].length - 1)
-			grid[i][j].addNeighbor(grid[i][0]);
+	protected void addCardinalEdges(Patch[][] grid, int i, int j, int num) {
+		int count = 1;
+		while (num > 0) {
+			if (i <= num - 1)
+				grid[i][j].addNeighbor(grid[grid.length - count][j]);
+			if (j <= num - 1)
+				grid[i][j].addNeighbor(grid[i][grid.length - count]);
+			if (i >= grid.length - num)
+				grid[i][j].addNeighbor(grid[count - 1][j]);
+			if (j >= grid[0].length - num)
+				grid[i][j].addNeighbor(grid[i][count - 1]);
+			count++;
+			num--;
+		}
 	}
 
 	protected void addDiagonalEdges(Patch[][] grid, int i, int j) {

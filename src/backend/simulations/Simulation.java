@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.scene.paint.Paint;
+import backend.neighborsetters.EcoNeighborSetter;
 import backend.neighborsetters.NeighborSetter;
 import backend.neighborsetters.SegNeighborSetter;
 import backend.patches.Patch;
@@ -42,8 +43,8 @@ public abstract class Simulation {
 				makeNewCell(i, j, thresholdValue);
 			}
 		}
-		NeighborSetter setter = new SegNeighborSetter();
-		setter.setNeighbors(myGrid, "TOROIDAL", "TRIANGLE");
+		NeighborSetter setter = new EcoNeighborSetter();
+		setter.setNeighbors(myGrid, "TOROIDAL", "HEXAGON");
 		setInitialState(initialCells);
 		initializeColors();
 		return myGrid;
