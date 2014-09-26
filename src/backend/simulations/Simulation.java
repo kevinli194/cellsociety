@@ -9,6 +9,11 @@ import backend.neighborsetters.SugarNeighborSetter;
 import backend.patches.Patch;
 import backend.xml.InitialCell;
 
+/**
+ * 
+ * @author CS308 Team16
+ *
+ */
 public abstract class Simulation {
 	protected Patch[][] myGrid;
 	public Paint[] myCellColors;
