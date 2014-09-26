@@ -59,14 +59,20 @@ public class SharkCell extends EcoCell {
 	}
 
 	/**
-	 * 
+	 * Eat a neighboring FishCell by making the cell Empty.
 	 * @param fish
+	 * 		fish represents the patch containing the neighboring FishCell.
 	 */
 	private void eatFish(Patch fish) {
 		myTurnsStarved = 0;
 		((EcoPatch) fish).setState(EMPTY);
 	}
 
+	/**
+	 * Check to see if the shark has not eaten in time.
+	 * @return
+	 * 		true for shark dead, false for shark still alive
+	 */
 	protected boolean checkSharkDeath() {
 		if (myTurnsStarved >= myStarveTime) {
 			((EcoPatch) myPatch).setState(EMPTY);
@@ -77,5 +83,4 @@ public class SharkCell extends EcoCell {
 		}
 
 	}
-
 }
