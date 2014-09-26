@@ -1,7 +1,5 @@
 package backend.simulations;
 
-import backend.cells.Cell;
-import backend.cells.SegCell;
 import backend.patches.Patch;
 import backend.patches.SegPatch;
 import backend.xml.InitialCell;

@@ -3,7 +3,6 @@ package backend.simulations;
 import java.util.List;
 
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import backend.patches.EcoPatch;
 import backend.xml.InitialCell;
 

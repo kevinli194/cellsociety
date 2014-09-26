@@ -448,6 +448,7 @@ public class CellViewer {
 	 */
 	private void setCellsGrid() {
 		myCellsGrid = myCellSimulation.initialize(myGameParams.simulationMode,
+				myGameParams.unitShape, myGameParams.edgeType,
 				myGameParams.gridXSize, myGameParams.gridYSize,
 				myGameParams.thresholdValue, myGameParams.initialCells);
 	}
