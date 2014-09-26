@@ -15,6 +15,7 @@ public class SugarAgentCell extends Cell {
 	public SugarAgentCell(SugarPatch patch) {
 		myPatch = patch;
 		mySugarMetabolism = 3;
+		mySugarAmount = 0;
 	}
 
 	@Override

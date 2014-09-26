@@ -6,6 +6,9 @@ import javafx.scene.paint.Color;
 
 public class SugarPatch extends Patch {
 
+	private final static int DEAD = 0;
+	private final static int ALIVE = 1;
+
 	private int myMaximumCapacity;
 	private int mySugarGrowBackInterval;
 	private int mySugarGrowBackRate;
@@ -20,13 +23,16 @@ public class SugarPatch extends Patch {
 		mySugarGrowBackInterval = 3;
 		mySugarGrowBackRate = 1;
 		mySugarTicks = 0;
-		
+
 		myCell = new SugarAgentCell(this);
 	}
 
 	@Override
 	public Color getColor() {
-		return null;
+		if (myCell.myState == ALIVE)
+			return Color.RED;
+		else
+			return Color.WHITE;
 	}
 
 	@Override
@@ -46,7 +52,7 @@ public class SugarPatch extends Patch {
 			}
 		}
 	}
-	
+
 	public void swapCells(Patch patch) {
 		Cell tempCell = patch.myCell;
 		patch.myCell = myCell;
