@@ -18,7 +18,7 @@ public abstract class Patch {
 	protected List<Patch> myNeighbors = new ArrayList<Patch>();
 	protected int[] myCoordinates = new int[2];
 	public boolean myUpdated;
-	protected int myState;
+	public int myState;
 	protected int myPreviousState;
 	protected double myThresholdValue;
 	protected int myPossibleStates;
@@ -43,6 +43,10 @@ public abstract class Patch {
 		}
 		return cellNeighborsList;
 
+	}
+	
+	public List<Patch> getPatchNeighbors() {
+		return myNeighbors;
 	}
 
 	public void addCell(Cell cell) {
