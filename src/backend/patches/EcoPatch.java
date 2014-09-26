@@ -2,7 +2,6 @@ package backend.patches;
 
 import java.util.Collections;
 
-import backend.cells.Cell;
 import backend.cells.EmptyCell;
 import backend.cells.FishCell;
 import backend.cells.SharkCell;
@@ -118,13 +117,6 @@ public class EcoPatch extends Patch {
 			}
 		}
 		return null;
-	}
-
-	public void swapCells(Patch patch) {
-		Cell tempCell = patch.myCell;
-		patch.myCell = myCell;
-		myCell.setPatch(patch);
-		myCell = tempCell;
 	}
 
 	/**

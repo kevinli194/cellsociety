@@ -3,25 +3,42 @@ package backend.patches;
 import javafx.scene.paint.Color;
 import backend.cells.FireCell;
 
+/**
+ * 
+ * @author CS308 Team16
+ * TreePatch is the Patch for the Spreading of Fire simulation.
+ * TreePatch stores an amount of wood that dictates how long it takes
+ * for a tree to burn. From the Patch perspective, the tree is either
+ * there or is not. The cell's state of burning will take precedence 
+ * if the tree is burning.
+ */
 public class TreePatch extends Patch {
 
+	/**
+	 * TreePatch states.
+	 */
 	private static final int NOT_BURNING = 0;
 	private static final int BURNING = 1;
 	private int myWoodAmount;
 
+	/**
+	 * Constructor for TreePatch
+	 * @param xCoord
+	 * @param yCoord
+	 * @param thresholdValue
+	 * 		This thresholdValue relates to the probability of fire spreading.
+	 */
 	public TreePatch(int xCoord, int yCoord, double thresholdValue) {
-		myCoordinates[0] = xCoord;
-		myCoordinates[1] = yCoord;
+		super(xCoord, yCoord, thresholdValue);
 		myUpdated = false;
 		myState = 0;
-		myThresholdValue = thresholdValue;
 		myCell = new FireCell(NOT_BURNING, this);
 		myPossibleStates = 2;
 	}
 
 	@Override
 	/**
-	 * Updates the trees. 
+	 * Updates the trees, which has higher priority than fires.
 	 */
 	public void update() {
 		if (myWoodAmount > 0 && myUpdated == false) {
@@ -35,6 +52,9 @@ public class TreePatch extends Patch {
 		}
 	}
 
+	/**
+	 * Changes the cell state to Burning and affects the tree in this patch.
+	 */
 	public void startFire() {
 		myWoodAmount = 0;
 		myCell.setState(BURNING);

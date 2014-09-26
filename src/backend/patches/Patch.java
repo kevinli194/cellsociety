@@ -30,6 +30,7 @@ public abstract class Patch {
 		myCoordinates[0] = xCoord;
 		myCoordinates[1] = yCoord;
 		myThresholdValue = thresholdValue;
+		myUpdated = false;
 	}
 	
 	/**
@@ -126,5 +127,17 @@ public abstract class Patch {
 	 * to their neighbor each update cycle (turn/frame).
 	 */
 	public abstract void update();
+	
+	/**
+	 * Swap between this patch's and another patch's cells.
+	 * @param patch
+	 * 		The patch to switch to
+	 */
+	public void swapCells(Patch patch) {
+		Cell tempCell = patch.myCell;
+		patch.myCell = myCell;
+		myCell.setPatch(patch);
+		myCell = tempCell;
+	}
 
 }
