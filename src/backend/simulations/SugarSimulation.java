@@ -2,7 +2,6 @@ package backend.simulations;
 
 import java.util.List;
 
-import javafx.scene.paint.Color;
 import backend.patches.SugarPatch;
 import backend.xml.InitialCell;
 
@@ -15,7 +14,11 @@ public class SugarSimulation extends Simulation {
 
 	@Override
 	protected void setInitialState(List<InitialCell> initialState) {
-	};
+		for(InitialCell c : initialState)
+		{
+			((SugarPatch) myGrid[c.myX][c.myY]).setState(c.myState);
+		}
+	}
 
 	@Override
 	public void updateGrid() {
@@ -34,6 +37,7 @@ public class SugarSimulation extends Simulation {
 		for (int i = 0; i < myGrid.length; i++) {
 			for (int j = 0; j < myGrid[0].length; j++) {
 				myGrid[i][j].reset();
+				((SugarPatch) myGrid[i][j]).resetCell();
 
 			}
 		}
@@ -41,7 +45,6 @@ public class SugarSimulation extends Simulation {
 
 	@Override
 	protected void initializeColors() {
-		// TODO Auto-generated method stub
 		
 	}
 

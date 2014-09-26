@@ -11,16 +11,19 @@ public class SugarAgentCell extends Cell {
 	private static final int ALIVE = 1;
 	private int mySugarAmount;
 	private int mySugarMetabolism;
+	private boolean myUpdated;
 
 	public SugarAgentCell(SugarPatch patch) {
 		myPatch = patch;
-		mySugarMetabolism = 3;
-		mySugarAmount = 0;
+		mySugarMetabolism = (int) Math.floor(Math.random() * 5) + 1;
+		mySugarAmount = (int) Math.floor(Math.random() * 4) + 1;
+		myUpdated = false;
 	}
 
 	@Override
 	public void update() {
-		if (myPatch.myUpdated == false && myState == ALIVE) {
+		if (myUpdated == false && myState == ALIVE) {
+			myUpdated = true;
 			List<Patch> myPatchNeighbors = myPatch.getPatchNeighbors();
 			int maximumSugarAmongNeighbors = Integer.MIN_VALUE;
 			SugarPatch maximumNeighbor = null;
@@ -32,14 +35,19 @@ public class SugarAgentCell extends Cell {
 					maximumNeighbor = (SugarPatch) neighbor;
 				}
 			}
-
-			maximumNeighbor.swapCells(myPatch);
+			
+			((SugarPatch) myPatch).swapCells(maximumNeighbor);
 			mySugarAmount += myPatch.myState;
+			myPatch.myState = 0;
 			mySugarAmount -= mySugarMetabolism;
-
-			if (mySugarAmount < 0) {
+			
+			if (mySugarAmount <= 0) {
 				myState = DEAD;
 			}
 		}
+	}
+	
+	public void reset() {
+		myUpdated = false;
 	}
 }

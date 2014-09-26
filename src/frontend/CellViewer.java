@@ -17,6 +17,7 @@ import backend.simulations.FireSimulation;
 import backend.simulations.GoLSimulation;
 import backend.simulations.SegSimulation;
 import backend.simulations.Simulation;
+import backend.simulations.SugarSimulation;
 import backend.xml.InitialGameParameters;
 import backend.xml.XMLParsing;
 import javafx.animation.KeyFrame;
@@ -124,7 +125,7 @@ public class CellViewer {
 	 * 
 	 */
 	private Simulation[] mySimulations = { new EcoSimulation(),
-			new FireSimulation(), new GoLSimulation(), new SegSimulation() };
+			new FireSimulation(), new GoLSimulation(), new SegSimulation(), new SugarSimulation() };
 
 	private Timeline myAnimation = new Timeline();
 	private Paint[] myCellColors;
