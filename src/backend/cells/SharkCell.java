@@ -3,12 +3,25 @@ package backend.cells;
 import backend.patches.EcoPatch;
 import backend.patches.Patch;
 
-
+/**
+ * 
+ * @author CS308 Team16
+ * SharkCell is an extension of EcoCell.
+ * SharkCells can move around the grid, reproduce after a certain number of rounds,
+ * and eat neighboring fish. Sharks will die if they do not eat within a certain 
+ * number of rounds.
+ *
+ */
 public class SharkCell extends EcoCell {
-
 	protected int myTurnsStarved;
 	private double myStarveTime;
 
+	/**
+	 * Constructor for SharkCell
+	 * @param patch
+	 * @param thresholdValue
+	 * 		This represents the breeding time (number of rounds) for this shark.
+	 */
 	public SharkCell(Patch patch, double thresholdValue) {
 		myPatch = patch;
 		myState = SHARK;
@@ -18,6 +31,9 @@ public class SharkCell extends EcoCell {
 		myTurnsStarved = 0;
 	}
 
+	/**
+	 * Update method for shark is called after update for the fish.
+	 */
 	@Override
 	public void update() {
 		if (myPatch.myUpdated == false) {
@@ -40,9 +56,12 @@ public class SharkCell extends EcoCell {
 				}
 			}
 		}
-
 	}
 
+	/**
+	 * 
+	 * @param fish
+	 */
 	private void eatFish(Patch fish) {
 		myTurnsStarved = 0;
 		((EcoPatch) fish).setState(EMPTY);

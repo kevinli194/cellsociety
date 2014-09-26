@@ -1,6 +1,7 @@
 package backend.patches;
 
 import javafx.scene.paint.Color;
+import backend.cells.Cell;
 import backend.cells.SegCell;
 
 public class SegPatch extends Patch {
@@ -51,7 +52,12 @@ public class SegPatch extends Patch {
 	@Override
 	public void update() {
 		updateCell();
-		
-		
+	}
+	
+	public void swapCells(Patch patch) {
+		Cell tempCell = patch.myCell;
+		patch.myCell = myCell;
+		myCell.myPatch = patch;
+		myCell = tempCell;
 	}
 }
