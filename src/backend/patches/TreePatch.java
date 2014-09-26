@@ -48,7 +48,7 @@ public class TreePatch extends Patch {
 	private boolean anyNeighborIsBurning() {
 		for (Patch neighbor : myNeighbors) {
 			FireCell cellNeighbor = (FireCell) neighbor.myCell;
-			if (cellNeighbor.myState == BURNING) {
+			if (cellNeighbor.getState() == BURNING) {
 				return true;
 			}
 		}
@@ -56,7 +56,7 @@ public class TreePatch extends Patch {
 	}
 
 	@Override
-	public void setState(String state) {
+	public void setInitialState(String state) {
 		if (state.equals("TREE")) {
 			myWoodAmount = 1;
 		}
@@ -67,9 +67,9 @@ public class TreePatch extends Patch {
 
 	@Override
 	public Color getColor() {
-		if (myCell.myState == BURNING) {
+		if (myCell.getState() == BURNING) {
 			return Color.RED;
-		} else if ((myCell.myState == NOT_BURNING) && myWoodAmount > 0) {
+		} else if ((myCell.getState() == NOT_BURNING) && myWoodAmount > 0) {
 			return Color.GREEN;
 		} else
 			return Color.WHITE;

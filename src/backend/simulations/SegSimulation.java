@@ -22,7 +22,7 @@ public class SegSimulation extends Simulation {
 	@Override
 	protected void setInitialState(List<InitialCell> initialState) {
 		for (InitialCell c : initialState) {
-			((SegPatch) myGrid[c.myX][c.myY]).setState(c.myState);
+			((SegPatch) myGrid[c.myX][c.myY]).setInitialState(c.myState);
 		}
 	}
 
@@ -66,7 +66,7 @@ public class SegSimulation extends Simulation {
 		for (int i = 0; i < myGrid.length; i++) {
 			for (int j = 0; j < myGrid[i].length; j++) {
 				Patch patch = myGrid[i][j];
-				if (patch.myCell.myState == 0) {
+				if (patch.getCell().getState() == 0) {
 					emptyPatches.add(patch);
 				}
 			}

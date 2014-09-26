@@ -17,12 +17,12 @@ import backend.cells.Cell;
 public abstract class Patch {
 	protected List<Patch> myNeighbors = new ArrayList<Patch>();
 	protected int[] myCoordinates = new int[2];
-	public boolean myUpdated;
-	public int myState;
+	protected boolean myUpdated;
+	protected int myState;
 	protected int myPreviousState;
 	protected double myThresholdValue;
 	protected int myPossibleStates;
-	public Cell myCell;
+	protected Cell myCell;
 	protected boolean isEmpty;
 
 	/**
@@ -37,20 +37,16 @@ public abstract class Patch {
 	}
 
 	public List<Cell> getCellNeighbors() {
-		List<Cell> cellNeighborsList =  new ArrayList<Cell>();
-		for (Patch p: myNeighbors) {
+		List<Cell> cellNeighborsList = new ArrayList<Cell>();
+		for (Patch p : myNeighbors) {
 			cellNeighborsList.add(p.myCell);
 		}
 		return cellNeighborsList;
 
 	}
-	
+
 	public List<Patch> getPatchNeighbors() {
 		return myNeighbors;
-	}
-
-	public void addCell(Cell cell) {
-		myCell = cell;
 	}
 
 	/**
@@ -66,6 +62,18 @@ public abstract class Patch {
 		myCell.update();
 	}
 
+	public boolean getUpdated() {
+		return myUpdated;
+	}
+
+	public void setUpdated(boolean updated) {
+		myUpdated = updated;
+	}
+
+	public void setCell(Cell cell) {
+		myCell = cell;
+	}
+
 	/**
 	 * Method that sets the state of an object. Used when setting the initial
 	 * state of the cells.
@@ -73,7 +81,6 @@ public abstract class Patch {
 	 * @param state
 	 *            the state of the object as defined as a string from the xml
 	 */
-	
 
 	/**
 	 * Resets the myUpdate of the cell for use in next frame. All empty cells
@@ -83,12 +90,19 @@ public abstract class Patch {
 		myUpdated = false;
 	}
 
-	public boolean isEmpty() {
-		return myCell == null;
+	public int getState() {
+		return myState;
 	}
-	
-	public abstract void setState(String state);
 
+	public void setState(int state) {
+		myState = state;
+	}
+
+	public Cell getCell() {
+		return myCell;
+	}
+
+	public abstract void setInitialState(String state);
 
 	/**
 	 * Changes the state of the cell to the next state allowing for dynamic user
@@ -96,7 +110,8 @@ public abstract class Patch {
 	 * 
 	 */
 	public int changedState() {
-		return (myCell.myState = (myCell.myState + 1) % myPossibleStates);
+		myCell.setState((myCell.getState() + 1) % myPossibleStates);
+		return myCell.getState();
 	}
 
 	/**

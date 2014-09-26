@@ -19,7 +19,7 @@ public class SugarSimulation extends Simulation {
 	@Override
 	protected void setInitialState(List<InitialCell> initialState) {
 		for (InitialCell c : initialState) {
-			((SugarPatch) myGrid[c.myX][c.myY]).setState(c.myState);
+			((SugarPatch) myGrid[c.myX][c.myY]).setInitialState(c.myState);
 		}
 	}
 

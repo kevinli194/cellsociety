@@ -1,6 +1,7 @@
 package backend.patches;
 
 import javafx.scene.paint.Color;
+import backend.cells.Cell;
 import backend.cells.SegCell;
 
 public class SegPatch extends Patch {
@@ -9,7 +10,6 @@ public class SegPatch extends Patch {
 	private static final int O = 2;
 	private SegPatch myEmptyPatch;
 	
-
 	public SegPatch(int xCoord, int yCoord, double thresholdValue) { 
 		myCoordinates[0] = xCoord;
 		myCoordinates[1] = yCoord;
@@ -20,9 +20,9 @@ public class SegPatch extends Patch {
 
 	@Override
 	public Color getColor() {
-		if (myCell.myState == X)
+		if (myCell.getState() == X)
 			return Color.BLACK;
-		else if (myCell.myState == O)
+		else if (myCell.getState() == O)
 			return Color.RED;
 		else 
 			return Color.WHITE;
@@ -30,13 +30,12 @@ public class SegPatch extends Patch {
 	}
 
 	@Override
-	public void setState(String state) {
+	public void setInitialState(String state) {
 		if(state.equals("X"))
-			myCell.myState = X;
+			myCell.setState(X);
 		
 		if (state.equals("O"))
-			myCell.myState = O;
-		
+			myCell.setState(O);	
 	}
 
 	public void setEmptyPatch(SegPatch segPatch) {
@@ -51,7 +50,12 @@ public class SegPatch extends Patch {
 	@Override
 	public void update() {
 		updateCell();
-		
-		
+	}
+	
+	public void swapCells(Patch patch) {
+		Cell tempCell = patch.myCell;
+		patch.myCell = myCell;
+		myCell.setPatch(patch);
+		myCell = tempCell;
 	}
 }

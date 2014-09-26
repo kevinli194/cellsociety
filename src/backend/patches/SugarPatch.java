@@ -28,14 +28,14 @@ public class SugarPatch extends Patch {
 
 	@Override
 	public Color getColor() {
-		if (myCell.myState == DEAD) {
+		if (myCell.getState() == DEAD) {
 			return Color.web("0x0000FF", ((double) myState) / myMaximumCapacity);
 		} else
 			return Color.RED;
 	}
 
 	@Override
-	public void setState(String state) {
+	public void setInitialState(String state) {
 		if (state.equals("ALIVE"))
 			myCell.setState(ALIVE);
 		else
@@ -64,7 +64,7 @@ public class SugarPatch extends Patch {
 	public void swapCells(Patch patch) {
 		Cell tempCell = patch.myCell;
 		patch.myCell = myCell;
-		myCell.myPatch = patch;
+		myCell.setPatch(patch);
 		myCell = tempCell;
 	}
 }
