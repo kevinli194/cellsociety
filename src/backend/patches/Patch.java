@@ -36,6 +36,15 @@ public abstract class Patch {
 		myNeighbors.add(neighbor);
 	}
 
+	public List<Cell> getCellNeighbors() {
+		List<Cell> cellNeighborsList =  new ArrayList<Cell>();
+		for (Patch p: myNeighbors) {
+			cellNeighborsList.add(p.myCell);
+		}
+		return cellNeighborsList;
+
+	}
+
 	public void addCell(Cell cell) {
 		myCell = cell;
 	}
@@ -65,22 +74,22 @@ public abstract class Patch {
 	 * (0) should remain as updated to skip for performance.
 	 */
 	public void reset() {
-			myUpdated = false;
-		}
+		myUpdated = false;
+	}
 
 
-	
+
 	public boolean isEmpty(){
 		return myCell == null;
 	}
-	
+
 	/**
 	 * Changes the state of the cell to the next state allowing for dynamic user
 	 * interaction
 	 * 
 	 */
 	public int changedState() {
-		return (myState = (myState + 1) % myPossibleStates);
+		return (myCell.myState = (myCell.myState + 1) % myPossibleStates);
 	}
 
 	/**
@@ -88,5 +97,5 @@ public abstract class Patch {
 	 * to their neighbor each update cycle (turn/frame).
 	 */
 	public abstract void update();
-	
+
 }

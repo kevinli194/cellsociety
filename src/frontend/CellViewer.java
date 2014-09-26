@@ -14,6 +14,7 @@ import frontend.gridshapes.ShapeFactory;
 import backend.patches.Patch;
 //import backend.simulations.EcoSimulation;
 import backend.simulations.FireSimulation;
+import backend.simulations.SegSimulation;
 //import backend.simulations.GoLSimulation;
 //import backend.simulations.SegSimulation;
 import backend.simulations.Simulation;
@@ -123,7 +124,7 @@ public class CellViewer {
 	 */
 	/*private Simulation [] mySimulations = { new EcoSimulation(), new FireSimulation(),
 			new GoLSimulation(),new SegSimulation()};*/
-	private Simulation myCellSimulation = new FireSimulation();
+	private Simulation myCellSimulation = new SegSimulation();
 	
 
 	private Timeline myAnimation = new Timeline();
@@ -234,11 +235,11 @@ public class CellViewer {
 	 * backend Cell object and frontend Cell viewer.
 	 * 
 	 */
-	private void setCellOnMouseListen(ShapeCell viewCell, Patch cell) {
+	private void setCellOnMouseListen(ShapeCell viewCell, Patch patch) {
 		viewCell.myShape.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent ke) {
-				viewCell.myShape.setFill(myCellColors[cell.changedState()]);
+				viewCell.myShape.setFill(myCellColors[patch.changedState()]);
 			}
 		});
 	}
