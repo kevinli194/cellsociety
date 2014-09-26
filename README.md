@@ -14,4 +14,3 @@ the second set of implementation specifications.  You can dynamically interact w
 clicking on the cells which toggles their state.  We have implemented error checking. cellShape and gridBoundaryType
 are the two parameters that go together.  We assign default values for these two items where nothing is specified.
 The button functions should be self-explanatory in nature and responsive to user interaction.
-=======
