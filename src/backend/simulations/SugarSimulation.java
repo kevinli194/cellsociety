@@ -3,6 +3,9 @@ package backend.simulations;
 import java.util.List;
 
 import javafx.scene.paint.Color;
+import backend.neighborsetters.NeighborSetter;
+import backend.neighborsetters.SugarNeighborSetter;
+import backend.patches.Patch;
 import backend.patches.SugarPatch;
 import backend.xml.InitialCell;
 
@@ -48,6 +51,13 @@ public class SugarSimulation extends Simulation {
 		myCellColors = new Color[2];
 		myCellColors[0] = Color.WHITE;
 		myCellColors[1] = Color.RED;
+	}
+	@Override
+	protected void setNeighbors(Patch[][] grid, String boundaryType,
+			String gridShape) {
+		NeighborSetter setter = new SugarNeighborSetter((int)myThreshold);
+		setter.setNeighbors(grid, boundaryType, gridShape);
+		
 	}
 
 }
