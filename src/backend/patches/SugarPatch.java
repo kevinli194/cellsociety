@@ -23,21 +23,21 @@ public class SugarPatch extends Patch {
 		mySugarGrowBackInterval = 3;
 		mySugarGrowBackRate = 1;
 		mySugarTicks = 0;
-
+		myPossibleStates = myMaximumCapacity;
 		myCell = new SugarAgentCell(this);
 	}
 
 	@Override
 	public Color getColor() {
-		if (myCell.myState == ALIVE)
+	
+		if (myCell.myState == DEAD) 
+			return Color.web("0x0000FF", mySugarAmount);
+		else 
 			return Color.RED;
-		else
-			return Color.WHITE;
 	}
 
 	@Override
-	public void setState(String state) {
-	};
+	public void setState(String state) {};
 
 	@Override
 	public void update() {

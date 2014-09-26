@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<simulation>
+	<simulationMode>Sugar</simulationMode>
+	<gridXSize>10</gridXSize>
+	<gridYSize>10</gridYSize>
+	<thresholdValue>3</thresholdValue>
+	<cell>
+		<state>ALIVE</state>
+		<x> 1 </x>
+		<y>6</y>
+	</cell>
+	<cell>
+		<state>ALIVE</state>
+		<x> 1 </x>
+		<y> 3 </y>
+	</cell>
+	<cell>
+		<state>ALIVE</state>
+		<x> 2 </x>
+		<y> 2 </y>
+	</cell>
+	<cell>
+		<state>ALIVE</state>
+		<x>8</x>
+		<y>5</y>
+	</cell>
+</simulation>
