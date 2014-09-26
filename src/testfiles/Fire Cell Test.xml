@@ -3,7 +3,7 @@
 	<simulationMode>Fire</simulationMode>
 	<gridXSize> 4 </gridXSize>
 	<gridYSize> 4 </gridYSize>
-	<thresholdValue> .8 </thresholdValue>
+	<thresholdValue> 0 </thresholdValue>
 	<cell>
 		<state> TREE </state>
 		<x> 1 </x>

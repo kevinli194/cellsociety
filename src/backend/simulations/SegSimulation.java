@@ -1,9 +1,11 @@
-package backend.simulations;
-import backend.cells.Cell;
-import backend.cells.SegCell;
+/*package backend.simulations;
+import backend.patches.Patch;
+import backend.patches.SegPatch;
 import backend.xml.InitialCell;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import javafx.scene.paint.Color;
 
 
@@ -11,13 +13,13 @@ public class SegSimulation extends Simulation {
 
 	@Override
 	protected void makeNewCell(int i, int j, double thresholdValue) {
-		myGrid[i][j] = new SegCell(i, j, true, 0, this, thresholdValue);
+		myGrid[i][j] = new SegPatch(i, j, true, 0, this, thresholdValue);
 	}
 
 	@Override
 	protected void setInitialState(List<InitialCell> initialState) {
 		for (InitialCell c : initialState) {
-			((SegCell) myGrid[c.myX][c.myY]).setState(c.myState);
+			((SegPatch) myGrid[c.myX][c.myY]).setState(c.myState);
 		}
 	}
 
@@ -25,7 +27,7 @@ public class SegSimulation extends Simulation {
 	public void updateGrid() {
 		for (int i = 0; i < myGrid.length; i++) {
 			for (int j = 0; j < myGrid[0].length; j++) {
-				((SegCell) myGrid[i][j]).update();
+				((SegPatch) myGrid[i][j]).update();
 			}
 		}
 
@@ -35,14 +37,14 @@ public class SegSimulation extends Simulation {
 			}
 		}
 	}
-	/**
+	*//**
 	 *  finds a random empty cell to move the contents of the cell to.
 	 * @return returns a random empty cell
-	 */
+	 *//*
 	
-	public Cell selectRandomEmptyCell()
+	public Patch selectRandomEmptyCell()
 	{
-		List<Cell> emptyCells = findEmptyCells();
+		List<Patch> emptyCells = findEmptyCells();
 		
 		if(emptyCells.isEmpty())
 			return null;
@@ -53,14 +55,14 @@ public class SegSimulation extends Simulation {
 		}
 	}
 	
-	private List<Cell> findEmptyCells()
+	private List<Patch> findEmptyCells()
 	{
-		List<Cell> emptyCells = new ArrayList<Cell>();
+		List<Patch> emptyCells = new ArrayList<Patch>();
 		for(int i = 0; i < myGrid.length; i++)
 		{
 			for(int j = 0; j < myGrid[i].length; j++)
 			{
-				Cell currentCell = myGrid[i][j];
+				Patch currentCell = myGrid[i][j];
 				if(currentCell.getState() == 0)
 				{
 					emptyCells.add(currentCell);
@@ -79,3 +81,4 @@ public class SegSimulation extends Simulation {
 		
 	}
 }
+*/

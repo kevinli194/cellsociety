@@ -2,14 +2,15 @@ package backend.simulations;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javafx.scene.paint.Paint;
-import backend.cells.Cell;
 import backend.neighborsetters.NeighborSetter;
 import backend.neighborsetters.SegNeighborSetter;
+import backend.patches.Patch;
 import backend.xml.InitialCell;
 
 public abstract class Simulation {
-	protected Cell[][] myGrid;
+	protected Patch[][] myGrid;
 	public Paint[] myCellColors;
 
 	/**
@@ -32,17 +33,17 @@ public abstract class Simulation {
 	 * @return returns an array of array of cells in a grid.
 	 */
 
-	public Cell[][] initialize(String modelType, int xDimension,
+	public Patch[][] initialize(String modelType, int xDimension,
 			int yDimension, double thresholdValue,
 			ArrayList<InitialCell> initialCells) {
-		myGrid = new Cell[xDimension][yDimension];
+		myGrid = new Patch[xDimension][yDimension];
 		for (int i = 0; i < xDimension; i++) {
 			for (int j = 0; j < yDimension; j++) {
 				makeNewCell(i, j, thresholdValue);
 			}
 		}
 		NeighborSetter setter = new SegNeighborSetter();
-		setter.setNeighbors(myGrid, "TOROIDAL", "SQUARE");
+		setter.setNeighbors(myGrid, "FINITE", "SQUARE");
 		setInitialState(initialCells);
 		initializeColors();
 		return myGrid;

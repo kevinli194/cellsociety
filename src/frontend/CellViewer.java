@@ -4,15 +4,18 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+
 import javax.xml.parsers.ParserConfigurationException;
+
 import org.xml.sax.SAXException;
+
 import frontend.gridshapes.ShapeCell;
 import frontend.gridshapes.ShapeFactory;
-import backend.cells.Cell;
-import backend.simulations.EcoSimulation;
+import backend.patches.Patch;
+//import backend.simulations.EcoSimulation;
 import backend.simulations.FireSimulation;
-import backend.simulations.GoLSimulation;
-import backend.simulations.SegSimulation;
+//import backend.simulations.GoLSimulation;
+//import backend.simulations.SegSimulation;
 import backend.simulations.Simulation;
 import backend.xml.InitialGameParameters;
 import backend.xml.XMLParsing;
@@ -70,7 +73,7 @@ public class CellViewer {
 	 *  Array of cell objects mapped 1:1 to a viewing cell 
 	 *  
 	 */
-	private Cell[][] myCellsGrid;
+	private Patch[][] myCellsGrid;
 
 	/**
 	 * Currently loaded file used in XML parsing
@@ -100,7 +103,7 @@ public class CellViewer {
 	 * Superclass object that get instantiated with the appropriate simulation
 	 * retrieved from the XML file
 	 */
-	private Simulation myCellSimulation;
+	//private Simulation myCellSimulation;
 
 	/**
 	 * Used in reflection to match simulation mode to appropriate Simulation subclass. 
@@ -118,8 +121,10 @@ public class CellViewer {
 	 * Add new simulation to the below array for extensibility
 	 * 
 	 */
-	private Simulation [] mySimulations = { new EcoSimulation(), new FireSimulation(),
-			new GoLSimulation(),new SegSimulation()};
+	/*private Simulation [] mySimulations = { new EcoSimulation(), new FireSimulation(),
+			new GoLSimulation(),new SegSimulation()};*/
+	private Simulation myCellSimulation = new FireSimulation();
+	
 
 	private Timeline myAnimation = new Timeline();
 	private Paint[] myCellColors;
@@ -176,13 +181,16 @@ public class CellViewer {
 	/**
 	 * Generates simulation with reflection by matching simulation name and corresponding class
 	 */
-	private void generateSimulation() {
+	/*private void generateSimulation() {
 		for (int i = 0; i < mySimulations.length; i++) {
 			if (mySimulations[i].getClass().getName().toLowerCase().equals(SIMULATION_PACKAGE + "." + myGameParams.simulationMode.toLowerCase() + CLASS_SUFFIX)){
 				myCellSimulation = mySimulations[i];
 				return;		
 			}
 		}
+	}
+	*/
+	private void generateSimulation(){
 	}
 
 	/**
@@ -206,15 +214,15 @@ public class CellViewer {
 		myBorderPane.setCenter(myCellsGridPane);
 		double sideLength = Math.min((myHeight/(myGameParams.gridXSize*2.2)), (myWidth/(myGameParams.gridYSize*1.5)));
 		double centerToVertices = (Math.sqrt(3)*(sideLength/2));
-		myShapeFactory = new ShapeFactory("TRIANGLE", myGameParams.gridXSize, myGameParams.gridYSize, 
+		myShapeFactory = new ShapeFactory("SQUARE", myGameParams.gridXSize, myGameParams.gridYSize, 
 				sideLength, centerToVertices);
 		myViewingGrid = myShapeFactory.getShapes();
 		for (int row = 0; row < myGameParams.gridXSize; row++) {
 			for (int col = 0; col < myGameParams.gridYSize; col++) {
-				Cell cell = myCellsGrid[row][col];
+				Patch patch = myCellsGrid[row][col];
 				myCellsGridPane.getChildren().add(myViewingGrid[row][col].getShape());
-				setCellOnMouseListen(myViewingGrid[row][col], cell);
-				myViewingGrid[row][col].getShape().setFill(myCellColors[cell.getState()]);
+				setCellOnMouseListen(myViewingGrid[row][col], patch);
+				myViewingGrid[row][col].getShape().setFill(patch.getColor());
 				myViewingGrid[row][col].getShape().setStroke(Color.WHITE);
 
 			}
@@ -226,7 +234,7 @@ public class CellViewer {
 	 * backend Cell object and frontend Cell viewer.
 	 * 
 	 */
-	private void setCellOnMouseListen(ShapeCell viewCell, Cell cell) {
+	private void setCellOnMouseListen(ShapeCell viewCell, Patch cell) {
 		viewCell.myShape.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent ke) {
@@ -464,8 +472,8 @@ public class CellViewer {
 		if (myCellsGridSet) {
 			for (int i = 0; i < myCellsGrid.length; i++) {
 				for (int j = 0; j < myCellsGrid[0].length; j++) {
-					Cell cell = myCellsGrid[i][j];
-					myViewingGrid[i][j].myShape.setFill(myCellColors[cell.getState()]);
+					Patch patch = myCellsGrid[i][j];
+					myViewingGrid[i][j].myShape.setFill(patch.getColor());
 				}
 			}
 		}

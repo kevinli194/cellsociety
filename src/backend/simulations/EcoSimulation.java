@@ -1,22 +1,22 @@
-package backend.simulations;
+/*package backend.simulations;
 
 import java.util.List;
 
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import backend.cells.EcoCell;
+import backend.patches.EcoPatch;
 import backend.xml.InitialCell;
 
 public class EcoSimulation extends Simulation {
 	@Override
 	protected void makeNewCell(int i, int j, double thresholdValue) {
-		myGrid[i][j] = new EcoCell(i, j, true, 0, (int) thresholdValue);
+		myGrid[i][j] = new EcoPatch(i, j, true, 0, (int) thresholdValue);
 	}
 
 	@Override
 	protected void setInitialState(List<InitialCell> initialState) {
 		for (InitialCell c : initialState) {
-			((EcoCell) myGrid[c.myX][c.myY]).setState(c.myState);
+			((EcoPatch) myGrid[c.myX][c.myY]).setState(c.myState);
 		}
 	}
 
@@ -24,12 +24,12 @@ public class EcoSimulation extends Simulation {
 	public void updateGrid() {
 		for (int i = 0; i < myGrid.length; i++) {
 			for (int j = 0; j < myGrid[0].length; j++) {
-				((EcoCell) myGrid[i][j]).update();
+				((EcoPatch) myGrid[i][j]).update();
 			}
 		}
 		for (int i = 0; i < myGrid.length; i++) {
 			for (int j = 0; j < myGrid[0].length; j++) {
-				((EcoCell) myGrid[i][j]).updateFish();
+				((EcoPatch) myGrid[i][j]).updateFish();
 			}
 		}
 
@@ -48,3 +48,4 @@ public class EcoSimulation extends Simulation {
 		myCellColors[2] = Color.GRAY;
 	}
 }
+*/

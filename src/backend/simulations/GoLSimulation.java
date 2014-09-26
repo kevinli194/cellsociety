@@ -1,22 +1,23 @@
-package backend.simulations;
+/*package backend.simulations;
 
 import java.util.List;
+
 import javafx.scene.paint.Color;
-import backend.cells.GoLCell;
+import backend.patches.GoLPatch;
 import backend.xml.InitialCell;
 
 public class GoLSimulation extends Simulation {
 
 	@Override
 	protected void makeNewCell(int i, int j, double thresholdValue) {
-		myGrid[i][j] = new GoLCell(i, j, false, 1);
+		myGrid[i][j] = new GoLPatch(i, j, false, 1);
 	}
 
 
 	@Override
 	protected void setInitialState(List<InitialCell> initialState) {
 		for (InitialCell c : initialState) {
-			((GoLCell) myGrid[c.myX][c.myY]).setState(c.myState);
+			((GoLPatch) myGrid[c.myX][c.myY]).setState(c.myState);
 		}
 	}
 
@@ -42,3 +43,4 @@ public class GoLSimulation extends Simulation {
 		myCellColors[2] = Color.BLACK;	
 	}
 }
+*/

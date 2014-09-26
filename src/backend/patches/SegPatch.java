@@ -1,14 +1,14 @@
-package backend.cells;
+/*package backend.patches;
 
 import backend.simulations.SegSimulation;
 
-public class SegCell extends Cell {
+public class SegPatch extends Patch {
 	private static final int EMPTY = 0;
 	private static final int X = 1;
 	private static final int O = 2;
 	private SegSimulation mySegCellManager;
 
-	public SegCell(int xCoord, int yCoord, boolean update, int state,
+	public SegPatch(int xCoord, int yCoord, boolean update, int state,
 			SegSimulation segCellManager, double thresholdValue) {
 		myCoordinates[0] = xCoord;
 		myCoordinates[1] = yCoord;
@@ -25,7 +25,7 @@ public class SegCell extends Cell {
 			myUpdated = true;
 			int satisfiedNeighbors = 0;
 			int totalNeighbors = 0;
-			for (Cell neighbor : myNeighbors) {
+			for (Patch neighbor : myNeighbors) {
 				if (neighbor.myState != EMPTY) {
 					if (neighbor.myState == myState)
 						satisfiedNeighbors++;
@@ -40,12 +40,12 @@ public class SegCell extends Cell {
 		}
 	}
 	
-	/**
+	*//**
 	 *  Moves a cell to a empty cell if dissatisfied.
-	 */
+	 *//*
 
 	private void moveToBeSatisfied() {
-		Cell emptyCell = mySegCellManager.selectRandomEmptyCell();
+		Patch emptyCell = mySegCellManager.selectRandomEmptyCell();
 		if (emptyCell != null) {
 			emptyCell.myPreviousState = emptyCell.myState;
 			emptyCell.myState = myState;
@@ -70,3 +70,4 @@ public class SegCell extends Cell {
 	}
 
 }
+*/

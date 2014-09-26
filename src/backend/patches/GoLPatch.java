@@ -1,11 +1,11 @@
-package backend.cells;
+/*package backend.patches;
 
 
-public class GoLCell extends Cell {
+public class GoLPatch extends Patch {
 	private static final int DEAD = 1;
 	private static final int ALIVE = 2;
 
-	public GoLCell(int xCoord, int yCoord, boolean update, int state) {
+	public GoLPatch(int xCoord, int yCoord, boolean update, int state) {
 		myCoordinates[0] = xCoord;
 		myCoordinates[1] = yCoord;
 		myUpdated = update;
@@ -60,11 +60,11 @@ public class GoLCell extends Cell {
 
 	}
 	
-	/**
+	*//**
 	 * method that gets a count of how many neighbors are in the ALIVE state.
 	 * 
 	 * @return returns the number of ALIVE state neighbors as an integer.
-	 */
+	 *//*
 
 	public int getAliveCount() {
 		int count = 0;
@@ -80,3 +80,4 @@ public class GoLCell extends Cell {
 	}
 
 }
+*/
