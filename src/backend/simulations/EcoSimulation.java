@@ -3,6 +3,7 @@ package backend.simulations;
 import java.util.List;
 
 import javafx.scene.paint.Color;
+
 import backend.neighborsetters.EcoNeighborSetter;
 import backend.neighborsetters.NeighborSetter;
 import backend.patches.EcoPatch;

@@ -4,11 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
-
 import org.xml.sax.SAXException;
-
 import frontend.gridshapes.ShapeCell;
 import frontend.gridshapes.ShapeFactory;
 import backend.patches.Patch;
@@ -18,6 +17,7 @@ import backend.simulations.GoLSimulation;
 import backend.simulations.SegSimulation;
 import backend.simulations.Simulation;
 import backend.simulations.SugarSimulation;
+import backend.xml.InitialCell;
 import backend.xml.InitialGameParameters;
 import backend.xml.XMLParsing;
 import javafx.animation.KeyFrame;
@@ -53,14 +53,15 @@ public class CellViewer {
 	private InitialGameParameters myGameParams;
 	private XMLParsing myXMLParser;
 	private CellWorld myCellWorld;
-	private boolean myCellsGridSet = false;
+	private boolean myGridSet = false;
 	private boolean myStepClicked = false;
 
 	/**
-	 * Whether file is currently selected used to display cells only after
+	 * Whether file is currently selected used to display patches & cells only after
 	 * created
 	 */
 	private boolean myFileSelected = false;
+	private boolean myFileValid = true;
 	/**
 	 * Button last clicked to handle processing "stepping into" simulation
 	 * frames
@@ -68,15 +69,15 @@ public class CellViewer {
 	private Button myLastClicked = null;
 
 	/**
-	 * Array of cells that are viewed during the simulation
+	 * Array of patches & cells that are viewed during the simulation
 	 */
 	private ShapeCell[][] myViewingGrid;
 
 	/**
-	 * Array of cell objects mapped 1:1 to a viewing cell
+	 * Array of patch objects (holding a cell) mapped 1:1 to a position in the viewing grid
 	 * 
 	 */
-	private Patch[][] myCellsGrid;
+	private Patch[][] myGrid;
 
 	/**
 	 * Currently loaded file used in XML parsing
@@ -84,9 +85,10 @@ public class CellViewer {
 	private File myFile;
 
 	/**
-	 * Stores the individual grid panes (cells) as children
+	 * Stores the individual objects as children
 	 */
-	private Group myCellsGridPane;
+	
+	private Group myGridGroup;
 	/**
 	 * Holds layout of the whole GUI
 	 */
@@ -214,32 +216,31 @@ public class CellViewer {
 	 */
 	private void addCellsToDisplay() {
 		disableButtons(false);
-		myCellsGridPane = new Group();
+		myGridGroup = new Group();
 		myCellColors = myCellSimulation.myCellColors;
-		myBorderPane.setCenter(myCellsGridPane);
+		myBorderPane.setCenter(myGridGroup);
 		double sideLength = Math.min(
 				(myHeight / (myGameParams.gridXSize * 2.2)),
 				(myWidth / (myGameParams.gridYSize * 1.5)));
 		double centerToVertices = (Math.sqrt(3) * (sideLength / 2));
-		myShapeFactory = new ShapeFactory("HEXAGON", myGameParams.gridXSize,
+		myShapeFactory = new ShapeFactory(myGameParams.unitShape.toUpperCase(), myGameParams.gridXSize,
 				myGameParams.gridYSize, sideLength, centerToVertices);
 		myViewingGrid = myShapeFactory.getShapes();
 		for (int row = 0; row < myGameParams.gridXSize; row++) {
 			for (int col = 0; col < myGameParams.gridYSize; col++) {
-				Patch patch = myCellsGrid[row][col];
-				myCellsGridPane.getChildren().add(
+				Patch patch = myGrid[row][col];
+				myGridGroup.getChildren().add(
 						myViewingGrid[row][col].getShape());
 				setCellOnMouseListen(myViewingGrid[row][col], patch);
 				myViewingGrid[row][col].getShape().setFill(patch.getColor());
 				myViewingGrid[row][col].getShape().setStroke(Color.WHITE);
-
 			}
 		}
 	}
 
 	/**
 	 * Sets the viewing cell on a mouse listener with a 1:1 mapping between the
-	 * backend Cell object and frontend Cell viewer.
+	 * backend Patch/Cell object and frontend Cell Viewer object.
 	 * 
 	 */
 	private void setCellOnMouseListen(ShapeCell viewCell, Patch patch) {
@@ -269,7 +270,9 @@ public class CellViewer {
 				myFile = fileChooser.showOpenDialog(stage);
 				if (myFile != null) {
 					parseXML();
-					resetGrid();
+					checkFileValid(stage);
+					if(myFileValid)
+						resetGrid();
 				} else {
 					fileNotSelected(stage);
 				}
@@ -280,6 +283,51 @@ public class CellViewer {
 
 	}
 
+	/**
+	 * Error-checking code that sees if a file is valid, and appropriately 
+	 * display pop-up message
+	 */
+	private void checkFileValid(Stage stage) {
+		if (myGameParams.simulationMode == null)
+			popUpNotification(stage, "Simulation mode not specified!");
+		if (myGameParams.gridXSize < 1 || myGameParams.gridYSize < 1)
+			popUpNotification(stage, "Grid size needs to be positive!");
+		if (myGameParams.thresholdValue < 0)
+			popUpNotification(stage, "Threshold parameter invalid!");
+		if (cellOutOfBounds(myGameParams.initialCells))
+			popUpNotification(stage, "Cell out of bounds!");
+	}
+
+	/**
+	 * Determines whether cell/patch is out of bounds of specified indices
+	 */
+	private boolean cellOutOfBounds(List<InitialCell> initialCells) {
+		for (InitialCell ic : initialCells) {
+			if (ic.myX < 0 || ic.myX > myGameParams.gridXSize || ic.myY < 0
+					|| ic.myY > myGameParams.gridYSize)
+				return true;
+		}
+		return false;
+	}
+
+	private void popUpNotification(Stage stage, String message) {
+		/**
+		 * Setting separate stage to show pop-up window (missing XML file) when
+		 * there is no previously loaded file.
+		 * 
+		 */
+		Stage dialog = new Stage();
+		dialog.initModality(Modality.APPLICATION_MODAL);
+		dialog.initOwner(stage);
+		VBox textBox = new VBox();
+		textBox.getChildren().add(new Text(message));
+		Scene dialogScene = new Scene(textBox, 500, 100);
+		dialog.setScene(dialogScene);
+		dialog.show();
+		myFileValid = false;
+	}
+
+	
 	/**
 	 * Handles user notification (pop-up window) when XML file not selected
 	 */
@@ -313,6 +361,7 @@ public class CellViewer {
 		try {
 			myGameParams = myXMLParser.parseInitialCellsFromFile(myFile);
 			myFileSelected = true;
+			myFileValid = true;
 			myPreviousFile = myFile;
 
 		} catch (ParserConfigurationException | SAXException | IOException e1) {
@@ -400,10 +449,11 @@ public class CellViewer {
 	}
 
 	/**
-	 * Sets the original grid of Cell objects
+	 * Sets the original grid of patch and Cell objects
 	 */
-	private void setCellsGrid() {
-		myCellsGrid = myCellSimulation.initialize(myGameParams.simulationMode,
+	private void setGrid() {
+		myGrid = myCellSimulation.initialize(myGameParams.simulationMode,
+				myGameParams.unitShape, myGameParams.edgeType,
 				myGameParams.gridXSize, myGameParams.gridYSize,
 				myGameParams.thresholdValue, myGameParams.initialCells);
 	}
@@ -414,10 +464,8 @@ public class CellViewer {
 	private void resetGrid() {
 		myAnimation.stop();
 		generateSimulation();
-		setCellsGrid();
+		setGrid();
 		addCellsToDisplay();
-		// addGridConstraints(myCellsGridPane, myGameParams.gridXSize,
-		// myGameParams.gridYSize);
 		myCellWorld.startAnimation();
 		myAnimation.pause();
 	}
@@ -454,27 +502,27 @@ public class CellViewer {
 	private void checkFileSelectedAndSetFlags() {
 
 		if ((myFile != null) && (myFileSelected)) {
-			myCellsGridSet = true;
+			myGridSet = true;
 			myFileSelected = false;
 		}
 	}
 
 	/**
-	 * Update states of simulation cells
+	 * Update states of simulation patches & cells
 	 */
 	private void updateGrid() {
-		if (myCellsGridSet)
+		if (myGridSet)
 			myCellSimulation.updateGrid();
 	}
 
 	/**
-	 * Display updated states of simulation cells
+	 * Display updated states of simulation patches & cells
 	 */
 	private void updateDisplay() {
-		if (myCellsGridSet) {
-			for (int i = 0; i < myCellsGrid.length; i++) {
-				for (int j = 0; j < myCellsGrid[0].length; j++) {
-					Patch patch = myCellsGrid[i][j];
+		if (myGridSet) {
+			for (int i = 0; i < myGrid.length; i++) {
+				for (int j = 0; j < myGrid[0].length; j++) {
+					Patch patch = myGrid[i][j];
 					myViewingGrid[i][j].myShape.setFill(patch.getColor());
 				}
 			}
