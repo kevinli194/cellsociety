@@ -10,14 +10,14 @@ public abstract class NeighborSetter {
 			if (gridShape == "SQUARE") {
 				for (int i = 0; i < grid.length; i++) {
 					for (int j = 0; j < grid[0].length; j++) {
-						recBounded(grid, i, j);
+						recAndTriBounded(grid, i, j);
 					}
 				}
 			}
 			if (gridShape == "TRIANGLE") {
 				for (int i = 0; i < grid.length; i++) {
 					for (int j = 0; j < grid[0].length; j++) {
-						triBounded(grid, i, j);
+						recAndTriBounded(grid, i, j);
 					}
 				}
 			}
@@ -34,14 +34,14 @@ public abstract class NeighborSetter {
 			if (gridShape.equals("SQUARE")) {
 				for (int i = 0; i < grid.length; i++) {
 					for (int j = 0; j < grid[0].length; j++) {
-						recToroidal(grid, i, j);
+						recAndTriToroidal(grid, i, j);
 					}
 				}
 			}
 			if (gridShape.equals("TRIANGLE")) {
 				for (int i = 0; i < grid.length; i++) {
 					for (int j = 0; j < grid[0].length; j++) {
-						triToroidal(grid, i, j);
+						recAndTriToroidal(grid, i, j);
 					}
 				}
 			}
@@ -57,18 +57,9 @@ public abstract class NeighborSetter {
 
 	}
 
-	public void recToroidal(Patch[][] grid, int i, int j) {
-		recBounded(grid, i, j);
+	public void recAndTriToroidal(Patch[][] grid, int i, int j) {
+		recAndTriBounded(grid, i, j);
 		addCardinalEdges(grid, i, j);
-
-	}
-
-	public void triToroidal(Patch[][] grid, int i, int j) {
-		triBounded(grid, i, j);
-		addCardinalEdges(grid, i, j);
-		addDiagonalEdges(grid, i, j);
-
-		// how to add appropriate edges
 
 	}
 
@@ -78,21 +69,8 @@ public abstract class NeighborSetter {
 
 	}
 
-	public void recBounded(Patch[][] grid, int i, int j) {
+	public void recAndTriBounded(Patch[][] grid, int i, int j) {
 		addCardinalNeighbors(grid, i, j);
-	}
-
-	public void triBounded(Patch[][] grid, int i, int j) {
-		/*
-		 * the mod 2 determines which direction the triangle is facing. This is
-		 * the code for 3 neighbors. if (i > 0 && (i + j) % 2 == 0)
-		 * grid[i][j].addNeighbor(grid[i - 1][j]); if (j > 0)
-		 * grid[i][j].addNeighbor(grid[i][j - 1]); if (i < grid.length - 1 && (i
-		 * + j) % 2 == 1) grid[i][j].addNeighbor(grid[i + 1][j]); if (j <
-		 * grid[0].length - 1) grid[i][j].addNeighbor(grid[i][j + 1]);
-		 */
-		addCardinalNeighbors(grid, i, j);
-		addDiagonalNeighbors(grid, i, j);
 	}
 
 	public void hexBounded(Patch[][] grid, int i, int j) {
