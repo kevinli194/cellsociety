@@ -29,7 +29,7 @@ public class SugarAgentCell extends Cell {
 			SugarPatch maximumNeighbor = null;
 
 			for (Patch neighbor : myPatchNeighbors) {
-				int neighborSugar = ((SugarPatch) neighbor).myState;
+				int neighborSugar = ((SugarPatch) neighbor).getState();
 				if (neighborSugar > maximumSugarAmongNeighbors) {
 					maximumSugarAmongNeighbors = neighborSugar;
 					maximumNeighbor = (SugarPatch) neighbor;
@@ -37,8 +37,8 @@ public class SugarAgentCell extends Cell {
 			}
 			
 			((SugarPatch) myPatch).swapCells(maximumNeighbor);
-			mySugarAmount += myPatch.myState;
-			myPatch.myState = 0;
+			mySugarAmount += myPatch.getState();
+			myPatch.setState(0);
 			mySugarAmount -= mySugarMetabolism;
 			
 			if (mySugarAmount <= 0) {

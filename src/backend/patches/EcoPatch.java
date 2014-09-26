@@ -24,9 +24,9 @@ public class EcoPatch extends Patch {
 
 	@Override
 	public Color getColor() {
-		if (myCell.myState == FISH)
+		if (myCell.getState() == FISH)
 			return Color.YELLOW;
-		if (myCell.myState == SHARK)
+		if (myCell.getState() == SHARK)
 			return Color.GRAY;
 		else{
 			return Color.BLUE;
@@ -35,7 +35,7 @@ public class EcoPatch extends Patch {
 	}
 
 	@Override
-	public void setState(String state) {
+	public void setInitialState(String state) {
 		// TODO Auto-generated method stub
 		if (state.equals("EMPTY")) {
 			myCell = new EmptyCell(this);
@@ -71,11 +71,11 @@ public class EcoPatch extends Patch {
 
 	}
 	public void updateShark(){
-		if (myCell.myState ==SHARK)
+		if (myCell.getState() ==SHARK)
 		myCell.update();
 	}
 	public void updateFish(){
-		if (myCell.myState == FISH)
+		if (myCell.getState() == FISH)
 			myCell.update();
 		
 	}
@@ -83,7 +83,7 @@ public class EcoPatch extends Patch {
 	public Patch findNeighborOfType(int stateID) {
 		Collections.shuffle(myNeighbors);
 		for (Patch neighbor : myNeighbors) {
-			if (neighbor.myCell.myState == stateID) {
+			if (neighbor.myCell.getState() == stateID) {
 				return neighbor;
 			}
 		}
@@ -94,7 +94,7 @@ public class EcoPatch extends Patch {
 	public void swapCells(Patch patch) {
 		Cell tempCell = patch.myCell;
 		patch.myCell = myCell;
-		myCell.myPatch = patch;
+		myCell.setPatch(patch);
 		myCell = tempCell;
 
 	}

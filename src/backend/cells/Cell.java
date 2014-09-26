@@ -12,12 +12,14 @@ import backend.patches.Patch;
  * difference between Cells and Patches.
  */
 public abstract class Cell {
-	/**
-	 * 
-	 */
-	public int myState;
-	public int myPreviousState;
-	public Patch myPatch;
+
+	protected int myState;
+	protected int myPreviousState;
+	protected Patch myPatch;
+	
+	public int getState(){
+		return myState;
+	}
 	
 	/**
 	 * Sets the state of the cell
@@ -27,7 +29,13 @@ public abstract class Cell {
 	public void setState(int state){
 		myState = state;
 	}
-	
+
+	public void setPatch(Patch patch){
+		myPatch = patch;
+	}
+	public int getPrevState(){
+		return myPreviousState;
+	}
 	/**
 	 * On each round/iteration of the simulation, the Cell will run its own logic that 
 	 * may potentially update its state.

@@ -57,23 +57,23 @@ public abstract class NeighborSetter {
 
 	}
 
-	public void recAndTriToroidal(Patch[][] grid, int i, int j) {
+	protected void recAndTriToroidal(Patch[][] grid, int i, int j) {
 		recAndTriBounded(grid, i, j);
 		addCardinalEdges(grid, i, j, 1);
 
 	}
 
-	public void hexToroidal(Patch[][] grid, int i, int j) {
+	protected void hexToroidal(Patch[][] grid, int i, int j) {
 		hexBounded(grid, i, j);
 		addHexEdges(grid, i, j);
 
 	}
 
-	public void recAndTriBounded(Patch[][] grid, int i, int j) {
+	protected void recAndTriBounded(Patch[][] grid, int i, int j) {
 		addCardinalNeighbors(grid, i, j, 1);
 	}
 
-	public void hexBounded(Patch[][] grid, int i, int j) {
+	protected void hexBounded(Patch[][] grid, int i, int j) {
 		addCardinalNeighbors(grid, i, j, 1);
 		addHexDiags(grid, i, j);
 
@@ -166,7 +166,7 @@ public abstract class NeighborSetter {
 		}
 	}
 
-	private void addHexEdges(Patch[][] grid, int i, int j) {
+	protected void addHexEdges(Patch[][] grid, int i, int j) {
 		if (i == 0) {
 			grid[i][j].addNeighbor(grid[grid.length - 1][j]);
 			if (j != 0)
@@ -181,7 +181,7 @@ public abstract class NeighborSetter {
 			grid[i][j].addNeighbor(grid[i][grid[0].length - 1]);
 		if (j == grid[0].length - 1)
 			grid[i][j].addNeighbor(grid[i][0]);
-		// how to set edges without confusion
+
 	}
 
 }

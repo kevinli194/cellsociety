@@ -28,10 +28,10 @@ public class SegCell extends Cell {
 	 */
 	@Override
 	public void update() {
-		if (myPatch.myUpdated == false && myState != EMPTY) {
-			myPatch.myUpdated = true;
-			double fractionOfNeighborsSatisfied = computeFractionOfNeighborsSatisfied();
-			if (fractionOfNeighborsSatisfied < myThresholdValue)
+		if (myPatch.getUpdated() == false && myState != EMPTY) {
+			myPatch.setUpdated(true);
+			double percentageOfNeighborsSatisfied = computeFractionOfNeighborsSatisfied();
+			if (percentageOfNeighborsSatisfied < myThresholdValue)
 				moveToBeSatisfied();
 		}
 	}

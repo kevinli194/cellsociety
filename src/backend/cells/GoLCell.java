@@ -30,29 +30,29 @@ public class GoLCell extends Cell {
 	 */
 	@Override
 	public void update() {
-		if (myPatch.myUpdated == false) {
+		if (myPatch.getUpdated() == false) {
 			if (myState == ALIVE && ((GoLPatch)myPatch).getAliveCount() < 2) {
 				myPreviousState = myState;
 				myState = DEAD;
-				myPatch.myUpdated = true;
+				myPatch.setUpdated(true);
 				return;
 			}
 			if (myState == ALIVE
 					&& (((GoLPatch)myPatch).getAliveCount() == 2 || ((GoLPatch)myPatch).getAliveCount() == 3)) {
 				myPreviousState = myState;
-				myPatch.myUpdated = true;
+				myPatch.setUpdated(true);
 				return;
 			}
 			if (myState == ALIVE && ((GoLPatch)myPatch).getAliveCount() > 3) {
 				myPreviousState = myState;
 				myState = DEAD;
-				myPatch.myUpdated = true;
+				myPatch.setUpdated(true);
 				return;
 			}
 			if (myState == DEAD && ((GoLPatch)myPatch).getAliveCount() == 3) {
 				myPreviousState = myState;
 				myState = ALIVE;
-				myPatch.myUpdated = true;
+				myPatch.setUpdated(true);
 				return;
 			}
 		}

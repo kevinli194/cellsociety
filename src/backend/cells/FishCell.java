@@ -29,8 +29,8 @@ public class FishCell extends EcoCell {
 	 */
 	@Override
 	public void update() {
-		if (myPatch.myUpdated == false) {
-			myPatch.myUpdated = true;
+		if (myPatch.getUpdated() == false) {
+			myPatch.setUpdated(true);
 			myTurnsAlive++;
 			Patch emptyNeighbor = ((EcoPatch) myPatch).findNeighborOfType(EMPTY);
 			if (emptyNeighbor != null) {

@@ -28,11 +28,11 @@ public class FireCell extends Cell {
 	 */
 	@Override
 	public void update() {
-		if (myPatch.myUpdated == false) {
+		if (myPatch.getUpdated() == false) {
 			if (myState == BURNING)
 				myState = NOT_BURNING;
 		}
-		myPatch.myUpdated = true;
+		myPatch.setUpdated(true);
 	}
 
 }
