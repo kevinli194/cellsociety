@@ -234,7 +234,6 @@ public class CellViewer {
 				setCellOnMouseListen(myViewingGrid[row][col], patch);
 				myViewingGrid[row][col].getShape().setFill(patch.getColor());
 				myViewingGrid[row][col].getShape().setStroke(Color.WHITE);
-
 			}
 		}
 	}

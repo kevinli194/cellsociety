@@ -12,12 +12,22 @@ import org.xml.sax.SAXException;
 import java.io.File;
 import java.io.IOException;
 
-/*
- * Based on code from http://javafxportal.blogspot.com/2012/03/how-to-read-xml-file-in-java-dom-parser.html
+/**
+ * 
+ * @author CS308 Team16
+ * Based on code from http://javafxportal.blogspot.com/2012/03/how-to-read-xml-file-in-java-dom-parser.html.
  */
-
 public class XMLParsing {
 
+	/**
+	 * Uses Java's Document parsing tool to take an input XML file
+	 * and extract the values from specific tags.
+	 * @param file 
+	 * 		the input File object that the user has selected with initial parameters
+	 * @return
+	 * 		returns an instance of a class that packages the data storing
+	 * 		the initial state of the simulation
+	 */
 	public InitialGameParameters parseInitialCellsFromFile(File file) throws ParserConfigurationException, SAXException, IOException
 	{	
 		Document doc = createDocumentFromFile(file);
@@ -42,15 +52,32 @@ public class XMLParsing {
 		return igp;
 	}
 	
+	/**
+	 * 
+	 * @param eElement
+	 * 		One particular cell element in the document.
+	 * @return
+	 * 		An InitialCell object that has the parameters for that particular cell element.
+	 */
 	private InitialCell createNewCellFromFileData(Element eElement)
 	{
 		InitialCell initialCell = new InitialCell();
-		initialCell.myState = getTagValueFromElement("state", eElement);
-		initialCell.myX = Integer.parseInt(getTagValueFromElement("x", eElement));
-		initialCell.myY = Integer.parseInt(getTagValueFromElement("y", eElement));
+		initialCell.myState = getTagValueFromElement(eElement, "state");
+		initialCell.myX = Integer.parseInt(getTagValueFromElement(eElement, "x"));
+		initialCell.myY = Integer.parseInt(getTagValueFromElement(eElement, "y"));
 		return initialCell;
 	}
 
+	/**
+	 * Sets up the Document parsing tools given the input file that the user specifies for initial configuration
+	 * @param file
+	 * 		Input file from user
+	 * @return
+	 * 		Document object constructed from the file
+	 * @throws ParserConfigurationException
+	 * @throws SAXException
+	 * @throws IOException
+	 */
 	private Document createDocumentFromFile(File file) throws ParserConfigurationException, SAXException, IOException
 	{
 		File fXmlFile = file;
@@ -61,12 +88,30 @@ public class XMLParsing {
 		return doc;
 	}
 
+	/**
+	 * Extract value by looking for a tag in a larger document.
+	 * @param doc
+	 * 		The document object with the data to look through.
+	 * @param tagName
+	 * 		The particular tag to match and get the value from.
+	 * @return
+	 * 		The value associated with the tag.
+	 */
 	private String getTagValueFromDoc(Document doc, String tagName)
 	{
 		return doc.getElementsByTagName(tagName).item(0).getChildNodes().item(0).getNodeValue().replaceAll("\\s", "");
 	}
 	
-	private String getTagValueFromElement(String sTag, Element eElement) {
-		return eElement.getElementsByTagName(sTag).item(0).getChildNodes().item(0).getNodeValue().replaceAll("\\s", "");
+	/**
+	 * Extract value by looking for a tag in a specific element in the document.
+	 * @param eElement
+	 * 		The element object with the data to look through.
+	 * @param tagName
+	 * 		The particular tag to match and get the value from.
+	 * @return
+	 * 		The value associated with the tag.
+	 */
+	private String getTagValueFromElement(Element eElement, String tagName) {
+		return eElement.getElementsByTagName(tagName).item(0).getChildNodes().item(0).getNodeValue().replaceAll("\\s", "");
 	}
 }
