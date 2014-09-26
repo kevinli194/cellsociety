@@ -7,6 +7,7 @@ import javafx.scene.paint.Paint;
 import backend.neighborsetters.EcoNeighborSetter;
 import backend.neighborsetters.NeighborSetter;
 import backend.neighborsetters.SegNeighborSetter;
+import backend.neighborsetters.SugarNeighborSetter;
 import backend.patches.Patch;
 import backend.xml.InitialCell;
 
@@ -43,7 +44,7 @@ public abstract class Simulation {
 				makeNewCell(i, j, thresholdValue);
 			}
 		}
-		NeighborSetter setter = new EcoNeighborSetter();
+		NeighborSetter setter = new SugarNeighborSetter();
 		setter.setNeighbors(myGrid, "TOROIDAL", "HEXAGON");
 		setInitialState(initialCells);
 		initializeColors();
