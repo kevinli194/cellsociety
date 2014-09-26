@@ -13,5 +13,5 @@ Shark(Predator) & Fish(Prey), and the Fire Simulation.  In addition, we have sup
 the second set of implementation specifications.  You can dynamically interact with the simulations by 
 clicking on the cells which toggles their state and you can view the simulation with these modifications.  We have implemented error checking for inputs that do not make sense
 such as negative grid size, no simulation mode specified, cells out of bounds, and if the threshold parameter is below 
-zero. cellShape and gridBoundaryType.  We assign default states when both gridShapeType and the gridBoundaryType are unspecified.
+zero.  We assign default states when both gridShapeType and the gridBoundaryType are unspecified.
 The button functions should be self-explanatory in nature and responsive to user interaction.
