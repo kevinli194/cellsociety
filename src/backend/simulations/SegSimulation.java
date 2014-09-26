@@ -1,7 +1,7 @@
 package backend.simulations;
 
-import backend.cells.Cell;
-import backend.cells.SegCell;
+import backend.neighborsetters.NeighborSetter;
+import backend.neighborsetters.SegNeighborSetter;
 import backend.patches.Patch;
 import backend.patches.SegPatch;
 import backend.xml.InitialCell;
@@ -80,5 +80,13 @@ public class SegSimulation extends Simulation {
 		myCellColors[1] = Color.BLACK;
 		myCellColors[2] = Color.RED;
 
+	}
+
+	@Override
+	protected void setNeighbors(Patch[][] grid, String boundaryType,
+			String gridShape) {
+		NeighborSetter setter = new SegNeighborSetter();
+		setter.setNeighbors(grid, boundaryType, gridShape);
+		
 	}
 }

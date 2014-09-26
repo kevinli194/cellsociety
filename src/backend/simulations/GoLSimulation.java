@@ -3,7 +3,10 @@ package backend.simulations;
 import java.util.List;
 
 import javafx.scene.paint.Color;
+import backend.neighborsetters.GoLNeighborSetter;
+import backend.neighborsetters.NeighborSetter;
 import backend.patches.GoLPatch;
+import backend.patches.Patch;
 import backend.xml.InitialCell;
 
 public class GoLSimulation extends Simulation {
@@ -36,9 +39,15 @@ public class GoLSimulation extends Simulation {
 
 	@Override
 	protected void initializeColors() {
-		myCellColors = new Color[3];
-		myCellColors[0] = Color.BLUE;
-		myCellColors[1] = Color.WHITE;
-		myCellColors[2] = Color.BLACK;
+		myCellColors = new Color[2];
+		myCellColors[0] = Color.WHITE;
+		myCellColors[1] = Color.BLACK;
+	}
+	@Override
+	protected void setNeighbors(Patch[][] grid, String boundaryType,
+			String gridShape) {
+		NeighborSetter setter = new GoLNeighborSetter();
+		setter.setNeighbors(grid, boundaryType, gridShape);
+		
 	}
 }
