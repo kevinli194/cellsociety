@@ -15,8 +15,8 @@ import backend.cells.Cell;
  */
 
 public abstract class Patch {
-	protected List<Patch> myNeighbors = new ArrayList<Patch>();
-	protected int[] myCoordinates = new int[2];
+	public List<Patch> myNeighbors = new ArrayList<Patch>();
+	public int[] myCoordinates = new int[2];
 	protected boolean myUpdated;
 	protected int myState;
 	protected int myPreviousState;
