@@ -3,6 +3,8 @@
 package frontend;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
+
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -40,22 +42,28 @@ public class SimulationButtons {
 	/**
 	 * Buttons used for user interaction.
 	 */
-	private Button myReset;
-	private Button myStart;
-	private Button myStop;
+	protected Button myReset;
+	protected Button myStart;
+	protected Button myStop;
 	protected Button myStep;
 	protected VBox myButtonVBox;
-	private Timeline myAnimation = new Timeline();	
-	private final ComboBox<String> mySpeedSelected = new ComboBox<String>();
+	protected Timeline myAnimation;	
+	protected ComboBox<String> mySpeedSelected;
 
 	public SimulationButtons(Timeline animation, CellViewer cellViewer) {
 		myAnimation = animation;
 		myCellViewer = cellViewer;
 	}
+	
+	public SimulationButtons() {
+		
+	}
+
 	/**
-	 * 
+	 * Initializes the buttons by creating a vertical box, disabling the buttons, and setting them on action. 
 	 */
 	protected void initializeButtons() {
+		mySpeedSelected = new ComboBox<String>();
 		addButtons();
 		myButtonVBox = createButtonsVBox();
 		disableButtons(true);
@@ -97,7 +105,7 @@ public class SimulationButtons {
 	/**
 	 * Add buttons placed on left side of window.
 	 */
-	private void addButtons() {
+	protected void addButtons() {
 		mySpeedSelected.getItems().addAll(VERY_SLOW, SLOW, NORMAL, FAST,
 				VERY_FAST);
 		mySpeedSelected.setValue(NORMAL);
@@ -152,7 +160,7 @@ public class SimulationButtons {
 	 * Update animation speed based on selection.
 	 */
 	protected void checkSpeedSelection() {
-		ArrayList<String> possibleSpeeds = new ArrayList<String>();
+		List<String> possibleSpeeds = new ArrayList<String>();
 		Collections.addAll(possibleSpeeds, VERY_SLOW, SLOW, NORMAL,
 				FAST, VERY_FAST);
 		for (int i = 0; i < possibleSpeeds.size(); i++) {

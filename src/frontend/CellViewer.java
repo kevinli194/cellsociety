@@ -6,8 +6,11 @@ package frontend;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+
 import javax.xml.parsers.ParserConfigurationException;
+
 import org.xml.sax.SAXException;
+
 import frontend.gridshapes.*;
 import backend.patches.Patch;
 import backend.simulations.*;
