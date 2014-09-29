@@ -11,6 +11,8 @@ import org.xml.sax.SAXException;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 
@@ -19,6 +21,8 @@ import java.io.IOException;
  */
 public class XMLParsing {
 
+	private InitialGameParameters igp;
+	
 	/**
 	 * Uses Java's Document parsing tool to take an input XML file
 	 * and extract the values from specific tags.
@@ -28,46 +32,18 @@ public class XMLParsing {
 	 * 		returns an instance of a class that packages the data storing
 	 * 		the initial state of the simulation
 	 */
-	public InitialGameParameters parseInitialCellsFromFile(File file) throws ParserConfigurationException, SAXException, IOException
+	public InitialGameParameters getInitialGameParametersFromXMLFile(File file) throws ParserConfigurationException, SAXException, IOException
 	{	
 		Document doc = createDocumentFromFile(file);
-		InitialGameParameters igp = new InitialGameParameters();
-		igp.simulationMode = getTagValueFromDoc(doc, "simulationMode");
-		igp.unitShape = getTagValueFromDoc(doc, "unitShape");
-		igp.edgeType = getTagValueFromDoc(doc, "edgeType");
-		igp.gridXSize = Integer.parseInt(getTagValueFromDoc(doc, "gridXSize"));
-		igp.gridYSize = Integer.parseInt(getTagValueFromDoc(doc, "gridYSize"));
-		igp.thresholdValue = Double.parseDouble(getTagValueFromDoc(doc, "thresholdValue"));
+		igp = new InitialGameParameters();
 
-		NodeList nList = doc.getElementsByTagName("cell");
-		for (int temp = 0; temp < nList.getLength(); temp++)
-		{
-			Node nNode = nList.item(temp);
-			if (nNode.getNodeType() == Node.ELEMENT_NODE)
-			{
-				Element eElement = (Element) nNode;
-				igp.initialCells.add(createNewCellFromFileData(eElement));
-			}
-		}
+		parseSimulationWorldData(doc);
+		NodeList cellList = doc.getElementsByTagName("cell");
+		parseInitialCells(cellList);
+		
 		return igp;
 	}
 	
-	/**
-	 * 
-	 * @param eElement
-	 * 		One particular cell element in the document.
-	 * @return
-	 * 		An InitialCell object that has the parameters for that particular cell element.
-	 */
-	private InitialCell createNewCellFromFileData(Element eElement)
-	{
-		InitialCell initialCell = new InitialCell();
-		initialCell.myState = getTagValueFromElement(eElement, "state");
-		initialCell.myX = Integer.parseInt(getTagValueFromElement(eElement, "x"));
-		initialCell.myY = Integer.parseInt(getTagValueFromElement(eElement, "y"));
-		return initialCell;
-	}
-
 	/**
 	 * Sets up the Document parsing tools given the input file that the user specifies for initial configuration
 	 * @param file
@@ -86,6 +62,57 @@ public class XMLParsing {
 		Document doc = dBuilder.parse(fXmlFile);
 		doc.getDocumentElement().normalize();
 		return doc;
+	}
+
+	/**
+	 * Parse the general parameters such as mode, grid size, etc. from the document
+	 * @param doc
+	 */
+	private void parseSimulationWorldData(Document doc)
+	{
+		igp.simulationMode = getTagValueFromDoc(doc, "simulationMode");
+		igp.unitShape = getTagValueFromDoc(doc, "unitShape");
+		igp.edgeType = getTagValueFromDoc(doc, "edgeType");
+		igp.gridXSize = Integer.parseInt(getTagValueFromDoc(doc, "gridXSize"));
+		igp.gridYSize = Integer.parseInt(getTagValueFromDoc(doc, "gridYSize"));
+		igp.thresholdValue = Double.parseDouble(getTagValueFromDoc(doc, "thresholdValue"));
+	}
+	
+	/**
+	 * Iterate through all instances of cell elements and parse the data for that cell
+	 * @param cellNodeList
+	 */
+	private void parseInitialCells(NodeList cellNodeList)
+	{
+		List<InitialCell> initialCells = new ArrayList<InitialCell>();
+		
+		for (int nodeIndex = 0; nodeIndex < cellNodeList.getLength(); nodeIndex++)
+		{
+			Node cellNode = cellNodeList.item(nodeIndex);
+			if (cellNode.getNodeType() == Node.ELEMENT_NODE)
+			{
+				Element eElement = (Element) cellNode;
+				initialCells.add(createInitialCell(eElement));
+			}
+		}		
+		
+		igp.initialCells = initialCells;
+	}
+	
+	/**
+	 * 
+	 * @param eElement
+	 * 		One particular cell element in the document.
+	 * @return
+	 * 		An InitialCell object that has the parameters for that particular cell element.
+	 */
+	private InitialCell createInitialCell(Element eElement)
+	{
+		InitialCell initialCell = new InitialCell();
+		initialCell.myState = getTagValueFromElement(eElement, "state");
+		initialCell.myX = Integer.parseInt(getTagValueFromElement(eElement, "x"));
+		initialCell.myY = Integer.parseInt(getTagValueFromElement(eElement, "y"));
+		return initialCell;
 	}
 
 	/**
