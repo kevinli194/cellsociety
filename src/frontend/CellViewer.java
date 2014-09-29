@@ -585,7 +585,7 @@ public class CellViewer {
 	 */
 	private void updateGrid() {
 		if (myGridSet) {
-			myCellSimulation.updateGrid();
+			myCellSimulation.updateGrid(myGrid);
 		}
 	}
 

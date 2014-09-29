@@ -11,33 +11,33 @@ import backend.xml.InitialCell;
 
 public class FireSimulation extends Simulation {
 	@Override
-	protected void makeNewCell(int i, int j, double thresholdValue) {
-		myGrid[i][j] = new TreePatch(i, j, thresholdValue);
+	protected void makeNewPatch(Patch[][] grid, int i, int j, double thresholdValue) {
+		grid[i][j] = new TreePatch(i, j, thresholdValue);
 	}
 
 	@Override
-	protected void setInitialState(List<InitialCell> initialState) {
+	protected void setInitialState(Patch[][] grid, List<InitialCell> initialState) {
 		for (InitialCell c : initialState) {
-			((TreePatch) myGrid[c.myX][c.myY]).setInitialState(c.myState);
+			((TreePatch) grid[c.myX][c.myY]).setInitialState(c.myState);
 		}
 	}
 
 	@Override
-	public void updateGrid() {
+	public void updateGrid(Patch[][] grid) {
 
-		for (int i = 0; i < myGrid.length; i++) {
-			for (int j = 0; j < myGrid[0].length; j++) {
-				((TreePatch) myGrid[i][j]).update();
+		for (int i = 0; i < grid.length; i++) {
+			for (int j = 0; j < grid[0].length; j++) {
+				((TreePatch) grid[i][j]).update();
 			}
 		}
-		for (int i = 0; i < myGrid.length; i++) {
-			for (int j = 0; j < myGrid[0].length; j++) {
-				((TreePatch) myGrid[i][j]).updateCell();
+		for (int i = 0; i < grid.length; i++) {
+			for (int j = 0; j < grid[0].length; j++) {
+				((TreePatch) grid[i][j]).updateCell();
 			}
 		}
-		for (int i = 0; i < myGrid.length; i++) {
-			for (int j = 0; j < myGrid[0].length; j++) {
-				myGrid[i][j].reset();
+		for (int i = 0; i < grid.length; i++) {
+			for (int j = 0; j < grid[0].length; j++) {
+				grid[i][j].reset();
 
 			}
 		}

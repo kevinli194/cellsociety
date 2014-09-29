@@ -12,33 +12,33 @@ import backend.xml.InitialCell;
 
 public class EcoSimulation extends Simulation {
 	@Override
-	protected void makeNewCell(int i, int j, double thresholdValue) {
-		myGrid[i][j] = new EcoPatch(i, j, thresholdValue);
+	protected void makeNewPatch(Patch[][] grid, int i, int j, double thresholdValue) {
+		grid[i][j] = new EcoPatch(i, j, thresholdValue);
 	}
 
 	@Override
-	protected void setInitialState(List<InitialCell> initialState) {
+	protected void setInitialState(Patch[][] grid, List<InitialCell> initialState) {
 		for (InitialCell c : initialState) {
-			((EcoPatch) myGrid[c.myX][c.myY]).setInitialState(c.myState);
+			((EcoPatch) grid[c.myX][c.myY]).setInitialState(c.myState);
 		}
 	}
 
 	@Override
-	public void updateGrid() {
-		for (int i = 0; i < myGrid.length; i++) {
-			for (int j = 0; j < myGrid[0].length; j++) {
-				((EcoPatch) myGrid[i][j]).updateShark();
+	public void updateGrid(Patch[][] grid) {
+		for (int i = 0; i < grid.length; i++) {
+			for (int j = 0; j < grid[0].length; j++) {
+				((EcoPatch) grid[i][j]).updateShark();
 			}
 		}
-		for (int i = 0; i < myGrid.length; i++) {
-			for (int j = 0; j < myGrid[0].length; j++) {
-				((EcoPatch) myGrid[i][j]).updateFish();
+		for (int i = 0; i < grid.length; i++) {
+			for (int j = 0; j < grid[0].length; j++) {
+				((EcoPatch) grid[i][j]).updateFish();
 			}
 		}
 
-		for (int i = 0; i < myGrid.length; i++) {
-			for (int j = 0; j < myGrid[0].length; j++) {
-				myGrid[i][j].reset();
+		for (int i = 0; i < grid.length; i++) {
+			for (int j = 0; j < grid[0].length; j++) {
+				grid[i][j].reset();
 			}
 		}
 	}

@@ -1,3 +1,6 @@
+// This entire file is part of my masterpiece.
+// Kevin Li
+
 package backend.simulations;
 
 import java.util.ArrayList;
@@ -13,7 +16,6 @@ import backend.xml.InitialCell;
  *
  */
 public abstract class Simulation {
-	protected Patch[][] myGrid;
 	public Paint[] myCellColors;
 	double myThreshold;
 
@@ -40,18 +42,18 @@ public abstract class Simulation {
 	public Patch[][] initialize(String modelType, String unitShape,
 			String boundaryType, int xDimension, int yDimension,
 			double thresholdValue, ArrayList<InitialCell> initialCells) {
-		myGrid = new Patch[xDimension][yDimension];
+		myThreshold = thresholdValue;
+		Patch[][] grid = new Patch[xDimension][yDimension];
 		for (int i = 0; i < xDimension; i++) {
 			for (int j = 0; j < yDimension; j++) {
-				makeNewCell(i, j, thresholdValue);
+				makeNewPatch(grid, i, j, thresholdValue);
 			}
 		}
-		myThreshold = thresholdValue;
-		setNeighbors(myGrid, boundaryType.toUpperCase(),
+		setNeighbors(grid, boundaryType.toUpperCase(),
 				unitShape.toUpperCase());
-		setInitialState(initialCells);
+		setInitialState(grid, initialCells);
 		initializeColors();
-		return myGrid;
+		return grid;
 	}
 
 	/**
@@ -65,7 +67,8 @@ public abstract class Simulation {
 	 *            feeds in threshold value to be used in cell
 	 */
 
-	protected abstract void makeNewCell(int i, int j, double thresholdValue);
+	protected abstract void makeNewPatch(Patch[][] grid, int i, int j,
+			double thresholdValue);
 
 	/**
 	 * sets the inital state in the grid
@@ -75,22 +78,13 @@ public abstract class Simulation {
 	 *            location of each cell.
 	 */
 
-	protected abstract void setInitialState(List<InitialCell> initialState);
+	protected abstract void setInitialState(Patch[][] grid,
+			List<InitialCell> initialState);
 
 	/**
 	 * Initializes the colors to be used for each state. Used when dynamically
 	 * editing each shape.
 	 */
-
-	protected abstract void initializeColors();
-
-	/**
-	 * iterates through the cell grid calling the update function on each cell
-	 * appropriately. resets myUpdate in each cell after each cycle. This is
-	 * called every frame.
-	 */
-	public abstract void updateGrid();
-
 	/**
 	 * Calls the appropriate neighborsetter to set the neighbors for a given
 	 * grid
@@ -105,4 +99,14 @@ public abstract class Simulation {
 
 	protected abstract void setNeighbors(Patch[][] grid, String boundaryType,
 			String gridShape);
+
+	protected abstract void initializeColors();
+
+	/**
+	 * Iterates through the cell grid calling the update function on each cell
+	 * appropriately. resets myUpdate in each cell after each cycle. This is
+	 * called every frame.
+	 */
+	public abstract void updateGrid(Patch[][] grid);
+
 }
